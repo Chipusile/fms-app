@@ -1,0 +1,41 @@
+import type { User } from '@/types'
+
+export function makeUser(overrides: Partial<User> = {}): User {
+  return {
+    id: 1,
+    tenant_id: 1,
+    name: 'Tenant Admin',
+    email: 'tenant.admin@example.com',
+    phone: null,
+    status: 'active',
+    is_super_admin: false,
+    email_verified_at: null,
+    last_login_at: null,
+    created_at: '2026-01-01T00:00:00Z',
+    updated_at: '2026-01-01T00:00:00Z',
+    tenant: {
+      id: 1,
+      name: 'Acme Logistics',
+      slug: 'acme-logistics',
+      domain: null,
+      status: 'active',
+      logo_path: null,
+      address: null,
+      city: null,
+      state: null,
+      country: null,
+      postal_code: null,
+      phone: null,
+      email: null,
+      website: null,
+      timezone: 'UTC',
+      currency: 'USD',
+      date_format: 'Y-m-d',
+      created_at: '2026-01-01T00:00:00Z',
+      updated_at: '2026-01-01T00:00:00Z',
+    },
+    roles: [],
+    permissions: [],
+    ...overrides,
+  }
+}
