@@ -55,7 +55,17 @@ class HardeningReadinessTest extends TestCase
             ->assertHeader('Referrer-Policy', 'strict-origin-when-cross-origin')
             ->assertHeader('X-Content-Type-Options', 'nosniff')
             ->assertHeader('X-Frame-Options', 'SAMEORIGIN')
-            ->assertHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+            ->assertHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()')
+            ->assertHeader('X-Request-Id');
+    }
+
+    public function test_readiness_endpoint_reports_healthy_dependencies(): void
+    {
+        $this->getJson('/readyz')
+            ->assertOk()
+            ->assertJsonPath('status', 'ok')
+            ->assertJsonPath('checks.database', 'ok')
+            ->assertJsonPath('checks.cache', 'ok');
     }
 
     public function test_report_export_requires_export_permission_even_when_report_view_is_granted(): void

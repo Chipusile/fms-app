@@ -1,0 +1,18 @@
+[Unit]
+Description=Fleet Management System Queue Worker
+After=network.target redis.service postgresql.service
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+Restart=always
+RestartSec=5
+WorkingDirectory=/var/www/fms-app/current/backend
+ExecStart=/usr/bin/php artisan queue:work redis --sleep=3 --tries=3 --timeout=120 --max-time=3600
+ExecReload=/usr/bin/php artisan queue:restart
+KillSignal=SIGTERM
+TimeoutStopSec=3600
+
+[Install]
+WantedBy=multi-user.target

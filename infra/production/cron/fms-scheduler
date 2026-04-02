@@ -1,0 +1,1 @@
+* * * * * www-data cd /var/www/fms-app/current/backend && /usr/bin/php artisan schedule:run >> /var/log/fms/scheduler.log 2>&1

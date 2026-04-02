@@ -2,6 +2,7 @@
 
 use App\Http\Helpers\ApiResponse;
 use App\Http\Middleware\AddSecurityHeaders;
+use App\Http\Middleware\AssignRequestId;
 use App\Http\Middleware\CheckPermission;
 use App\Http\Middleware\EnsureStatefulFrontendRequests;
 use App\Http\Middleware\EnsureTenantIsActive;
@@ -28,9 +29,28 @@ return Application::configure(basePath: dirname(__DIR__))
             'tenant.active' => EnsureTenantIsActive::class,
         ]);
 
-        $middleware->web(append: AddSecurityHeaders::class);
+        $trustedProxies = array_values(array_filter(array_map(
+            static fn (string $proxy) => trim($proxy),
+            explode(',', (string) env('TRUSTED_PROXIES', ''))
+        )));
+        if ($trustedProxies !== []) {
+            $middleware->trustProxies(at: $trustedProxies === ['*'] ? '*' : $trustedProxies);
+        }
+
+        $trustedHosts = array_values(array_filter(array_map(
+            static fn (string $host) => trim($host),
+            explode(',', (string) env('TRUSTED_HOSTS', ''))
+        )));
+        if ($trustedHosts !== []) {
+            $middleware->trustHosts(at: $trustedHosts);
+        }
+
+        $middleware->web(
+            prepend: AssignRequestId::class,
+            append: AddSecurityHeaders::class,
+        );
         $middleware->api(
-            prepend: EnsureStatefulFrontendRequests::class,
+            prepend: [AssignRequestId::class, EnsureStatefulFrontendRequests::class],
             append: AddSecurityHeaders::class,
         );
     })

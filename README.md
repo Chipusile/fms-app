@@ -25,8 +25,15 @@ Enterprise-grade, multi-tenant Fleet Management System designed as a reusable Sa
 - [Local Development](docs/local-development.md)
 - [API Docs](docs/api/README.md)
 - [Deployment Guide](docs/deployment.md)
+- [Deployment Architecture](docs/deployment-architecture.md)
+- [Deployment Runbook](docs/deployment-runbook.md)
+- [Production Environment Template](docs/env-production-template.md)
 - [Operations Runbook](docs/operations.md)
+- [Backup and Restore](docs/backup-restore.md)
+- [Rollback Plan](docs/rollback-plan.md)
+- [Post-Deploy Checklist](docs/post-deploy-checklist.md)
 - [Release Checklist](docs/release-checklist.md)
+- [Production Readiness Report](docs/production-readiness-report.md)
 - [Phase 0 Completion](docs/reports/phase-0-completion.md)
 - [Phase 1 Progress](docs/reports/phase-1-progress.md)
 - [Phase 2 Progress](docs/reports/phase-2-progress.md)
@@ -46,6 +53,7 @@ Enterprise-grade, multi-tenant Fleet Management System designed as a reusable Sa
 - Phase 4: complete across Phase 4A and 4B with maintenance schedules, maintenance requests, work orders, component lifecycle tracking, reminder dispatch automation, compliance register workflows, and SPA pages for maintenance/compliance management
 - Phase 5: complete with analytics services, dashboard KPIs and charts, report-center datasets, advanced reporting filters, CSV export tracking, and recent export visibility in the SPA
 - Phase 6: complete with security headers, endpoint throttling, permission hardening tests, OpenAPI baseline docs, deployment and operations runbooks, CI workflow refinement, accessibility shell improvements, and analytics bundle hardening
+- Production hardening: complete for repository handoff with runtime hardening, release automation artifacts, production env templates, readiness checks, bootstrap command, backup/rollback scripts, and deployment runbooks; a staging dry run remains the final external gate before live rollout
 
 ## Quick Start
 

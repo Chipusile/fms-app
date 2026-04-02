@@ -13,13 +13,31 @@ class AddSecurityHeaders
         /** @var Response $response */
         $response = $next($request);
 
-        $response->headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');
-        $response->headers->set('X-Content-Type-Options', 'nosniff');
-        $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
-        $response->headers->set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+        $headers = config('security.headers');
 
-        if ($request->isSecure()) {
-            $response->headers->set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+        $response->headers->set('Referrer-Policy', $headers['referrer_policy']);
+        $response->headers->set('X-Content-Type-Options', $headers['content_type_options']);
+        $response->headers->set('X-Frame-Options', $headers['frame_options']);
+        $response->headers->set('Permissions-Policy', $headers['permissions_policy']);
+        $response->headers->set('Cross-Origin-Opener-Policy', $headers['cross_origin_opener_policy']);
+        $response->headers->set('Cross-Origin-Resource-Policy', $headers['cross_origin_resource_policy']);
+
+        if ($headers['content_security_policy']) {
+            $response->headers->set('Content-Security-Policy', $headers['content_security_policy']);
+        }
+
+        if ($request->isSecure() && $headers['hsts']['enabled']) {
+            $hsts = sprintf('max-age=%d', $headers['hsts']['max_age']);
+
+            if ($headers['hsts']['include_subdomains']) {
+                $hsts .= '; includeSubDomains';
+            }
+
+            if ($headers['hsts']['preload']) {
+                $hsts .= '; preload';
+            }
+
+            $response->headers->set('Strict-Transport-Security', $hsts);
         }
 
         return $response;

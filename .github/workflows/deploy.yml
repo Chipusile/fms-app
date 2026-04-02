@@ -1,0 +1,157 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Target environment
+        required: true
+        type: choice
+        options:
+          - staging
+          - production
+      ref:
+        description: Git ref to deploy
+        required: true
+        default: main
+      run_migrations:
+        description: Run database migrations during deploy
+        required: true
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+env:
+  PHP_VERSION: '8.3'
+  NODE_VERSION: '22.12.0'
+
+jobs:
+  quality:
+    name: Quality Gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.ref }}
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          coverage: none
+
+      - name: Install backend dependencies
+        working-directory: backend
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: Run backend tests
+        working-directory: backend
+        run: php artisan test
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Run frontend verification
+        working-directory: frontend
+        run: |
+          npm run type-check
+          npm run test:unit:run
+          npm run build
+
+  package:
+    name: Package Release
+    runs-on: ubuntu-latest
+    needs: quality
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.ref }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Build frontend bundle
+        working-directory: frontend
+        run: |
+          npm ci
+          npm run build
+
+      - name: Create release archive
+        run: |
+          tar \
+            --exclude=.git \
+            --exclude=backend/vendor \
+            --exclude=backend/storage/logs \
+            --exclude=frontend/node_modules \
+            -czf fms-release-${GITHUB_SHA}.tgz .
+
+      - name: Upload release archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-archive
+          path: fms-release-${{ github.sha }}.tgz
+          if-no-files-found: error
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: package
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.ref }}
+
+      - name: Download release archive
+        uses: actions/download-artifact@v4
+        with:
+          name: release-archive
+
+      - name: Load SSH key
+        uses: webfactory/ssh-agent@v0.9.1
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+
+      - name: Add deploy host to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p "${{ secrets.DEPLOY_SSH_PORT }}" "${{ secrets.DEPLOY_SSH_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Upload release archive
+        run: |
+          scp -P "${{ secrets.DEPLOY_SSH_PORT }}" \
+            "fms-release-${GITHUB_SHA}.tgz" \
+            "${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }}:/tmp/fms-release-${GITHUB_SHA}.tgz"
+
+      - name: Run remote deployment
+        env:
+          APP_ROOT: ${{ secrets.DEPLOY_PATH }}
+          RELEASE_ARCHIVE: /tmp/fms-release-${{ github.sha }}.tgz
+          RELEASE_ID: ${{ github.sha }}
+          RUN_MIGRATIONS: ${{ inputs.run_migrations }}
+        run: |
+          ssh -p "${{ secrets.DEPLOY_SSH_PORT }}" "${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }}" \
+            "APP_ROOT='${APP_ROOT}' RELEASE_ARCHIVE='${RELEASE_ARCHIVE}' RELEASE_ID='${RELEASE_ID}' RUN_MIGRATIONS='${RUN_MIGRATIONS}' bash -s" \
+            < infra/production/scripts/deploy-release.sh
+
+      - name: Run post-deploy smoke checks
+        env:
+          APP_BASE_URL: ${{ secrets.APP_BASE_URL }}
+        run: bash infra/production/scripts/post-deploy-smoke.sh
