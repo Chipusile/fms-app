@@ -1,0 +1,172 @@
+services:
+  # ── PHP-FPM (Laravel) ──────────────────────────────────────────
+  app:
+    build:
+      context: ./docker/php
+      args:
+        UID: ${HOST_UID:-1000}
+        GID: ${HOST_GID:-1000}
+    container_name: fms-app
+    restart: unless-stopped
+    volumes:
+      - ./backend:/var/www/backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      - PHP_OPCACHE_VALIDATE_TIMESTAMPS=1
+    networks:
+      - fms-network
+
+  # ── Nginx (API reverse proxy) ──────────────────────────────────
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: fms-nginx
+    restart: unless-stopped
+    ports:
+      - "${NGINX_PORT:-8080}:80"
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./backend/public:/var/www/backend/public:ro
+      - ./backend/storage/app/public:/var/www/backend/storage/app/public:ro
+    depends_on:
+      - app
+    networks:
+      - fms-network
+
+  # ── Vue 3 Vite Dev Server ──────────────────────────────────────
+  frontend:
+    image: node:22-alpine
+    container_name: fms-frontend
+    restart: unless-stopped
+    working_dir: /app
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+    ports:
+      - "${VITE_PORT:-5173}:5173"
+    volumes:
+      - ./frontend:/app
+      - fms-node-modules:/app/node_modules
+    environment:
+      - VITE_DEV_PROXY_TARGET=http://nginx:80
+      - VITE_API_BASE_URL=/api/v1
+    networks:
+      - fms-network
+
+  # ── PostgreSQL 16 ──────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: fms-postgres
+    restart: unless-stopped
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    environment:
+      POSTGRES_DB: ${DB_DATABASE:-fms_db}
+      POSTGRES_USER: ${DB_USERNAME:-fms_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-fms_secret}
+    volumes:
+      - fms-postgres-data:/var/lib/postgresql/data
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-fms_user} -d ${DB_DATABASE:-fms_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - fms-network
+
+  # ── Redis 7 (cache + queues) ───────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: fms-redis
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - fms-redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - fms-network
+
+  # ── MinIO (S3-compatible object storage) ───────────────────────
+  minio:
+    image: minio/minio:latest
+    container_name: fms-minio
+    restart: unless-stopped
+    ports:
+      - "${MINIO_API_PORT:-9000}:9000"
+      - "${MINIO_CONSOLE_PORT:-9001}:9001"
+    environment:
+      MINIO_ROOT_USER: ${AWS_ACCESS_KEY_ID:-fms_minio}
+      MINIO_ROOT_PASSWORD: ${AWS_SECRET_ACCESS_KEY:-fms_minio_secret}
+    volumes:
+      - fms-minio-data:/data
+    command: server /data --console-address ":9001"
+    networks:
+      - fms-network
+
+  # ── Mailpit (email testing) ────────────────────────────────────
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: fms-mailpit
+    restart: unless-stopped
+    ports:
+      - "${MAIL_PORT:-1025}:1025"
+      - "${MAILPIT_UI_PORT:-8025}:8025"
+    networks:
+      - fms-network
+
+  # ── Queue Worker ───────────────────────────────────────────────
+  queue:
+    build:
+      context: ./docker/php
+      args:
+        UID: ${HOST_UID:-1000}
+        GID: ${HOST_GID:-1000}
+    container_name: fms-queue
+    restart: unless-stopped
+    command: php artisan queue:work redis --sleep=3 --tries=3 --max-time=3600
+    volumes:
+      - ./backend:/var/www/backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - fms-network
+
+  # ── Scheduler (cron) ───────────────────────────────────────────
+  scheduler:
+    build:
+      context: ./docker/php
+      args:
+        UID: ${HOST_UID:-1000}
+        GID: ${HOST_GID:-1000}
+    container_name: fms-scheduler
+    restart: unless-stopped
+    command: sh -c "while true; do php artisan schedule:run --verbose --no-interaction; sleep 60; done"
+    volumes:
+      - ./backend:/var/www/backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - fms-network
+
+volumes:
+  fms-postgres-data:
+  fms-redis-data:
+  fms-minio-data:
+  fms-node-modules:
+
+networks:
+  fms-network:
+    driver: bridge
