@@ -364,7 +364,7 @@ onMounted(async () => {
       <template #actions>
         <RouterLink
           :to="{ name: 'inspections' }"
-          class="inline-flex items-center rounded-2xl border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+          class="inline-flex items-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50"
         >
           Back to inspections
         </RouterLink>
@@ -395,11 +395,11 @@ onMounted(async () => {
     <form class="grid gap-6 xl:grid-cols-[1fr_0.95fr]" @submit.prevent="submit">
       <SectionCard title="Inspection details" description="Identify the checklist, asset, timing, and operating context for this inspection.">
         <div class="grid gap-4 md:grid-cols-2">
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Template</span>
             <select
               v-model="form.inspection_template_id"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || isViewMode"
             >
               <option v-for="template in templates" :key="template.id" :value="template.id">
@@ -408,11 +408,11 @@ onMounted(async () => {
             </select>
             <FieldError :errors="errorsFor('inspection_template_id')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Vehicle</span>
             <select
               v-model="form.vehicle_id"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || isViewMode"
             >
               <option v-for="vehicle in vehicles" :key="vehicle.id" :value="vehicle.id">
@@ -421,11 +421,11 @@ onMounted(async () => {
             </select>
             <FieldError :errors="errorsFor('vehicle_id')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Driver</span>
             <select
               v-model="form.driver_id"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || isViewMode"
             >
               <option :value="null">No driver linked</option>
@@ -435,11 +435,11 @@ onMounted(async () => {
             </select>
             <FieldError :errors="errorsFor('driver_id')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Trip</span>
             <select
               v-model="form.trip_id"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || isViewMode"
             >
               <option :value="null">Not linked to a trip</option>
@@ -449,32 +449,32 @@ onMounted(async () => {
             </select>
             <FieldError :errors="errorsFor('trip_id')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Performed at</span>
             <input
               v-model="form.performed_at"
               type="datetime-local"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || isViewMode"
             >
             <FieldError :errors="errorsFor('performed_at')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Odometer reading</span>
             <input
               v-model.number="form.odometer_reading"
               type="number"
               min="0"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || isViewMode"
             >
             <FieldError :errors="errorsFor('odometer_reading')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700 md:col-span-2">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200 md:col-span-2">
             <span class="font-medium">Notes</span>
             <textarea
               v-model="form.notes"
-              class="min-h-28 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="min-h-28 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || isViewMode"
             />
             <FieldError :errors="errorsFor('notes')" />
@@ -483,34 +483,34 @@ onMounted(async () => {
       </SectionCard>
 
       <SectionCard title="Workflow summary" description="Review status, outcome, and governance context without leaving the record.">
-        <div class="space-y-4 text-sm text-slate-700">
+        <div class="space-y-4 text-sm text-slate-700 dark:text-slate-200">
           <div
             v-if="inspection"
-            class="flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3"
+            class="flex items-center justify-between rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3"
           >
             <div>
-              <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Current status</p>
-              <p class="mt-1 text-base font-semibold text-slate-900">{{ inspection.inspection_number }}</p>
+              <p class="text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Current status</p>
+              <p class="mt-1 text-base font-semibold text-slate-900 dark:text-slate-100">{{ inspection.inspection_number }}</p>
             </div>
             <StatusBadge :value="inspection.status" />
           </div>
           <p
             v-else
-            class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs leading-5 text-slate-600"
+            class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3 text-xs leading-5 text-slate-600 dark:text-slate-400"
           >
             Save the inspection first to expose closure and approval history.
           </p>
 
           <div class="grid gap-3 md:grid-cols-2">
-            <div class="rounded-2xl border border-slate-200 bg-white px-4 py-3">
-              <p class="text-xs uppercase tracking-[0.16em] text-slate-500">Result</p>
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-3">
+              <p class="text-xs uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">Result</p>
               <div class="mt-2">
                 <StatusBadge :value="inspection?.result ?? 'pending'" />
               </div>
             </div>
-            <div class="rounded-2xl border border-slate-200 bg-white px-4 py-3">
-              <p class="text-xs uppercase tracking-[0.16em] text-slate-500">Defects</p>
-              <p class="mt-2 text-sm font-semibold text-slate-900">
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-3">
+              <p class="text-xs uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">Defects</p>
+              <p class="mt-2 text-sm font-semibold text-slate-900 dark:text-slate-100">
                 {{ inspection ? `${inspection.failed_items} failed · ${inspection.critical_defects} critical` : 'Not evaluated yet' }}
               </p>
             </div>
@@ -518,23 +518,23 @@ onMounted(async () => {
 
           <div
             v-if="inspection?.approval_requests?.length"
-            class="rounded-2xl border border-slate-200 bg-white px-4 py-3"
+            class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-3"
           >
-            <p class="text-xs uppercase tracking-[0.16em] text-slate-500">Approval history</p>
+            <p class="text-xs uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">Approval history</p>
             <div class="mt-3 space-y-3">
               <div
                 v-for="approval in inspection.approval_requests"
                 :key="approval.id"
-                class="flex flex-col gap-2 rounded-2xl border border-slate-100 bg-slate-50 px-4 py-3"
+                class="flex flex-col gap-2 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3"
               >
                 <div class="flex items-center justify-between gap-3">
                   <div>
-                    <p class="text-sm font-semibold text-slate-900">{{ approval.title }}</p>
-                    <p class="text-xs text-slate-500">{{ approval.summary ?? 'Approval workflow entry' }}</p>
+                    <p class="text-sm font-semibold text-slate-900 dark:text-slate-100">{{ approval.title }}</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">{{ approval.summary ?? 'Approval workflow entry' }}</p>
                   </div>
                   <StatusBadge :value="approval.status" />
                 </div>
-                <p v-if="approval.decision_notes" class="text-xs leading-5 text-slate-600">
+                <p v-if="approval.decision_notes" class="text-xs leading-5 text-slate-600 dark:text-slate-400">
                   Decision notes: {{ approval.decision_notes }}
                 </p>
               </div>
@@ -543,13 +543,13 @@ onMounted(async () => {
 
           <div
             v-if="inspection && canClose && inspection.status !== 'closed'"
-            class="space-y-3 rounded-2xl border border-slate-200 bg-white px-4 py-4"
+            class="space-y-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-4"
           >
-            <label class="space-y-2 text-sm text-slate-700">
+            <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
               <span class="font-medium">Resolution notes</span>
               <textarea
                 v-model="closeNotes"
-                class="min-h-24 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+                class="min-h-24 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
                 :disabled="actionLoading"
               />
               <FieldError :errors="errorsFor('resolution_notes')" />
@@ -567,7 +567,7 @@ onMounted(async () => {
           <div class="flex flex-col gap-3 sm:flex-row">
             <RouterLink
               :to="{ name: 'inspections' }"
-              class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 sm:w-auto"
+              class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50 sm:w-auto"
             >
               Back to list
             </RouterLink>
@@ -589,21 +589,21 @@ onMounted(async () => {
         <div
           v-for="(entry, index) in displayResponses"
           :key="String(entry.key)"
-          class="rounded-3xl border border-slate-200 bg-slate-50/70 p-5"
+          class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40 p-5"
         >
           <div class="flex items-start justify-between gap-4">
             <div>
-              <p class="text-sm font-semibold text-slate-900">{{ entry.label }}</p>
+              <p class="text-sm font-semibold text-slate-900 dark:text-slate-100">{{ entry.label }}</p>
               <p
                 v-if="!isViewMode && selectedTemplate?.items?.[index]?.description"
-                class="mt-1 text-xs leading-5 text-slate-500"
+                class="mt-1 text-xs leading-5 text-slate-500 dark:text-slate-400"
               >
                 {{ selectedTemplate.items[index].description }}
               </p>
             </div>
             <span
               v-if="!isViewMode && entry.required"
-              class="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-xs font-semibold text-slate-600"
+              class="rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-2.5 py-1 text-xs font-semibold text-slate-600 dark:text-slate-400"
             >
               Required
             </span>
@@ -611,35 +611,35 @@ onMounted(async () => {
 
           <div class="mt-4 grid gap-4 md:grid-cols-2">
             <template v-if="isViewMode">
-              <div class="rounded-2xl border border-slate-200 bg-white px-4 py-3">
-                <p class="text-xs uppercase tracking-[0.16em] text-slate-500">Response</p>
-                <p class="mt-2 text-sm font-medium text-slate-900">{{ responseLabel(entry.responseValue, entry.isPass) }}</p>
+              <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-3">
+                <p class="text-xs uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">Response</p>
+                <p class="mt-2 text-sm font-medium text-slate-900 dark:text-slate-100">{{ responseLabel(entry.responseValue, entry.isPass) }}</p>
               </div>
-              <div class="rounded-2xl border border-slate-200 bg-white px-4 py-3">
-                <p class="text-xs uppercase tracking-[0.16em] text-slate-500">Defect severity</p>
+              <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-3">
+                <p class="text-xs uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">Defect severity</p>
                 <div class="mt-2">
                   <StatusBadge v-if="entry.defectSeverity" :value="entry.defectSeverity" />
-                  <span v-else class="text-sm text-slate-500">None</span>
+                  <span v-else class="text-sm text-slate-500 dark:text-slate-400">None</span>
                 </div>
               </div>
               <div
                 v-if="entry.defectSummary || entry.notes"
-                class="md:col-span-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700"
+                class="md:col-span-2 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-3 text-sm text-slate-700 dark:text-slate-200"
               >
-                <p v-if="entry.defectSummary"><span class="font-medium text-slate-900">Defect:</span> {{ entry.defectSummary }}</p>
-                <p v-if="entry.notes" class="mt-2"><span class="font-medium text-slate-900">Notes:</span> {{ entry.notes }}</p>
+                <p v-if="entry.defectSummary"><span class="font-medium text-slate-900 dark:text-slate-100">Defect:</span> {{ entry.defectSummary }}</p>
+                <p v-if="entry.notes" class="mt-2"><span class="font-medium text-slate-900 dark:text-slate-100">Notes:</span> {{ entry.notes }}</p>
               </div>
             </template>
 
             <template v-else>
               <label
                 v-if="entry.responseType === 'pass_fail'"
-                class="space-y-2 text-sm text-slate-700"
+                class="space-y-2 text-sm text-slate-700 dark:text-slate-200"
               >
                 <span class="font-medium">Outcome</span>
                 <select
                   :value="form.responses[index]?.is_pass === null ? '' : form.responses[index]?.is_pass ? 'pass' : 'fail'"
-                  class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+                  class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
                   @change="setPassFail(index, String(($event.target as HTMLSelectElement).value))"
                 >
                   <option value="">Select outcome</option>
@@ -651,12 +651,12 @@ onMounted(async () => {
 
               <label
                 v-else-if="entry.responseType === 'boolean'"
-                class="space-y-2 text-sm text-slate-700"
+                class="space-y-2 text-sm text-slate-700 dark:text-slate-200"
               >
                 <span class="font-medium">Response</span>
                 <select
                   :value="form.responses[index]?.response_value === null ? '' : String(form.responses[index]?.response_value)"
-                  class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+                  class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
                   @change="setBooleanResponse(index, String(($event.target as HTMLSelectElement).value))"
                 >
                   <option value="">Select response</option>
@@ -668,13 +668,13 @@ onMounted(async () => {
 
               <label
                 v-else-if="entry.responseType === 'number'"
-                class="space-y-2 text-sm text-slate-700"
+                class="space-y-2 text-sm text-slate-700 dark:text-slate-200"
               >
                 <span class="font-medium">Response</span>
                 <input
                   :value="form.responses[index]?.response_value as number | null"
                   type="number"
-                  class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+                  class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
                   @input="setResponseValue(index, Number(($event.target as HTMLInputElement).value))"
                 >
                 <FieldError :errors="errorsFor(`responses.${index}.response_value`)" />
@@ -682,35 +682,35 @@ onMounted(async () => {
 
               <label
                 v-else
-                class="space-y-2 text-sm text-slate-700"
+                class="space-y-2 text-sm text-slate-700 dark:text-slate-200"
               >
                 <span class="font-medium">Response</span>
                 <textarea
                   :value="String(form.responses[index]?.response_value ?? '')"
-                  class="min-h-24 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+                  class="min-h-24 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
                   @input="setResponseValue(index, ($event.target as HTMLTextAreaElement).value)"
                 />
                 <FieldError :errors="errorsFor(`responses.${index}.response_value`)" />
               </label>
 
               <label
-                class="space-y-2 text-sm text-slate-700"
+                class="space-y-2 text-sm text-slate-700 dark:text-slate-200"
               >
                 <span class="font-medium">Inspector notes</span>
                 <textarea
                   :value="form.responses[index]?.notes ?? ''"
-                  class="min-h-24 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+                  class="min-h-24 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
                   @input="setResponseNotes(index, ($event.target as HTMLTextAreaElement).value)"
                 />
                 <FieldError :errors="errorsFor(`responses.${index}.notes`)" />
               </label>
 
               <template v-if="entry.responseType === 'pass_fail' && form.responses[index]?.is_pass === false">
-                <label class="space-y-2 text-sm text-slate-700">
+                <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
                   <span class="font-medium">Defect severity</span>
                   <select
                     :value="form.responses[index]?.defect_severity ?? ''"
-                    class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+                    class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
                     @change="setDefectSeverity(index, String(($event.target as HTMLSelectElement).value))"
                   >
                     <option value="">No defect severity</option>
@@ -724,11 +724,11 @@ onMounted(async () => {
                   </select>
                   <FieldError :errors="errorsFor(`responses.${index}.defect_severity`)" />
                 </label>
-                <label class="space-y-2 text-sm text-slate-700">
+                <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
                   <span class="font-medium">Defect summary</span>
                   <input
                     :value="form.responses[index]?.defect_summary ?? ''"
-                    class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+                    class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
                     @input="setDefectSummary(index, ($event.target as HTMLInputElement).value)"
                   >
                   <FieldError :errors="errorsFor(`responses.${index}.defect_summary`)" />
@@ -740,7 +740,7 @@ onMounted(async () => {
 
         <p
           v-if="!displayResponses.length"
-          class="rounded-2xl border border-dashed border-slate-300 px-4 py-6 text-sm text-slate-500"
+          class="rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 px-4 py-6 text-sm text-slate-500 dark:text-slate-400"
         >
           Select an inspection template to load the checklist structure.
         </p>

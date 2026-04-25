@@ -56,7 +56,7 @@ onMounted(async () => {
       tone="danger"
     />
 
-    <div v-if="loading" class="rounded-2xl border border-slate-200 bg-white/90 px-6 py-12 text-center text-sm text-slate-500 shadow-sm shadow-slate-200/60">
+    <div v-if="loading" class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/70 px-6 py-12 text-center text-sm text-slate-500 dark:text-slate-400 shadow-sm shadow-slate-200/60 dark:shadow-black/20">
       Loading templates...
     </div>
 
@@ -67,24 +67,24 @@ onMounted(async () => {
         :title="template.label"
         :description="template.description"
       >
-        <div class="space-y-5 text-sm text-slate-700">
+        <div class="space-y-5 text-sm text-slate-700 dark:text-slate-200">
           <div class="flex flex-wrap gap-2">
             <span
               v-for="column in template.columns"
               :key="column"
-              class="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-600"
+              class="rounded-full border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-3 py-1 text-xs font-semibold text-slate-600 dark:text-slate-400"
             >
               {{ column }}
             </span>
           </div>
 
           <div class="space-y-2">
-            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Sample row</p>
-            <div class="overflow-x-auto rounded-2xl border border-slate-200 bg-slate-50 p-4">
-              <table class="min-w-full text-left text-xs text-slate-600">
+            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400">Sample row</p>
+            <div class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-4">
+              <table class="min-w-full text-left text-xs text-slate-600 dark:text-slate-400">
                 <thead>
                   <tr>
-                    <th v-for="column in template.columns" :key="column" class="px-2 py-2 font-semibold text-slate-700">
+                    <th v-for="column in template.columns" :key="column" class="px-2 py-2 font-semibold text-slate-700 dark:text-slate-200">
                       {{ column }}
                     </th>
                   </tr>
@@ -101,8 +101,8 @@ onMounted(async () => {
           </div>
 
           <div class="space-y-2">
-            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Import notes</p>
-            <ul class="space-y-2 text-sm leading-6 text-slate-600">
+            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400">Import notes</p>
+            <ul class="space-y-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
               <li v-for="note in template.notes" :key="note">
                 {{ note }}
               </li>

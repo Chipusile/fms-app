@@ -143,27 +143,27 @@ onMounted(async () => {
           v-model="search"
           type="search"
           placeholder="Search by vehicle, driver, or department"
-          class="min-w-[240px] flex-1 rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="min-w-[240px] flex-1 rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
-        <select v-model="vehicleFilter" class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500">
+        <select v-model="vehicleFilter" class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500">
           <option value="">All vehicles</option>
           <option v-for="vehicle in vehicles" :key="vehicle.id" :value="String(vehicle.id)">
             {{ vehicle.label }}
           </option>
         </select>
-        <select v-model="driverFilter" class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500">
+        <select v-model="driverFilter" class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500">
           <option value="">All drivers</option>
           <option v-for="driver in drivers" :key="driver.id" :value="String(driver.id)">
             {{ driver.label }}
           </option>
         </select>
-        <select v-model="departmentFilter" class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500">
+        <select v-model="departmentFilter" class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500">
           <option value="">All departments</option>
           <option v-for="department in departments" :key="department.id" :value="String(department.id)">
             {{ department.label }}
           </option>
         </select>
-        <select v-model="statusFilter" class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500">
+        <select v-model="statusFilter" class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500">
           <option value="">All statuses</option>
           <option v-for="option in vehicleAssignmentStatusOptions" :key="option.value" :value="option.value">
             {{ option.label }}
@@ -192,13 +192,13 @@ onMounted(async () => {
         <div class="flex items-center gap-2">
           <RouterLink
             :to="{ name: 'vehicle-assignments.edit', params: { id: String(row.id) } }"
-            class="rounded-xl border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-50"
+            class="rounded-xl border border-slate-300 dark:border-slate-700 px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50"
           >
             Edit
           </RouterLink>
           <button
             type="button"
-            class="rounded-xl border border-rose-300 px-3 py-1.5 text-xs font-semibold text-rose-700 transition hover:bg-rose-50"
+            class="rounded-xl border border-rose-300 dark:border-rose-800/60 px-3 py-1.5 text-xs font-semibold text-rose-700 dark:text-rose-200 transition hover:bg-rose-50 dark:hover:bg-rose-950/40"
             @click="removeAssignment(Number(row.id))"
           >
             Delete

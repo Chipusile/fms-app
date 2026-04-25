@@ -102,7 +102,7 @@ onMounted(async () => {
   <div class="space-y-6">
     <PageHeader eyebrow="Operations" :title="isEditMode ? 'Edit driver' : 'Create driver'" description="Driver records can be managed independently from full application user accounts.">
       <template #actions>
-        <RouterLink :to="{ name: 'drivers' }" class="inline-flex items-center rounded-2xl border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
+        <RouterLink :to="{ name: 'drivers' }" class="inline-flex items-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50">
           Cancel
         </RouterLink>
       </template>
@@ -113,73 +113,73 @@ onMounted(async () => {
     <form class="grid gap-6 xl:grid-cols-[1fr_0.9fr]" @submit.prevent="submit">
       <SectionCard title="Driver details" description="Identity, licensing, and contact information.">
         <div class="grid gap-4 md:grid-cols-2">
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Name</span>
-            <input v-model="form.name" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model="form.name" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('name')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Department</span>
-            <select v-model="form.department_id" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <select v-model="form.department_id" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
               <option :value="null">Unassigned</option>
               <option v-for="department in departments" :key="department.id" :value="department.id">{{ department.name }}</option>
             </select>
             <FieldError :errors="errorsFor('department_id')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Employee number</span>
-            <input v-model="form.employee_number" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model="form.employee_number" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('employee_number')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">License number</span>
-            <input v-model="form.license_number" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model="form.license_number" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('license_number')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">License class</span>
-            <input v-model="form.license_class" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model="form.license_class" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('license_class')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">License expiry</span>
-            <input v-model="form.license_expiry_date" type="date" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model="form.license_expiry_date" type="date" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('license_expiry_date')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Phone</span>
-            <input v-model="form.phone" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model="form.phone" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('phone')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Email</span>
-            <input v-model="form.email" type="email" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model="form.email" type="email" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('email')" />
           </label>
         </div>
       </SectionCard>
 
       <SectionCard title="Lifecycle" description="Operational status and employment timing.">
-        <div class="space-y-4 text-sm text-slate-700">
+        <div class="space-y-4 text-sm text-slate-700 dark:text-slate-200">
           <label class="space-y-2">
             <span class="font-medium">Hire date</span>
-            <input v-model="form.hire_date" type="date" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model="form.hire_date" type="date" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('hire_date')" />
           </label>
           <label class="space-y-2">
             <span class="font-medium">Status</span>
-            <select v-model="form.status" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <select v-model="form.status" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
               <option v-for="option in driverStatusOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
             </select>
             <FieldError :errors="errorsFor('status')" />
           </label>
           <label class="space-y-2">
             <span class="font-medium">Notes</span>
-            <textarea v-model="form.notes" class="min-h-32 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading" />
+            <textarea v-model="form.notes" class="min-h-32 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading" />
             <FieldError :errors="errorsFor('notes')" />
           </label>
           <div class="flex flex-col gap-3 sm:flex-row">
-            <RouterLink :to="{ name: 'drivers' }" class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 sm:w-auto">
+            <RouterLink :to="{ name: 'drivers' }" class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50 sm:w-auto">
               Cancel
             </RouterLink>
             <button type="submit" class="w-full rounded-2xl bg-slate-950 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60" :disabled="loading || submitting">

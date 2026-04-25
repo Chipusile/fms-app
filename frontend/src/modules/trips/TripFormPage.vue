@@ -230,7 +230,7 @@ onMounted(async () => {
       <template #actions>
         <RouterLink
           :to="{ name: 'trips' }"
-          class="inline-flex items-center rounded-2xl border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+          class="inline-flex items-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50"
         >
           Back to trips
         </RouterLink>
@@ -261,62 +261,62 @@ onMounted(async () => {
     <form class="grid gap-6 xl:grid-cols-[1fr_0.95fr]" @submit.prevent="submit">
       <SectionCard title="Trip details" description="Define the route, timing, and purpose for this journey request.">
         <div class="grid gap-4 md:grid-cols-2">
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Vehicle</span>
-            <select v-model="form.vehicle_id" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
+            <select v-model="form.vehicle_id" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
               <option v-for="vehicle in vehicles" :key="vehicle.id" :value="vehicle.id">
                 {{ vehicle.label }}{{ vehicle.secondary ? ` · ${vehicle.secondary}` : '' }}
               </option>
             </select>
             <FieldError :errors="errorsFor('vehicle_id')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Driver</span>
-            <select v-model="form.driver_id" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
+            <select v-model="form.driver_id" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
               <option v-for="driver in drivers" :key="driver.id" :value="driver.id">
                 {{ driver.label }}{{ driver.secondary ? ` · ${driver.secondary}` : '' }}
               </option>
             </select>
             <FieldError :errors="errorsFor('driver_id')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700 md:col-span-2">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200 md:col-span-2">
             <span class="font-medium">Purpose</span>
-            <input v-model="form.purpose" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
+            <input v-model="form.purpose" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
             <FieldError :errors="errorsFor('purpose')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Origin</span>
-            <input v-model="form.origin" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
+            <input v-model="form.origin" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
             <FieldError :errors="errorsFor('origin')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Destination</span>
-            <input v-model="form.destination" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
+            <input v-model="form.destination" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
             <FieldError :errors="errorsFor('destination')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Scheduled start</span>
-            <input v-model="form.scheduled_start" type="datetime-local" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
+            <input v-model="form.scheduled_start" type="datetime-local" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
             <FieldError :errors="errorsFor('scheduled_start')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Scheduled end</span>
-            <input v-model="form.scheduled_end" type="datetime-local" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
+            <input v-model="form.scheduled_end" type="datetime-local" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
             <FieldError :errors="errorsFor('scheduled_end')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Passengers</span>
-            <input v-model.number="form.passengers" type="number" min="1" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
+            <input v-model.number="form.passengers" type="number" min="1" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
             <FieldError :errors="errorsFor('passengers')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Cargo description</span>
-            <input v-model="form.cargo_description" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
+            <input v-model="form.cargo_description" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
             <FieldError :errors="errorsFor('cargo_description')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700 md:col-span-2">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200 md:col-span-2">
             <span class="font-medium">Notes</span>
-            <textarea v-model="form.notes" class="min-h-28 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)" />
+            <textarea v-model="form.notes" class="min-h-28 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)" />
             <FieldError :errors="errorsFor('notes')" />
           </label>
         </div>
@@ -324,70 +324,70 @@ onMounted(async () => {
 
       <div class="space-y-6">
         <SectionCard title="Workflow status" description="Track approval and execution milestones without leaving the record.">
-          <div class="space-y-4 text-sm text-slate-700">
-            <div v-if="trip" class="flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
+          <div class="space-y-4 text-sm text-slate-700 dark:text-slate-200">
+            <div v-if="trip" class="flex items-center justify-between rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3">
               <div>
-                <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Current status</p>
-                <p class="mt-1 text-base font-semibold text-slate-900">{{ trip.trip_number }}</p>
+                <p class="text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Current status</p>
+                <p class="mt-1 text-base font-semibold text-slate-900 dark:text-slate-100">{{ trip.trip_number }}</p>
               </div>
               <StatusBadge :value="trip.status" />
             </div>
-            <p v-else class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs leading-5 text-slate-600">
+            <p v-else class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3 text-xs leading-5 text-slate-600 dark:text-slate-400">
               Save the trip first to expose approval and execution controls.
             </p>
 
-            <div v-if="trip?.rejection_reason" class="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-xs leading-5 text-rose-800">
+            <div v-if="trip?.rejection_reason" class="rounded-2xl border border-rose-200 dark:border-rose-900/60 bg-rose-50 dark:bg-rose-950/40 px-4 py-3 text-xs leading-5 text-rose-800 dark:text-rose-200">
               Rejection reason: {{ trip.rejection_reason }}
             </div>
-            <div v-if="trip?.cancellation_reason" class="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-xs leading-5 text-rose-800">
+            <div v-if="trip?.cancellation_reason" class="rounded-2xl border border-rose-200 dark:border-rose-900/60 bg-rose-50 dark:bg-rose-950/40 px-4 py-3 text-xs leading-5 text-rose-800 dark:text-rose-200">
               Cancellation reason: {{ trip.cancellation_reason }}
             </div>
-            <div v-if="trip?.actual_start || trip?.actual_end" class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs leading-5 text-slate-600">
+            <div v-if="trip?.actual_start || trip?.actual_end" class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3 text-xs leading-5 text-slate-600 dark:text-slate-400">
               <p>Actual start: {{ trip.actual_start ? new Date(trip.actual_start).toLocaleString() : 'Not started' }}</p>
               <p>Actual end: {{ trip.actual_end ? new Date(trip.actual_end).toLocaleString() : 'Not completed' }}</p>
               <p>Distance: {{ trip.distance_km ?? '—' }} km</p>
             </div>
 
             <template v-if="isEditMode">
-              <div v-if="canApprove" class="space-y-3 rounded-2xl border border-slate-200 p-4">
-                <p class="text-sm font-semibold text-slate-900">Approval</p>
-                <textarea v-model="approvalNotes" class="min-h-24 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" placeholder="Optional approval note" :disabled="actionLoading" />
+              <div v-if="canApprove" class="space-y-3 rounded-2xl border border-slate-200 dark:border-slate-800 p-4">
+                <p class="text-sm font-semibold text-slate-900 dark:text-slate-100">Approval</p>
+                <textarea v-model="approvalNotes" class="min-h-24 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" placeholder="Optional approval note" :disabled="actionLoading" />
                 <button type="button" class="rounded-2xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-500 disabled:opacity-60" :disabled="actionLoading" @click="runAction('approve', { notes: approvalNotes || null })">
                   Approve trip
                 </button>
               </div>
 
-              <div v-if="canApprove" class="space-y-3 rounded-2xl border border-slate-200 p-4">
-                <p class="text-sm font-semibold text-slate-900">Reject request</p>
-                <textarea v-model="rejectionReason" class="min-h-24 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" placeholder="Reason for rejection" :disabled="actionLoading" />
+              <div v-if="canApprove" class="space-y-3 rounded-2xl border border-slate-200 dark:border-slate-800 p-4">
+                <p class="text-sm font-semibold text-slate-900 dark:text-slate-100">Reject request</p>
+                <textarea v-model="rejectionReason" class="min-h-24 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" placeholder="Reason for rejection" :disabled="actionLoading" />
                 <FieldError :errors="errorsFor('reason')" />
                 <button type="button" class="rounded-2xl bg-rose-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-rose-500 disabled:opacity-60" :disabled="actionLoading || !rejectionReason" @click="runAction('reject', { reason: rejectionReason })">
                   Reject trip
                 </button>
               </div>
 
-              <div v-if="canStart" class="space-y-3 rounded-2xl border border-slate-200 p-4">
-                <p class="text-sm font-semibold text-slate-900">Start trip</p>
-                <input v-model.number="startOdometer" type="number" min="0" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :placeholder="selectedVehicle ? `Current vehicle odometer ${selectedVehicle.odometer_reading}` : 'Start odometer'" :disabled="actionLoading">
+              <div v-if="canStart" class="space-y-3 rounded-2xl border border-slate-200 dark:border-slate-800 p-4">
+                <p class="text-sm font-semibold text-slate-900 dark:text-slate-100">Start trip</p>
+                <input v-model.number="startOdometer" type="number" min="0" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :placeholder="selectedVehicle ? `Current vehicle odometer ${selectedVehicle.odometer_reading}` : 'Start odometer'" :disabled="actionLoading">
                 <FieldError :errors="errorsFor('start_odometer')" />
                 <button type="button" class="rounded-2xl bg-sky-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-sky-500 disabled:opacity-60" :disabled="actionLoading || startOdometer === null" @click="runAction('start', { start_odometer: startOdometer })">
                   Start trip
                 </button>
               </div>
 
-              <div v-if="canComplete" class="space-y-3 rounded-2xl border border-slate-200 p-4">
-                <p class="text-sm font-semibold text-slate-900">Complete trip</p>
-                <input v-model.number="endOdometer" type="number" min="0" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" placeholder="End odometer" :disabled="actionLoading">
+              <div v-if="canComplete" class="space-y-3 rounded-2xl border border-slate-200 dark:border-slate-800 p-4">
+                <p class="text-sm font-semibold text-slate-900 dark:text-slate-100">Complete trip</p>
+                <input v-model.number="endOdometer" type="number" min="0" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" placeholder="End odometer" :disabled="actionLoading">
                 <FieldError :errors="errorsFor('end_odometer')" />
-                <textarea v-model="completionNotes" class="min-h-24 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" placeholder="Completion notes" :disabled="actionLoading" />
+                <textarea v-model="completionNotes" class="min-h-24 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" placeholder="Completion notes" :disabled="actionLoading" />
                 <button type="button" class="rounded-2xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-500 disabled:opacity-60" :disabled="actionLoading || endOdometer === null" @click="runAction('complete', { end_odometer: endOdometer, notes: completionNotes || null })">
                   Complete trip
                 </button>
               </div>
 
-              <div v-if="canCancel" class="space-y-3 rounded-2xl border border-slate-200 p-4">
-                <p class="text-sm font-semibold text-slate-900">Cancel trip</p>
-                <textarea v-model="cancellationReason" class="min-h-24 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" placeholder="Reason for cancellation" :disabled="actionLoading" />
+              <div v-if="canCancel" class="space-y-3 rounded-2xl border border-slate-200 dark:border-slate-800 p-4">
+                <p class="text-sm font-semibold text-slate-900 dark:text-slate-100">Cancel trip</p>
+                <textarea v-model="cancellationReason" class="min-h-24 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" placeholder="Reason for cancellation" :disabled="actionLoading" />
                 <button type="button" class="rounded-2xl bg-rose-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-rose-500 disabled:opacity-60" :disabled="actionLoading || !cancellationReason" @click="runAction('cancel', { reason: cancellationReason })">
                   Cancel trip
                 </button>
@@ -397,7 +397,7 @@ onMounted(async () => {
             <div class="flex flex-col gap-3 sm:flex-row">
               <RouterLink
                 :to="{ name: 'trips' }"
-                class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 sm:w-auto"
+                class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50 sm:w-auto"
               >
                 Back
               </RouterLink>

@@ -111,14 +111,14 @@ onMounted(async () => {
         <RouterLink
           v-if="canManageAssignments"
           :to="{ name: 'vehicle-assignments' }"
-          class="inline-flex items-center rounded-2xl border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+          class="inline-flex items-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50"
         >
           Manage assignments
         </RouterLink>
         <RouterLink
           v-if="canAccessTemplates"
           :to="{ name: 'onboarding-templates' }"
-          class="inline-flex items-center rounded-2xl border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+          class="inline-flex items-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50"
         >
           Onboarding templates
         </RouterLink>
@@ -145,11 +145,11 @@ onMounted(async () => {
           v-model="search"
           type="search"
           placeholder="Search vehicles"
-          class="min-w-[220px] flex-1 rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="min-w-[220px] flex-1 rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
         <select
           v-model="statusFilter"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option value="">All statuses</option>
           <option
@@ -162,7 +162,7 @@ onMounted(async () => {
         </select>
         <select
           v-model="fuelTypeFilter"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option value="">All fuel types</option>
           <option
@@ -175,7 +175,7 @@ onMounted(async () => {
         </select>
         <select
           v-model="vehicleTypeFilter"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option value="">All vehicle types</option>
           <option
@@ -213,14 +213,14 @@ onMounted(async () => {
           <RouterLink
             v-if="auth.hasPermission('vehicles.update')"
             :to="{ name: 'vehicles.edit', params: { id: String(row.id) } }"
-            class="rounded-xl border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-50"
+            class="rounded-xl border border-slate-300 dark:border-slate-700 px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50"
           >
             Edit
           </RouterLink>
           <button
             v-if="auth.hasPermission('vehicles.delete')"
             type="button"
-            class="rounded-xl border border-rose-300 px-3 py-1.5 text-xs font-semibold text-rose-700 transition hover:bg-rose-50"
+            class="rounded-xl border border-rose-300 dark:border-rose-800/60 px-3 py-1.5 text-xs font-semibold text-rose-700 dark:text-rose-200 transition hover:bg-rose-50 dark:hover:bg-rose-950/40"
             @click="removeVehicle(Number(row.id))"
           >
             Delete

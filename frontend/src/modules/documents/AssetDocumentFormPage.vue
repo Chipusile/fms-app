@@ -176,7 +176,7 @@ onMounted(async () => {
       <template #actions>
         <RouterLink
           :to="{ name: 'asset-documents' }"
-          class="inline-flex items-center rounded-2xl border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+          class="inline-flex items-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50"
         >
           Cancel
         </RouterLink>
@@ -193,18 +193,18 @@ onMounted(async () => {
     <form class="grid gap-6 xl:grid-cols-[1fr_0.95fr]" @submit.prevent="submit">
       <SectionCard title="Document details" description="Choose the target record first, then capture the document metadata and lifecycle dates.">
         <div class="grid gap-4 md:grid-cols-2">
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Target type</span>
-            <select v-model="form.documentable_type" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <select v-model="form.documentable_type" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
               <option v-for="option in documentableTypeOptions" :key="option.value" :value="option.value">
                 {{ option.label }}
               </option>
             </select>
             <FieldError :errors="errorsFor('documentable_type')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Target record</span>
-            <select v-model="form.documentable_id" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <select v-model="form.documentable_id" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
               <option :value="null">Select record</option>
               <option v-for="target in targetOptions" :key="target.id" :value="target.id">
                 {{ target.label }}{{ target.secondary ? ` · ${target.secondary}` : '' }}
@@ -212,43 +212,43 @@ onMounted(async () => {
             </select>
             <FieldError :errors="errorsFor('documentable_id')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700 md:col-span-2">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200 md:col-span-2">
             <span class="font-medium">Document name</span>
-            <input v-model="form.name" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model="form.name" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('name')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Document type</span>
-            <select v-model="form.document_type" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <select v-model="form.document_type" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
               <option v-for="option in assetDocumentTypeOptions" :key="option.value" :value="option.value">
                 {{ option.label }}
               </option>
             </select>
             <FieldError :errors="errorsFor('document_type')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Document number</span>
-            <input v-model="form.document_number" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model="form.document_number" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('document_number')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Issue date</span>
-            <input v-model="form.issue_date" type="date" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model="form.issue_date" type="date" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('issue_date')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Expiry date</span>
-            <input v-model="form.expiry_date" type="date" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model="form.expiry_date" type="date" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('expiry_date')" />
           </label>
         </div>
       </SectionCard>
 
       <SectionCard title="File and lifecycle" description="Uploads stay behind the storage abstraction so local disk or S3-compatible backends can be swapped later without changing the UI contract.">
-        <div class="space-y-4 text-sm text-slate-700">
+        <div class="space-y-4 text-sm text-slate-700 dark:text-slate-200">
           <label class="space-y-2">
             <span class="font-medium">Status</span>
-            <select v-model="form.status" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <select v-model="form.status" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
               <option v-for="option in assetDocumentStatusOptions" :key="option.value" :value="option.value">
                 {{ option.label }}
               </option>
@@ -260,26 +260,26 @@ onMounted(async () => {
             <input
               type="file"
               accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm outline-none file:mr-4 file:rounded-xl file:border-0 file:bg-slate-100 file:px-3 file:py-2 file:font-semibold file:text-slate-700"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 text-sm outline-none file:mr-4 file:rounded-xl file:border-0 file:bg-slate-100 file:px-3 file:py-2 file:font-semibold file:text-slate-700"
               :disabled="loading"
               @change="handleFileChange"
             >
             <FieldError :errors="errorsFor('file')" />
           </label>
-          <div v-if="existingDocument?.file_name" class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs leading-5 text-slate-600">
-            Current file: <span class="font-semibold text-slate-800">{{ existingDocument.file_name }}</span>
-            <a v-if="existingDocument.download_url" :href="existingDocument.download_url" class="ml-2 font-semibold text-blue-700 hover:text-blue-900">Download</a>
+          <div v-if="existingDocument?.file_name" class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3 text-xs leading-5 text-slate-600 dark:text-slate-400">
+            Current file: <span class="font-semibold text-slate-800 dark:text-slate-100">{{ existingDocument.file_name }}</span>
+            <a v-if="existingDocument.download_url" :href="existingDocument.download_url" class="ml-2 font-semibold text-blue-700 dark:text-blue-200 hover:text-blue-900 dark:hover:text-blue-100">Download</a>
           </div>
           <label class="space-y-2">
             <span class="font-medium">Notes</span>
-            <textarea v-model="form.notes" class="min-h-28 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading" />
+            <textarea v-model="form.notes" class="min-h-28 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading" />
             <FieldError :errors="errorsFor('notes')" />
           </label>
-          <p class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs leading-5 text-slate-600">
+          <p class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3 text-xs leading-5 text-slate-600 dark:text-slate-400">
             Supported uploads: PDF, Office files, and common image formats up to 10 MB. File replacement updates the current record while keeping the document audit trail in the backend.
           </p>
           <div class="flex flex-col gap-3 sm:flex-row">
-            <RouterLink :to="{ name: 'asset-documents' }" class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 sm:w-auto">
+            <RouterLink :to="{ name: 'asset-documents' }" class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50 sm:w-auto">
               Cancel
             </RouterLink>
             <button type="submit" class="w-full rounded-2xl bg-slate-950 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60" :disabled="loading || submitting">

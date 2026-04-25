@@ -160,7 +160,7 @@ onMounted(async () => {
       <template #actions>
         <RouterLink
           :to="{ name: 'compliance' }"
-          class="inline-flex items-center rounded-2xl border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+          class="inline-flex items-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50"
         >
           Back to compliance
         </RouterLink>
@@ -184,66 +184,66 @@ onMounted(async () => {
     <form class="grid gap-6 xl:grid-cols-[1fr_0.9fr]" @submit.prevent="submit">
       <SectionCard title="Compliance details" description="Define the regulatory record, linked entity, and renewal timing.">
         <div class="grid gap-4 md:grid-cols-2">
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Entity type</span>
-            <select v-model="form.compliant_type" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
+            <select v-model="form.compliant_type" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
               <option v-for="option in compliantTypeOptions" :key="option.value" :value="option.value">
                 {{ option.label }}
               </option>
             </select>
             <FieldError :errors="errorsFor('compliant_type')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Entity</span>
-            <select v-model="form.compliant_id" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
+            <select v-model="form.compliant_id" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
               <option v-for="option in entityOptions" :key="option.id" :value="option.id">
                 {{ option.label }}{{ option.secondary ? ` · ${option.secondary}` : '' }}
               </option>
             </select>
             <FieldError :errors="errorsFor('compliant_id')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700 md:col-span-2">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200 md:col-span-2">
             <span class="font-medium">Title</span>
-            <input v-model="form.title" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
+            <input v-model="form.title" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
             <FieldError :errors="errorsFor('title')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Category</span>
-            <select v-model="form.category" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
+            <select v-model="form.category" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
               <option v-for="option in complianceCategoryOptions" :key="option.value" :value="option.value">
                 {{ option.label }}
               </option>
             </select>
             <FieldError :errors="errorsFor('category')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Reference number</span>
-            <input v-model="form.reference_number" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
+            <input v-model="form.reference_number" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
             <FieldError :errors="errorsFor('reference_number')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Issuer</span>
-            <input v-model="form.issuer" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
+            <input v-model="form.issuer" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
             <FieldError :errors="errorsFor('issuer')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Reminder days</span>
-            <input v-model.number="form.reminder_days" type="number" min="1" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
+            <input v-model.number="form.reminder_days" type="number" min="1" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
             <FieldError :errors="errorsFor('reminder_days')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Issue date</span>
-            <input v-model="form.issue_date" type="date" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
+            <input v-model="form.issue_date" type="date" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
             <FieldError :errors="errorsFor('issue_date')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Expiry date</span>
-            <input v-model="form.expiry_date" type="date" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
+            <input v-model="form.expiry_date" type="date" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
             <FieldError :errors="errorsFor('expiry_date')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700 md:col-span-2">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200 md:col-span-2">
             <span class="font-medium">Notes</span>
-            <textarea v-model="form.notes" class="min-h-28 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)" />
+            <textarea v-model="form.notes" class="min-h-28 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)" />
             <FieldError :errors="errorsFor('notes')" />
           </label>
         </div>
@@ -251,38 +251,38 @@ onMounted(async () => {
 
       <div class="space-y-6">
         <SectionCard title="Renewal status" description="Review the current compliance posture while updating the record.">
-          <div class="space-y-4 text-sm text-slate-700">
-            <div v-if="complianceItem" class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
+          <div class="space-y-4 text-sm text-slate-700 dark:text-slate-200">
+            <div v-if="complianceItem" class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3">
               <div class="flex items-center justify-between gap-4">
                 <div>
-                  <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Current status</p>
-                  <p class="mt-1 text-base font-semibold text-slate-900">{{ complianceItem.title }}</p>
+                  <p class="text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Current status</p>
+                  <p class="mt-1 text-base font-semibold text-slate-900 dark:text-slate-100">{{ complianceItem.title }}</p>
                 </div>
                 <StatusBadge :value="complianceItem.status" />
               </div>
-              <p class="mt-3 text-sm text-slate-600">
+              <p class="mt-3 text-sm text-slate-600 dark:text-slate-400">
                 Expiry: {{ complianceItem.expiry_date ?? 'No expiry date' }}
                 <span v-if="complianceItem.days_until_expiry !== null">
                   · {{ complianceItem.days_until_expiry >= 0 ? `${complianceItem.days_until_expiry} days left` : `${Math.abs(complianceItem.days_until_expiry)} days overdue` }}
                 </span>
               </p>
             </div>
-            <p v-else class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm leading-6 text-slate-600">
+            <p v-else class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3 text-sm leading-6 text-slate-600 dark:text-slate-400">
               New records compute their lifecycle status automatically from the configured expiry and reminder window.
             </p>
 
-            <div class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
-              <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Linked entity</p>
-              <p class="mt-1 text-base font-semibold text-slate-900">
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3">
+              <p class="text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Linked entity</p>
+              <p class="mt-1 text-base font-semibold text-slate-900 dark:text-slate-100">
                 {{ entityOptions.find((option) => option.id === form.compliant_id)?.label ?? 'No entity selected' }}
               </p>
-              <p class="mt-1 text-sm text-slate-600">
+              <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
                 {{ entityOptions.find((option) => option.id === form.compliant_id)?.secondary ?? 'Select the driver or vehicle that owns this compliance obligation.' }}
               </p>
             </div>
 
             <div class="flex flex-col gap-3 sm:flex-row">
-              <RouterLink :to="{ name: 'compliance' }" class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 sm:w-auto">
+              <RouterLink :to="{ name: 'compliance' }" class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50 sm:w-auto">
                 Cancel
               </RouterLink>
               <button type="submit" class="w-full rounded-2xl bg-slate-950 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60" :disabled="loading || submitting || (isEditMode ? !canEdit : !canCreate)">

@@ -139,11 +139,11 @@ onMounted(async () => {
           v-model="search"
           type="search"
           placeholder="Search trip number, route, vehicle, or driver"
-          class="min-w-[240px] flex-1 rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="min-w-[240px] flex-1 rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
         <select
           v-model="statusFilter"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option value="">All statuses</option>
           <option v-for="option in tripStatusOptions" :key="option.value" :value="option.value">
@@ -152,7 +152,7 @@ onMounted(async () => {
         </select>
         <select
           v-model="vehicleFilter"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option value="">All vehicles</option>
           <option v-for="vehicle in vehicles" :key="vehicle.id" :value="String(vehicle.id)">
@@ -161,7 +161,7 @@ onMounted(async () => {
         </select>
         <select
           v-model="driverFilter"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option value="">All drivers</option>
           <option v-for="driver in drivers" :key="driver.id" :value="String(driver.id)">
@@ -190,7 +190,7 @@ onMounted(async () => {
       <template #cell-actions="{ row }">
         <RouterLink
           :to="{ name: 'trips.edit', params: { id: String(row.id) } }"
-          class="inline-flex rounded-xl border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-50"
+          class="inline-flex rounded-xl border border-slate-300 dark:border-slate-700 px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50"
         >
           Open
         </RouterLink>

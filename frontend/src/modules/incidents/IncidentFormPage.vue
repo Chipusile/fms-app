@@ -257,7 +257,7 @@ onMounted(async () => {
       <template #actions>
         <RouterLink
           :to="{ name: 'incidents' }"
-          class="inline-flex items-center rounded-2xl border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+          class="inline-flex items-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50"
         >
           Back to incidents
         </RouterLink>
@@ -281,11 +281,11 @@ onMounted(async () => {
     <form class="grid gap-6 xl:grid-cols-[1fr_0.95fr]" @submit.prevent="submit">
       <SectionCard title="Incident details" description="Capture the operational context, type, severity, and narrative for this event.">
         <div class="grid gap-4 md:grid-cols-2">
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Vehicle</span>
             <select
               v-model="form.vehicle_id"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || (isEditMode && !canEdit)"
             >
               <option v-for="vehicle in vehicles" :key="vehicle.id" :value="vehicle.id">
@@ -294,11 +294,11 @@ onMounted(async () => {
             </select>
             <FieldError :errors="errorsFor('vehicle_id')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Driver</span>
             <select
               v-model="form.driver_id"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || (isEditMode && !canEdit)"
             >
               <option :value="null">No driver linked</option>
@@ -308,11 +308,11 @@ onMounted(async () => {
             </select>
             <FieldError :errors="errorsFor('driver_id')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Trip</span>
             <select
               v-model="form.trip_id"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || (isEditMode && !canEdit)"
             >
               <option :value="null">Not linked to a trip</option>
@@ -322,11 +322,11 @@ onMounted(async () => {
             </select>
             <FieldError :errors="errorsFor('trip_id')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Assigned to</span>
             <select
               v-model="form.assigned_to"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || (isEditMode && !canEdit)"
             >
               <option :value="null">Unassigned</option>
@@ -336,11 +336,11 @@ onMounted(async () => {
             </select>
             <FieldError :errors="errorsFor('assigned_to')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Incident type</span>
             <select
               v-model="form.incident_type"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || (isEditMode && !canEdit)"
             >
               <option v-for="option in incidentTypeOptions" :key="option.value" :value="option.value">
@@ -349,11 +349,11 @@ onMounted(async () => {
             </select>
             <FieldError :errors="errorsFor('incident_type')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Severity</span>
             <select
               v-model="form.severity"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || (isEditMode && !canEdit)"
             >
               <option v-for="option in incidentSeverityOptions" :key="option.value" :value="option.value">
@@ -362,40 +362,40 @@ onMounted(async () => {
             </select>
             <FieldError :errors="errorsFor('severity')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Occurred at</span>
             <input
               v-model="form.occurred_at"
               type="datetime-local"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || (isEditMode && !canEdit)"
             >
             <FieldError :errors="errorsFor('occurred_at')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Reported at</span>
             <input
               v-model="form.reported_at"
               type="datetime-local"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || (isEditMode && !canEdit)"
             >
             <FieldError :errors="errorsFor('reported_at')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700 md:col-span-2">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200 md:col-span-2">
             <span class="font-medium">Location</span>
             <input
               v-model="form.location"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || (isEditMode && !canEdit)"
             >
             <FieldError :errors="errorsFor('location')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700 md:col-span-2">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200 md:col-span-2">
             <span class="font-medium">Description</span>
             <textarea
               v-model="form.description"
-              class="min-h-32 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="min-h-32 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || (isEditMode && !canEdit)"
             />
             <FieldError :errors="errorsFor('description')" />
@@ -404,52 +404,52 @@ onMounted(async () => {
       </SectionCard>
 
       <SectionCard title="Impact and workflow" description="Keep response actions, approval history, and closure controls in one view.">
-        <div class="space-y-4 text-sm text-slate-700">
+        <div class="space-y-4 text-sm text-slate-700 dark:text-slate-200">
           <div
             v-if="incident"
-            class="flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3"
+            class="flex items-center justify-between rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3"
           >
             <div>
-              <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Current status</p>
-              <p class="mt-1 text-base font-semibold text-slate-900">{{ incident.incident_number }}</p>
+              <p class="text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Current status</p>
+              <p class="mt-1 text-base font-semibold text-slate-900 dark:text-slate-100">{{ incident.incident_number }}</p>
             </div>
             <StatusBadge :value="incident.status" />
           </div>
           <p
             v-else
-            class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs leading-5 text-slate-600"
+            class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3 text-xs leading-5 text-slate-600 dark:text-slate-400"
           >
             Save the incident first to expose resolution and closure actions.
           </p>
 
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Immediate action</span>
             <textarea
               v-model="form.immediate_action"
-              class="min-h-24 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="min-h-24 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || (isEditMode && !canEdit)"
             />
             <FieldError :errors="errorsFor('immediate_action')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Injury count</span>
             <input
               v-model.number="form.injury_count"
               type="number"
               min="0"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || (isEditMode && !canEdit)"
             >
             <FieldError :errors="errorsFor('injury_count')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Estimated cost</span>
             <input
               v-model.number="form.estimated_cost"
               type="number"
               min="0"
               step="0.01"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || (isEditMode && !canEdit)"
             >
             <FieldError :errors="errorsFor('estimated_cost')" />
@@ -457,23 +457,23 @@ onMounted(async () => {
 
           <div
             v-if="incident?.approval_requests?.length"
-            class="rounded-2xl border border-slate-200 bg-white px-4 py-3"
+            class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-3"
           >
-            <p class="text-xs uppercase tracking-[0.16em] text-slate-500">Approval history</p>
+            <p class="text-xs uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">Approval history</p>
             <div class="mt-3 space-y-3">
               <div
                 v-for="approval in incident.approval_requests"
                 :key="approval.id"
-                class="rounded-2xl border border-slate-100 bg-slate-50 px-4 py-3"
+                class="rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3"
               >
                 <div class="flex items-center justify-between gap-3">
                   <div>
-                    <p class="text-sm font-semibold text-slate-900">{{ approval.title }}</p>
-                    <p class="text-xs text-slate-500">{{ approval.summary ?? 'Approval workflow entry' }}</p>
+                    <p class="text-sm font-semibold text-slate-900 dark:text-slate-100">{{ approval.title }}</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">{{ approval.summary ?? 'Approval workflow entry' }}</p>
                   </div>
                   <StatusBadge :value="approval.status" />
                 </div>
-                <p v-if="approval.decision_notes" class="mt-2 text-xs leading-5 text-slate-600">
+                <p v-if="approval.decision_notes" class="mt-2 text-xs leading-5 text-slate-600 dark:text-slate-400">
                   Decision notes: {{ approval.decision_notes }}
                 </p>
               </div>
@@ -482,12 +482,12 @@ onMounted(async () => {
 
           <label
             v-if="incident && canResolve"
-            class="space-y-2 text-sm text-slate-700"
+            class="space-y-2 text-sm text-slate-700 dark:text-slate-200"
           >
             <span class="font-medium">Resolution notes</span>
             <textarea
               v-model="resolutionNotes"
-              class="min-h-24 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="min-h-24 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="actionLoading"
             />
             <FieldError :errors="errorsFor('resolution_notes')" />
@@ -506,7 +506,7 @@ onMounted(async () => {
             <button
               v-if="canClose"
               type="button"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50 disabled:cursor-not-allowed disabled:opacity-60"
               :disabled="actionLoading"
               @click="closeIncident"
             >
@@ -515,7 +515,7 @@ onMounted(async () => {
             <button
               v-if="incident && canDelete"
               type="button"
-              class="w-full rounded-2xl border border-rose-300 px-4 py-3 text-sm font-semibold text-rose-700 transition hover:bg-rose-50 disabled:cursor-not-allowed disabled:opacity-60"
+              class="w-full rounded-2xl border border-rose-300 dark:border-rose-800/60 px-4 py-3 text-sm font-semibold text-rose-700 dark:text-rose-200 transition hover:bg-rose-50 dark:hover:bg-rose-950/40 disabled:cursor-not-allowed disabled:opacity-60"
               :disabled="actionLoading"
               @click="deleteIncident"
             >
@@ -526,7 +526,7 @@ onMounted(async () => {
           <div class="flex flex-col gap-3 sm:flex-row">
             <RouterLink
               :to="{ name: 'incidents' }"
-              class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 sm:w-auto"
+              class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50 sm:w-auto"
             >
               Back to list
             </RouterLink>

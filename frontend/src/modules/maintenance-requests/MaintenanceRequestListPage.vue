@@ -153,24 +153,24 @@ onMounted(async () => {
     </PageHeader>
 
     <div class="grid gap-4 md:grid-cols-4">
-      <div class="rounded-2xl border border-slate-200 bg-white/90 p-5 shadow-sm shadow-slate-200/60">
-        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Tracked requests</p>
-        <p class="mt-3 text-3xl font-semibold text-slate-950">{{ meta.total }}</p>
-        <p class="mt-2 text-sm text-slate-600">Visible maintenance demand records for the active tenant.</p>
+      <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/70 p-5 shadow-sm shadow-slate-200/60 dark:shadow-black/20">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Tracked requests</p>
+        <p class="mt-3 text-3xl font-semibold text-slate-950 dark:text-slate-100">{{ meta.total }}</p>
+        <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">Visible maintenance demand records for the active tenant.</p>
       </div>
-      <div class="rounded-2xl border border-amber-200 bg-amber-50/70 p-5 shadow-sm shadow-amber-100/60">
-        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-amber-700">Submitted</p>
-        <p class="mt-3 text-3xl font-semibold text-amber-950">{{ statusCounts.submitted }}</p>
+      <div class="rounded-2xl border border-amber-200 dark:border-amber-900/60 bg-amber-50/70 dark:bg-amber-950/40 p-5 shadow-sm shadow-amber-100/60 dark:shadow-amber-900/20">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-amber-700 dark:text-amber-200">Submitted</p>
+        <p class="mt-3 text-3xl font-semibold text-amber-950 dark:text-amber-100">{{ statusCounts.submitted }}</p>
         <p class="mt-2 text-sm text-amber-900/80">Requests still waiting for review or action.</p>
       </div>
-      <div class="rounded-2xl border border-emerald-200 bg-emerald-50/70 p-5 shadow-sm shadow-emerald-100/60">
-        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700">Approved</p>
-        <p class="mt-3 text-3xl font-semibold text-emerald-950">{{ statusCounts.approved }}</p>
+      <div class="rounded-2xl border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/70 dark:bg-emerald-950/40 p-5 shadow-sm shadow-emerald-100/60 dark:shadow-emerald-900/20">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700 dark:text-emerald-200">Approved</p>
+        <p class="mt-3 text-3xl font-semibold text-emerald-950 dark:text-emerald-100">{{ statusCounts.approved }}</p>
         <p class="mt-2 text-sm text-emerald-900/80">Requests cleared for conversion into execution work.</p>
       </div>
-      <div class="rounded-2xl border border-sky-200 bg-sky-50/70 p-5 shadow-sm shadow-sky-100/60">
-        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-sky-700">Converted</p>
-        <p class="mt-3 text-3xl font-semibold text-sky-950">{{ statusCounts.converted }}</p>
+      <div class="rounded-2xl border border-sky-200 dark:border-sky-900/60 bg-sky-50/70 dark:bg-sky-950/40 p-5 shadow-sm shadow-sky-100/60 dark:shadow-sky-900/20">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-sky-700 dark:text-sky-200">Converted</p>
+        <p class="mt-3 text-3xl font-semibold text-sky-950 dark:text-sky-100">{{ statusCounts.converted }}</p>
         <p class="mt-2 text-sm text-sky-900/80">Requests already linked to work orders for execution tracking.</p>
       </div>
     </div>
@@ -188,11 +188,11 @@ onMounted(async () => {
           v-model="search"
           type="search"
           placeholder="Search request number, title, or vehicle"
-          class="min-w-[240px] flex-1 rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="min-w-[240px] flex-1 rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
         <select
           v-model="statusFilter"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option value="">All statuses</option>
           <option v-for="option in maintenanceRequestStatusOptions" :key="option.value" :value="option.value">
@@ -201,7 +201,7 @@ onMounted(async () => {
         </select>
         <select
           v-model="typeFilter"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option value="">All request types</option>
           <option v-for="option in maintenanceRequestTypeOptions" :key="option.value" :value="option.value">
@@ -210,7 +210,7 @@ onMounted(async () => {
         </select>
         <select
           v-model="vehicleFilter"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option value="">All vehicles</option>
           <option v-for="vehicle in vehicles" :key="vehicle.id" :value="String(vehicle.id)">
@@ -246,14 +246,14 @@ onMounted(async () => {
         <div class="flex items-center gap-2">
           <RouterLink
             :to="{ name: 'maintenance-requests.edit', params: { id: String(row.id) } }"
-            class="rounded-xl border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-50"
+            class="rounded-xl border border-slate-300 dark:border-slate-700 px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50"
           >
             Open
           </RouterLink>
           <button
             v-if="auth.hasPermission('maintenance.delete') && row.status !== 'converted'"
             type="button"
-            class="rounded-xl border border-rose-300 px-3 py-1.5 text-xs font-semibold text-rose-700 transition hover:bg-rose-50"
+            class="rounded-xl border border-rose-300 dark:border-rose-800/60 px-3 py-1.5 text-xs font-semibold text-rose-700 dark:text-rose-200 transition hover:bg-rose-50 dark:hover:bg-rose-950/40"
             @click="removeRequest(Number(row.id))"
           >
             Delete

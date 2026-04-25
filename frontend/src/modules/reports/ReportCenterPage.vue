@@ -321,7 +321,7 @@ onMounted(async () => {
       <FilterBar>
         <select
           v-model="reportType"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option
             v-for="option in supportData?.report_types ?? []"
@@ -335,21 +335,21 @@ onMounted(async () => {
           v-model="search"
           type="search"
           placeholder="Search current report"
-          class="min-w-[220px] flex-1 rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="min-w-[220px] flex-1 rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
         <input
           v-model="dateFrom"
           type="date"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
         <input
           v-model="dateTo"
           type="date"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
         <select
           v-model="vehicleFilter"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option value="">All vehicles</option>
           <option
@@ -362,7 +362,7 @@ onMounted(async () => {
         </select>
         <select
           v-model="departmentFilter"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option value="">All departments</option>
           <option
@@ -376,7 +376,7 @@ onMounted(async () => {
         <select
           v-if="showStatusFilter"
           v-model="statusFilter"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option value="">All statuses</option>
           <option
@@ -390,7 +390,7 @@ onMounted(async () => {
         <select
           v-if="showCategoryFilter"
           v-model="categoryFilter"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option value="">All categories</option>
           <option
@@ -404,7 +404,7 @@ onMounted(async () => {
         <select
           v-if="showSeverityFilter"
           v-model="severityFilter"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option value="">All severities</option>
           <option
@@ -488,13 +488,13 @@ onMounted(async () => {
               <a
                 v-if="row.download_url"
                 :href="`${exportDownloadBase}${String(row.download_url)}`"
-                class="rounded-xl border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-50"
+                class="rounded-xl border border-slate-300 dark:border-slate-700 px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50"
               >
                 Download
               </a>
               <span
                 v-else
-                class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500"
+                class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400"
               >
                 Pending
               </span>
@@ -512,21 +512,21 @@ onMounted(async () => {
           title="Current report scope"
           description="Quick visibility into the filter frame currently applied to the dataset."
         >
-          <dl class="space-y-3 text-sm text-slate-700">
+          <dl class="space-y-3 text-sm text-slate-700 dark:text-slate-200">
             <div class="flex items-start justify-between gap-3">
-              <dt class="font-medium text-slate-500">Window</dt>
+              <dt class="font-medium text-slate-500 dark:text-slate-400">Window</dt>
               <dd class="text-right">{{ dateFrom }} to {{ dateTo }}</dd>
             </div>
             <div class="flex items-start justify-between gap-3">
-              <dt class="font-medium text-slate-500">Vehicle</dt>
+              <dt class="font-medium text-slate-500 dark:text-slate-400">Vehicle</dt>
               <dd class="text-right">{{ supportData?.vehicles.find((vehicle) => String(vehicle.id) === vehicleFilter)?.label ?? 'All vehicles' }}</dd>
             </div>
             <div class="flex items-start justify-between gap-3">
-              <dt class="font-medium text-slate-500">Department</dt>
+              <dt class="font-medium text-slate-500 dark:text-slate-400">Department</dt>
               <dd class="text-right">{{ supportData?.departments.find((department) => String(department.id) === departmentFilter)?.label ?? 'All departments' }}</dd>
             </div>
             <div class="flex items-start justify-between gap-3">
-              <dt class="font-medium text-slate-500">Status</dt>
+              <dt class="font-medium text-slate-500 dark:text-slate-400">Status</dt>
               <dd class="text-right">{{ statusFilter ? humanize(statusFilter) : 'All statuses' }}</dd>
             </div>
           </dl>

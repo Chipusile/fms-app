@@ -311,7 +311,7 @@ onMounted(async () => {
       <template #actions>
         <RouterLink
           :to="{ name: 'maintenance-requests' }"
-          class="inline-flex items-center rounded-2xl border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+          class="inline-flex items-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50"
         >
           Back to requests
         </RouterLink>
@@ -335,18 +335,18 @@ onMounted(async () => {
     <form class="grid gap-6 xl:grid-cols-[1fr_0.95fr]" @submit.prevent="submit">
       <SectionCard title="Request details" description="Capture the asset, need, and request context before approval or execution begins.">
         <div class="grid gap-4 md:grid-cols-2">
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Vehicle</span>
-            <select v-model="form.vehicle_id" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
+            <select v-model="form.vehicle_id" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
               <option v-for="vehicle in vehicles" :key="vehicle.id" :value="vehicle.id">
                 {{ vehicle.label }}{{ vehicle.secondary ? ` · ${vehicle.secondary}` : '' }}
               </option>
             </select>
             <FieldError :errors="errorsFor('vehicle_id')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Related schedule</span>
-            <select v-model="form.maintenance_schedule_id" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
+            <select v-model="form.maintenance_schedule_id" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
               <option :value="null">No linked schedule</option>
               <option v-for="schedule in filteredSchedules" :key="schedule.id" :value="schedule.id">
                 {{ schedule.label }}{{ schedule.secondary ? ` · ${schedule.secondary}` : '' }}
@@ -354,9 +354,9 @@ onMounted(async () => {
             </select>
             <FieldError :errors="errorsFor('maintenance_schedule_id')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Preferred service provider</span>
-            <select v-model="form.service_provider_id" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
+            <select v-model="form.service_provider_id" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
               <option :value="null">Not assigned</option>
               <option v-for="provider in serviceProviders" :key="provider.id" :value="provider.id">
                 {{ provider.label }}{{ provider.secondary ? ` · ${provider.secondary}` : '' }}
@@ -364,42 +364,42 @@ onMounted(async () => {
             </select>
             <FieldError :errors="errorsFor('service_provider_id')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Needed by</span>
-            <input v-model="form.needed_by" type="date" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
+            <input v-model="form.needed_by" type="date" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
             <FieldError :errors="errorsFor('needed_by')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700 md:col-span-2">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200 md:col-span-2">
             <span class="font-medium">Title</span>
-            <input v-model="form.title" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
+            <input v-model="form.title" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
             <FieldError :errors="errorsFor('title')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Request type</span>
-            <select v-model="form.request_type" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
+            <select v-model="form.request_type" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
               <option v-for="option in maintenanceRequestTypeOptions" :key="option.value" :value="option.value">
                 {{ option.label }}
               </option>
             </select>
             <FieldError :errors="errorsFor('request_type')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Priority</span>
-            <select v-model="form.priority" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
+            <select v-model="form.priority" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
               <option v-for="option in maintenanceRequestPriorityOptions" :key="option.value" :value="option.value">
                 {{ option.label }}
               </option>
             </select>
             <FieldError :errors="errorsFor('priority')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Observed odometer</span>
-            <input v-model.number="form.odometer_reading" type="number" min="0" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
+            <input v-model.number="form.odometer_reading" type="number" min="0" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
             <FieldError :errors="errorsFor('odometer_reading')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700 md:col-span-2">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200 md:col-span-2">
             <span class="font-medium">Description</span>
-            <textarea v-model="form.description" class="min-h-32 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord" />
+            <textarea v-model="form.description" class="min-h-32 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord" />
             <FieldError :errors="errorsFor('description')" />
           </label>
         </div>
@@ -407,58 +407,58 @@ onMounted(async () => {
 
       <div class="space-y-6">
         <SectionCard title="Workflow context" description="Monitor approval status, conversion readiness, and linked execution records.">
-          <div class="space-y-4 text-sm text-slate-700">
-            <div class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
-              <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Selected vehicle</p>
-              <p class="mt-1 text-base font-semibold text-slate-900">
+          <div class="space-y-4 text-sm text-slate-700 dark:text-slate-200">
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3">
+              <p class="text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Selected vehicle</p>
+              <p class="mt-1 text-base font-semibold text-slate-900 dark:text-slate-100">
                 {{ selectedVehicle?.label ?? 'No vehicle selected' }}
               </p>
-              <p class="mt-1 text-sm text-slate-600">
+              <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
                 Current odometer: {{ selectedVehicle ? `${selectedVehicle.odometer_reading.toLocaleString()} km` : '—' }}
               </p>
             </div>
 
-            <div v-if="maintenanceRequest" class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
+            <div v-if="maintenanceRequest" class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3">
               <div class="flex items-center justify-between gap-4">
                 <div>
-                  <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Current workflow state</p>
-                  <p class="mt-1 text-base font-semibold text-slate-900">{{ maintenanceRequest.request_number }}</p>
+                  <p class="text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Current workflow state</p>
+                  <p class="mt-1 text-base font-semibold text-slate-900 dark:text-slate-100">{{ maintenanceRequest.request_number }}</p>
                 </div>
                 <StatusBadge :value="maintenanceRequest.status" />
               </div>
-              <p class="mt-3 text-sm text-slate-600">
+              <p class="mt-3 text-sm text-slate-600 dark:text-slate-400">
                 Requested by {{ maintenanceRequest.requester?.name ?? 'Unknown user' }} on
                 {{ maintenanceRequest.requested_at ? new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(maintenanceRequest.requested_at)) : '—' }}
               </p>
-              <p v-if="maintenanceRequest.reviewer" class="mt-1 text-sm text-slate-600">
+              <p v-if="maintenanceRequest.reviewer" class="mt-1 text-sm text-slate-600 dark:text-slate-400">
                 Reviewed by {{ maintenanceRequest.reviewer.name }}
               </p>
-              <p v-if="maintenanceRequest.work_order" class="mt-3 text-sm text-slate-700">
+              <p v-if="maintenanceRequest.work_order" class="mt-3 text-sm text-slate-700 dark:text-slate-200">
                 Linked work order:
-                <RouterLink :to="{ name: 'work-orders.edit', params: { id: String(maintenanceRequest.work_order.id) } }" class="font-semibold text-blue-700 hover:text-blue-900">
+                <RouterLink :to="{ name: 'work-orders.edit', params: { id: String(maintenanceRequest.work_order.id) } }" class="font-semibold text-blue-700 dark:text-blue-200 hover:text-blue-900 dark:hover:text-blue-100">
                   {{ maintenanceRequest.work_order.work_order_number }}
                 </RouterLink>
               </p>
             </div>
-            <p v-else class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm leading-6 text-slate-600">
+            <p v-else class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3 text-sm leading-6 text-slate-600 dark:text-slate-400">
               New requests start in a submitted state and can then be approved, rejected, or converted into work orders.
             </p>
 
-            <label v-if="isEditMode" class="space-y-2 text-sm text-slate-700">
+            <label v-if="isEditMode" class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
               <span class="font-medium">Review notes</span>
-              <textarea v-model="decision.review_notes" class="min-h-24 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading || (!canApproveRecord && !canCancelRecord)" />
+              <textarea v-model="decision.review_notes" class="min-h-24 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading || (!canApproveRecord && !canCancelRecord)" />
               <FieldError :errors="errorsFor('review_notes')" />
             </label>
 
-            <div v-if="canConvertRecord" class="space-y-4 rounded-2xl border border-slate-200 bg-white px-4 py-4">
+            <div v-if="canConvertRecord" class="space-y-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-4">
               <div>
-                <p class="text-sm font-semibold text-slate-900">Convert to work order</p>
-                <p class="mt-1 text-sm text-slate-600">Approved requests can be turned into execution work without re-entering maintenance details.</p>
+                <p class="text-sm font-semibold text-slate-900 dark:text-slate-100">Convert to work order</p>
+                <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Approved requests can be turned into execution work without re-entering maintenance details.</p>
               </div>
               <div class="grid gap-4 md:grid-cols-2">
-                <label class="space-y-2 text-sm text-slate-700">
+                <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
                   <span class="font-medium">Execution provider</span>
-                  <select v-model="convertForm.service_provider_id" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading">
+                  <select v-model="convertForm.service_provider_id" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading">
                     <option :value="null">Use request provider</option>
                     <option v-for="provider in serviceProviders" :key="provider.id" :value="provider.id">
                       {{ provider.label }}{{ provider.secondary ? ` · ${provider.secondary}` : '' }}
@@ -466,9 +466,9 @@ onMounted(async () => {
                   </select>
                   <FieldError :errors="errorsFor('service_provider_id')" />
                 </label>
-                <label class="space-y-2 text-sm text-slate-700">
+                <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
                   <span class="font-medium">Assignee</span>
-                  <select v-model="convertForm.assigned_to" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading">
+                  <select v-model="convertForm.assigned_to" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading">
                     <option :value="null">Unassigned</option>
                     <option v-for="assignee in assignees" :key="assignee.id" :value="assignee.id">
                       {{ assignee.label }}{{ assignee.secondary ? ` · ${assignee.secondary}` : '' }}
@@ -476,24 +476,24 @@ onMounted(async () => {
                   </select>
                   <FieldError :errors="errorsFor('assigned_to')" />
                 </label>
-                <label class="space-y-2 text-sm text-slate-700 md:col-span-2">
+                <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200 md:col-span-2">
                   <span class="font-medium">Work order title</span>
-                  <input v-model="convertForm.title" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading">
+                  <input v-model="convertForm.title" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading">
                   <FieldError :errors="errorsFor('title')" />
                 </label>
-                <label class="space-y-2 text-sm text-slate-700">
+                <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
                   <span class="font-medium">Due date</span>
-                  <input v-model="convertForm.due_date" type="date" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading">
+                  <input v-model="convertForm.due_date" type="date" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading">
                   <FieldError :errors="errorsFor('due_date')" />
                 </label>
-                <label class="space-y-2 text-sm text-slate-700">
+                <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
                   <span class="font-medium">Estimated cost</span>
-                  <input v-model.number="convertForm.estimated_cost" type="number" min="0" step="0.01" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading">
+                  <input v-model.number="convertForm.estimated_cost" type="number" min="0" step="0.01" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading">
                   <FieldError :errors="errorsFor('estimated_cost')" />
                 </label>
-                <label class="space-y-2 text-sm text-slate-700 md:col-span-2">
+                <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200 md:col-span-2">
                   <span class="font-medium">Execution notes</span>
-                  <textarea v-model="convertForm.notes" class="min-h-24 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading" />
+                  <textarea v-model="convertForm.notes" class="min-h-24 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading" />
                   <FieldError :errors="errorsFor('notes')" />
                 </label>
               </div>
@@ -501,7 +501,7 @@ onMounted(async () => {
 
             <div class="flex flex-col gap-3">
               <div class="flex flex-col gap-3 sm:flex-row">
-                <RouterLink :to="{ name: 'maintenance-requests' }" class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 sm:w-auto">
+                <RouterLink :to="{ name: 'maintenance-requests' }" class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50 sm:w-auto">
                   Cancel
                 </RouterLink>
                 <button type="submit" class="w-full rounded-2xl bg-slate-950 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60" :disabled="loading || submitting || (isEditMode ? !canEditRecord : !canCreate)">
@@ -522,7 +522,7 @@ onMounted(async () => {
                 <button
                   v-if="canApproveRecord"
                   type="button"
-                  class="rounded-2xl border border-rose-300 px-4 py-3 text-sm font-semibold text-rose-700 transition hover:bg-rose-50 disabled:cursor-not-allowed disabled:opacity-60"
+                  class="rounded-2xl border border-rose-300 dark:border-rose-800/60 px-4 py-3 text-sm font-semibold text-rose-700 dark:text-rose-200 transition hover:bg-rose-50 dark:hover:bg-rose-950/40 disabled:cursor-not-allowed disabled:opacity-60"
                   :disabled="actionLoading"
                   @click="runDecision('reject')"
                 >
@@ -531,7 +531,7 @@ onMounted(async () => {
                 <button
                   v-if="canCancelRecord"
                   type="button"
-                  class="rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
+                  class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50 disabled:cursor-not-allowed disabled:opacity-60"
                   :disabled="actionLoading"
                   @click="runDecision('cancel')"
                 >
@@ -549,7 +549,7 @@ onMounted(async () => {
                 <button
                   v-if="canDelete && maintenanceRequest?.status !== 'converted'"
                   type="button"
-                  class="rounded-2xl border border-rose-300 px-4 py-3 text-sm font-semibold text-rose-700 transition hover:bg-rose-50"
+                  class="rounded-2xl border border-rose-300 dark:border-rose-800/60 px-4 py-3 text-sm font-semibold text-rose-700 dark:text-rose-200 transition hover:bg-rose-50 dark:hover:bg-rose-950/40"
                   @click="removeMaintenanceRequest"
                 >
                   Delete request

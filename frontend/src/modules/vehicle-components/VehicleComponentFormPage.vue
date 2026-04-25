@@ -281,7 +281,7 @@ onMounted(async () => {
       <template #actions>
         <RouterLink
           :to="{ name: 'vehicle-components' }"
-          class="inline-flex items-center rounded-2xl border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+          class="inline-flex items-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50"
         >
           Back to components
         </RouterLink>
@@ -305,18 +305,18 @@ onMounted(async () => {
     <form class="grid gap-6 xl:grid-cols-[1fr_0.95fr]" @submit.prevent="submit">
       <SectionCard title="Component details" description="Define the asset link, expected lifecycle, and replacement thresholds for the component.">
         <div class="grid gap-4 md:grid-cols-2">
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Vehicle</span>
-            <select v-model="form.vehicle_id" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
+            <select v-model="form.vehicle_id" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
               <option v-for="vehicle in vehicles" :key="vehicle.id" :value="vehicle.id">
                 {{ vehicle.label }}{{ vehicle.secondary ? ` · ${vehicle.secondary}` : '' }}
               </option>
             </select>
             <FieldError :errors="errorsFor('vehicle_id')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Service provider</span>
-            <select v-model="form.service_provider_id" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
+            <select v-model="form.service_provider_id" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
               <option :value="null">Not assigned</option>
               <option v-for="provider in serviceProviders" :key="provider.id" :value="provider.id">
                 {{ provider.label }}{{ provider.secondary ? ` · ${provider.secondary}` : '' }}
@@ -324,96 +324,96 @@ onMounted(async () => {
             </select>
             <FieldError :errors="errorsFor('service_provider_id')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Component type</span>
-            <select v-model="form.component_type" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
+            <select v-model="form.component_type" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
               <option v-for="option in vehicleComponentTypeOptions" :key="option.value" :value="option.value">
                 {{ option.label }}
               </option>
             </select>
             <FieldError :errors="errorsFor('component_type')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Position code</span>
-            <input v-model="form.position_code" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
+            <input v-model="form.position_code" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
             <FieldError :errors="errorsFor('position_code')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Brand</span>
-            <input v-model="form.brand" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
+            <input v-model="form.brand" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
             <FieldError :errors="errorsFor('brand')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Model</span>
-            <input v-model="form.model" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
+            <input v-model="form.model" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
             <FieldError :errors="errorsFor('model')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Serial number</span>
-            <input v-model="form.serial_number" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
+            <input v-model="form.serial_number" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
             <FieldError :errors="errorsFor('serial_number')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Lifecycle status</span>
-            <select v-model="form.status" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
+            <select v-model="form.status" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
               <option v-for="option in vehicleComponentStatusOptions" :key="option.value" :value="option.value">
                 {{ option.label }}
               </option>
             </select>
             <FieldError :errors="errorsFor('status')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Condition</span>
-            <select v-model="form.condition_status" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
+            <select v-model="form.condition_status" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
               <option v-for="option in vehicleComponentConditionStatusOptions" :key="option.value" :value="option.value">
                 {{ option.label }}
               </option>
             </select>
             <FieldError :errors="errorsFor('condition_status')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Installed date</span>
-            <input v-model="form.installed_at" type="date" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
+            <input v-model="form.installed_at" type="date" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
             <FieldError :errors="errorsFor('installed_at')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Installed odometer</span>
-            <input v-model.number="form.installed_odometer" type="number" min="0" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
+            <input v-model.number="form.installed_odometer" type="number" min="0" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
             <FieldError :errors="errorsFor('installed_odometer')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Expected life (days)</span>
-            <input v-model.number="form.expected_life_days" type="number" min="1" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
+            <input v-model.number="form.expected_life_days" type="number" min="1" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
             <FieldError :errors="errorsFor('expected_life_days')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Expected life (km)</span>
-            <input v-model.number="form.expected_life_km" type="number" min="1" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
+            <input v-model.number="form.expected_life_km" type="number" min="1" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
             <FieldError :errors="errorsFor('expected_life_km')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Reminder days</span>
-            <input v-model.number="form.reminder_days" type="number" min="1" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
+            <input v-model.number="form.reminder_days" type="number" min="1" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
             <FieldError :errors="errorsFor('reminder_days')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Reminder kilometres</span>
-            <input v-model.number="form.reminder_km" type="number" min="1" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
+            <input v-model.number="form.reminder_km" type="number" min="1" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
             <FieldError :errors="errorsFor('reminder_km')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Warranty expiry</span>
-            <input v-model="form.warranty_expiry_date" type="date" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
+            <input v-model="form.warranty_expiry_date" type="date" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
             <FieldError :errors="errorsFor('warranty_expiry_date')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Last inspected</span>
-            <input v-model="form.last_inspected_at" type="date" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
+            <input v-model="form.last_inspected_at" type="date" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord">
             <FieldError :errors="errorsFor('last_inspected_at')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700 md:col-span-2">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200 md:col-span-2">
             <span class="font-medium">Notes</span>
-            <textarea v-model="form.notes" class="min-h-28 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord" />
+            <textarea v-model="form.notes" class="min-h-28 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || !canEditRecord" />
             <FieldError :errors="errorsFor('notes')" />
           </label>
         </div>
@@ -421,30 +421,30 @@ onMounted(async () => {
 
       <div class="space-y-6">
         <SectionCard title="Lifecycle context" description="Review replacement posture and close out components when they leave service.">
-          <div class="space-y-4 text-sm text-slate-700">
-            <div class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
-              <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Selected vehicle</p>
-              <p class="mt-1 text-base font-semibold text-slate-900">{{ selectedVehicle?.label ?? 'No vehicle selected' }}</p>
-              <p class="mt-1 text-sm text-slate-600">
+          <div class="space-y-4 text-sm text-slate-700 dark:text-slate-200">
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3">
+              <p class="text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Selected vehicle</p>
+              <p class="mt-1 text-base font-semibold text-slate-900 dark:text-slate-100">{{ selectedVehicle?.label ?? 'No vehicle selected' }}</p>
+              <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
                 Current odometer: {{ selectedVehicle ? `${selectedVehicle.odometer_reading.toLocaleString()} km` : '—' }}
               </p>
             </div>
 
-            <div v-if="vehicleComponent" class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
+            <div v-if="vehicleComponent" class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3">
               <div class="flex items-center justify-between gap-4">
                 <div>
-                  <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Current due state</p>
-                  <p class="mt-1 text-base font-semibold text-slate-900">{{ vehicleComponent.component_number }}</p>
+                  <p class="text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Current due state</p>
+                  <p class="mt-1 text-base font-semibold text-slate-900 dark:text-slate-100">{{ vehicleComponent.component_number }}</p>
                 </div>
                 <StatusBadge :value="vehicleComponent.due_status" />
               </div>
-              <p class="mt-3 text-sm text-slate-600">
+              <p class="mt-3 text-sm text-slate-600 dark:text-slate-400">
                 Next replacement:
                 <span v-if="vehicleComponent.next_replacement_at">{{ vehicleComponent.next_replacement_at }}</span>
                 <span v-else>No date</span>
                 <span v-if="vehicleComponent.next_replacement_km !== null"> · {{ vehicleComponent.next_replacement_km.toLocaleString() }} km</span>
               </p>
-              <p class="mt-1 text-sm text-slate-600">
+              <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
                 Remaining:
                 <span v-if="vehicleComponent.days_until_replacement !== null">{{ vehicleComponent.days_until_replacement }} days</span>
                 <span v-if="vehicleComponent.days_until_replacement !== null && vehicleComponent.km_until_replacement !== null"> · </span>
@@ -452,36 +452,36 @@ onMounted(async () => {
                 <span v-if="vehicleComponent.days_until_replacement === null && vehicleComponent.km_until_replacement === null">No threshold calculated</span>
               </p>
             </div>
-            <p v-else class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm leading-6 text-slate-600">
+            <p v-else class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3 text-sm leading-6 text-slate-600 dark:text-slate-400">
               New components compute replacement thresholds after saving based on installed baseline and expected life values.
             </p>
 
-            <div v-if="canRetireRecord" class="space-y-4 rounded-2xl border border-slate-200 bg-white px-4 py-4">
+            <div v-if="canRetireRecord" class="space-y-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-4">
               <div>
-                <p class="text-sm font-semibold text-slate-900">Retire or fail component</p>
-                <p class="mt-1 text-sm text-slate-600">Use this when the component leaves service, fails in operation, or is replaced.</p>
+                <p class="text-sm font-semibold text-slate-900 dark:text-slate-100">Retire or fail component</p>
+                <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Use this when the component leaves service, fails in operation, or is replaced.</p>
               </div>
               <div class="grid gap-4 md:grid-cols-2">
-                <label class="space-y-2 text-sm text-slate-700">
+                <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
                   <span class="font-medium">Lifecycle outcome</span>
-                  <select v-model="retirement.status" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading">
+                  <select v-model="retirement.status" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading">
                     <option value="retired">Retired</option>
                     <option value="failed">Failed</option>
                   </select>
                 </label>
-                <label class="space-y-2 text-sm text-slate-700">
+                <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
                   <span class="font-medium">Removed date</span>
-                  <input v-model="retirement.removed_at" type="date" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading">
+                  <input v-model="retirement.removed_at" type="date" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading">
                   <FieldError :errors="errorsFor('removed_at')" />
                 </label>
-                <label class="space-y-2 text-sm text-slate-700">
+                <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
                   <span class="font-medium">Removed odometer</span>
-                  <input v-model.number="retirement.removed_odometer" type="number" min="0" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading">
+                  <input v-model.number="retirement.removed_odometer" type="number" min="0" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading">
                   <FieldError :errors="errorsFor('removed_odometer')" />
                 </label>
-                <label class="space-y-2 text-sm text-slate-700 md:col-span-2">
+                <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200 md:col-span-2">
                   <span class="font-medium">Removal reason</span>
-                  <textarea v-model="retirement.removal_reason" class="min-h-24 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading" />
+                  <textarea v-model="retirement.removal_reason" class="min-h-24 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading" />
                   <FieldError :errors="errorsFor('removal_reason')" />
                 </label>
               </div>
@@ -489,7 +489,7 @@ onMounted(async () => {
 
             <div class="flex flex-col gap-3">
               <div class="flex flex-col gap-3 sm:flex-row">
-                <RouterLink :to="{ name: 'vehicle-components' }" class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 sm:w-auto">
+                <RouterLink :to="{ name: 'vehicle-components' }" class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50 sm:w-auto">
                   Cancel
                 </RouterLink>
                 <button type="submit" class="w-full rounded-2xl bg-slate-950 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60" :disabled="loading || submitting || (isEditMode ? !canEditRecord : !canCreate)">
@@ -501,7 +501,7 @@ onMounted(async () => {
                 <button
                   v-if="canRetireRecord"
                   type="button"
-                  class="rounded-2xl border border-amber-300 px-4 py-3 text-sm font-semibold text-amber-800 transition hover:bg-amber-50 disabled:cursor-not-allowed disabled:opacity-60"
+                  class="rounded-2xl border border-amber-300 dark:border-amber-800/60 px-4 py-3 text-sm font-semibold text-amber-800 dark:text-amber-200 transition hover:bg-amber-50 dark:hover:bg-amber-950/40 disabled:cursor-not-allowed disabled:opacity-60"
                   :disabled="actionLoading"
                   @click="retireComponent"
                 >
@@ -510,7 +510,7 @@ onMounted(async () => {
                 <button
                   v-if="canDelete && !isLifecycleClosed"
                   type="button"
-                  class="rounded-2xl border border-rose-300 px-4 py-3 text-sm font-semibold text-rose-700 transition hover:bg-rose-50"
+                  class="rounded-2xl border border-rose-300 dark:border-rose-800/60 px-4 py-3 text-sm font-semibold text-rose-700 dark:text-rose-200 transition hover:bg-rose-50 dark:hover:bg-rose-950/40"
                   @click="removeComponent"
                 >
                   Delete component

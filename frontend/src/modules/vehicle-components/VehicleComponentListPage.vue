@@ -187,19 +187,19 @@ onMounted(async () => {
     </PageHeader>
 
     <div class="grid gap-4 md:grid-cols-3">
-      <div class="rounded-2xl border border-slate-200 bg-white/90 p-5 shadow-sm shadow-slate-200/60">
-        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Tracked components</p>
-        <p class="mt-3 text-3xl font-semibold text-slate-950">{{ meta.total }}</p>
-        <p class="mt-2 text-sm text-slate-600">Lifecycle-managed components currently visible in the registry.</p>
+      <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/70 p-5 shadow-sm shadow-slate-200/60 dark:shadow-black/20">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Tracked components</p>
+        <p class="mt-3 text-3xl font-semibold text-slate-950 dark:text-slate-100">{{ meta.total }}</p>
+        <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">Lifecycle-managed components currently visible in the registry.</p>
       </div>
-      <div class="rounded-2xl border border-amber-200 bg-amber-50/70 p-5 shadow-sm shadow-amber-100/60">
-        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-amber-700">Due soon</p>
-        <p class="mt-3 text-3xl font-semibold text-amber-950">{{ dueSoonComponents.length }}</p>
+      <div class="rounded-2xl border border-amber-200 dark:border-amber-900/60 bg-amber-50/70 dark:bg-amber-950/40 p-5 shadow-sm shadow-amber-100/60 dark:shadow-amber-900/20">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-amber-700 dark:text-amber-200">Due soon</p>
+        <p class="mt-3 text-3xl font-semibold text-amber-950 dark:text-amber-100">{{ dueSoonComponents.length }}</p>
         <p class="mt-2 text-sm text-amber-900/80">Components approaching replacement date or kilometre thresholds.</p>
       </div>
-      <div class="rounded-2xl border border-rose-200 bg-rose-50/70 p-5 shadow-sm shadow-rose-100/60">
-        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-rose-700">Due replacement</p>
-        <p class="mt-3 text-3xl font-semibold text-rose-950">{{ overdueComponents.length }}</p>
+      <div class="rounded-2xl border border-rose-200 dark:border-rose-900/60 bg-rose-50/70 dark:bg-rose-950/40 p-5 shadow-sm shadow-rose-100/60 dark:shadow-rose-900/20">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-rose-700 dark:text-rose-200">Due replacement</p>
+        <p class="mt-3 text-3xl font-semibold text-rose-950 dark:text-rose-100">{{ overdueComponents.length }}</p>
         <p class="mt-2 text-sm text-rose-900/80">Components that have crossed configured lifecycle limits and need action.</p>
       </div>
     </div>
@@ -217,11 +217,11 @@ onMounted(async () => {
           v-model="search"
           type="search"
           placeholder="Search component number, serial, brand, or vehicle"
-          class="min-w-[240px] flex-1 rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="min-w-[240px] flex-1 rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
         <select
           v-model="statusFilter"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option value="">All lifecycle states</option>
           <option v-for="option in vehicleComponentStatusOptions" :key="option.value" :value="option.value">
@@ -230,7 +230,7 @@ onMounted(async () => {
         </select>
         <select
           v-model="typeFilter"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option value="">All component types</option>
           <option v-for="option in vehicleComponentTypeOptions" :key="option.value" :value="option.value">
@@ -239,7 +239,7 @@ onMounted(async () => {
         </select>
         <select
           v-model="vehicleFilter"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option value="">All vehicles</option>
           <option v-for="vehicle in vehicles" :key="vehicle.id" :value="String(vehicle.id)">
@@ -272,14 +272,14 @@ onMounted(async () => {
         <div class="flex items-center gap-2">
           <RouterLink
             :to="{ name: 'vehicle-components.edit', params: { id: String(row.id) } }"
-            class="rounded-xl border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-50"
+            class="rounded-xl border border-slate-300 dark:border-slate-700 px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50"
           >
             Open
           </RouterLink>
           <button
             v-if="auth.hasPermission('maintenance.delete') && !['retired', 'failed'].includes(String(row.status))"
             type="button"
-            class="rounded-xl border border-rose-300 px-3 py-1.5 text-xs font-semibold text-rose-700 transition hover:bg-rose-50"
+            class="rounded-xl border border-rose-300 dark:border-rose-800/60 px-3 py-1.5 text-xs font-semibold text-rose-700 dark:text-rose-200 transition hover:bg-rose-50 dark:hover:bg-rose-950/40"
             @click="removeComponent(Number(row.id))"
           >
             Delete

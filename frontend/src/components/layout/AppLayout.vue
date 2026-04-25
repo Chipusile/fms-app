@@ -7,7 +7,7 @@ const sidebarOpen = ref(false)
 </script>
 
 <template>
-  <div class="flex h-screen bg-gray-50">
+  <div class="flex h-screen bg-gray-50 dark:bg-slate-950">
     <a
       href="#app-main-content"
       class="sr-only absolute left-4 top-4 z-[60] rounded-xl bg-slate-950 px-4 py-2 text-sm font-semibold text-white focus:not-sr-only"

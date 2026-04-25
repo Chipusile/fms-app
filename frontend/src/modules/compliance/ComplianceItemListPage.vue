@@ -152,24 +152,24 @@ onMounted(async () => {
     </PageHeader>
 
     <div class="grid gap-4 lg:grid-cols-4">
-      <div class="rounded-2xl border border-slate-200 bg-white/90 p-5 shadow-sm shadow-slate-200/60">
-        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">All items</p>
-        <p class="mt-3 text-3xl font-semibold text-slate-950">{{ dashboard.totals.all }}</p>
-        <p class="mt-2 text-sm text-slate-600">Tracked compliance records for the active tenant.</p>
+      <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/70 p-5 shadow-sm shadow-slate-200/60 dark:shadow-black/20">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">All items</p>
+        <p class="mt-3 text-3xl font-semibold text-slate-950 dark:text-slate-100">{{ dashboard.totals.all }}</p>
+        <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">Tracked compliance records for the active tenant.</p>
       </div>
-      <div class="rounded-2xl border border-emerald-200 bg-emerald-50/70 p-5 shadow-sm shadow-emerald-100/60">
-        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700">Valid</p>
-        <p class="mt-3 text-3xl font-semibold text-emerald-950">{{ dashboard.totals.valid }}</p>
+      <div class="rounded-2xl border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/70 dark:bg-emerald-950/40 p-5 shadow-sm shadow-emerald-100/60 dark:shadow-emerald-900/20">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700 dark:text-emerald-200">Valid</p>
+        <p class="mt-3 text-3xl font-semibold text-emerald-950 dark:text-emerald-100">{{ dashboard.totals.valid }}</p>
         <p class="mt-2 text-sm text-emerald-900/80">Records safely outside the configured reminder window.</p>
       </div>
-      <div class="rounded-2xl border border-amber-200 bg-amber-50/70 p-5 shadow-sm shadow-amber-100/60">
-        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-amber-700">Expiring soon</p>
-        <p class="mt-3 text-3xl font-semibold text-amber-950">{{ dashboard.totals.expiring_soon }}</p>
+      <div class="rounded-2xl border border-amber-200 dark:border-amber-900/60 bg-amber-50/70 dark:bg-amber-950/40 p-5 shadow-sm shadow-amber-100/60 dark:shadow-amber-900/20">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-amber-700 dark:text-amber-200">Expiring soon</p>
+        <p class="mt-3 text-3xl font-semibold text-amber-950 dark:text-amber-100">{{ dashboard.totals.expiring_soon }}</p>
         <p class="mt-2 text-sm text-amber-900/80">Items nearing expiry based on tenant reminder thresholds.</p>
       </div>
-      <div class="rounded-2xl border border-rose-200 bg-rose-50/70 p-5 shadow-sm shadow-rose-100/60">
-        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-rose-700">Expired</p>
-        <p class="mt-3 text-3xl font-semibold text-rose-950">{{ dashboard.totals.expired }}</p>
+      <div class="rounded-2xl border border-rose-200 dark:border-rose-900/60 bg-rose-50/70 dark:bg-rose-950/40 p-5 shadow-sm shadow-rose-100/60 dark:shadow-rose-900/20">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-rose-700 dark:text-rose-200">Expired</p>
+        <p class="mt-3 text-3xl font-semibold text-rose-950 dark:text-rose-100">{{ dashboard.totals.expired }}</p>
         <p class="mt-2 text-sm text-rose-900/80">Records already outside their valid operating window.</p>
       </div>
     </div>
@@ -194,11 +194,11 @@ onMounted(async () => {
           v-model="search"
           type="search"
           placeholder="Search title, reference number, or issuer"
-          class="min-w-[240px] flex-1 rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="min-w-[240px] flex-1 rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
         <select
           v-model="statusFilter"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option value="">All statuses</option>
           <option v-for="option in complianceStatusOptions" :key="option.value" :value="option.value">
@@ -207,7 +207,7 @@ onMounted(async () => {
         </select>
         <select
           v-model="categoryFilter"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option value="">All categories</option>
           <option v-for="option in complianceCategoryOptions" :key="option.value" :value="option.value">
@@ -216,7 +216,7 @@ onMounted(async () => {
         </select>
         <select
           v-model="compliantTypeFilter"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option value="">All entity types</option>
           <option v-for="option in compliantTypeOptions" :key="option.value" :value="option.value">
@@ -246,14 +246,14 @@ onMounted(async () => {
         <div class="flex items-center gap-2">
           <RouterLink
             :to="{ name: 'compliance.edit', params: { id: String(row.id) } }"
-            class="rounded-xl border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-50"
+            class="rounded-xl border border-slate-300 dark:border-slate-700 px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50"
           >
             Open
           </RouterLink>
           <button
             v-if="auth.hasPermission('compliance.delete')"
             type="button"
-            class="rounded-xl border border-rose-300 px-3 py-1.5 text-xs font-semibold text-rose-700 transition hover:bg-rose-50"
+            class="rounded-xl border border-rose-300 dark:border-rose-800/60 px-3 py-1.5 text-xs font-semibold text-rose-700 dark:text-rose-200 transition hover:bg-rose-50 dark:hover:bg-rose-950/40"
             @click="removeComplianceItem(Number(row.id))"
           >
             Delete

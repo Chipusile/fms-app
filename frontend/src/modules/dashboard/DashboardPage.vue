@@ -155,7 +155,7 @@ onMounted(async () => {
         <RouterLink
           v-if="canViewReports"
           :to="{ name: 'reports' }"
-          class="inline-flex items-center rounded-2xl border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+          class="inline-flex items-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50"
         >
           Open report center
         </RouterLink>
@@ -182,16 +182,16 @@ onMounted(async () => {
           <input
             v-model="dateFrom"
             type="date"
-            class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+            class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
           >
           <input
             v-model="dateTo"
             type="date"
-            class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+            class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
           >
           <select
             v-model="vehicleFilter"
-            class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+            class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
           >
             <option value="">All vehicles</option>
             <option
@@ -204,7 +204,7 @@ onMounted(async () => {
           </select>
           <select
             v-model="departmentFilter"
-            class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+            class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
           >
             <option value="">All departments</option>
             <option
@@ -261,20 +261,20 @@ onMounted(async () => {
             <div
               v-for="vehicle in analytics?.highlights.top_utilization_vehicles ?? []"
               :key="vehicle.label"
-              class="flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3"
+              class="flex items-center justify-between rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3"
             >
               <div>
-                <p class="font-semibold text-slate-900">{{ vehicle.label }}</p>
-                <p class="text-sm text-slate-600">{{ vehicle.trip_count }} trips</p>
+                <p class="font-semibold text-slate-900 dark:text-slate-100">{{ vehicle.label }}</p>
+                <p class="text-sm text-slate-600 dark:text-slate-400">{{ vehicle.trip_count }} trips</p>
               </div>
-              <p class="text-sm font-semibold text-slate-900">
+              <p class="text-sm font-semibold text-slate-900 dark:text-slate-100">
                 {{ formatDistance(vehicle.distance_km) }} km
               </p>
             </div>
           </div>
           <p
             v-else
-            class="text-sm leading-6 text-slate-500"
+            class="text-sm leading-6 text-slate-500 dark:text-slate-400"
           >
             No utilization data is available for the selected filter combination.
           </p>
@@ -291,13 +291,13 @@ onMounted(async () => {
             <div
               v-for="item in analytics?.highlights.urgent_compliance_items ?? []"
               :key="`${item.title}-${item.entity}`"
-              class="rounded-2xl border border-slate-200 bg-white px-4 py-3"
+              class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-3"
             >
               <div class="flex items-start justify-between gap-3">
                 <div>
-                  <p class="font-semibold text-slate-900">{{ item.title }}</p>
-                  <p class="text-sm text-slate-600">{{ item.entity }}</p>
-                  <p class="mt-1 text-xs uppercase tracking-[0.18em] text-slate-500">
+                  <p class="font-semibold text-slate-900 dark:text-slate-100">{{ item.title }}</p>
+                  <p class="text-sm text-slate-600 dark:text-slate-400">{{ item.entity }}</p>
+                  <p class="mt-1 text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
                     {{ formatDate(item.expiry_date) }}
                   </p>
                 </div>
@@ -307,7 +307,7 @@ onMounted(async () => {
           </div>
           <p
             v-else
-            class="text-sm leading-6 text-slate-500"
+            class="text-sm leading-6 text-slate-500 dark:text-slate-400"
           >
             No urgent compliance renewals were found for the current dashboard scope.
           </p>
@@ -320,27 +320,27 @@ onMounted(async () => {
           description="Active due-soon versus overdue maintenance obligations across schedules and components."
         >
           <div class="grid gap-3 sm:grid-cols-2">
-            <div class="rounded-2xl border border-amber-200 bg-amber-50/70 p-4">
-              <p class="text-xs font-semibold uppercase tracking-[0.18em] text-amber-700">Due soon schedules</p>
-              <p class="mt-2 text-2xl font-semibold text-amber-950">
+            <div class="rounded-2xl border border-amber-200 dark:border-amber-900/60 bg-amber-50/70 dark:bg-amber-950/40 p-4">
+              <p class="text-xs font-semibold uppercase tracking-[0.18em] text-amber-700 dark:text-amber-200">Due soon schedules</p>
+              <p class="mt-2 text-2xl font-semibold text-amber-950 dark:text-amber-100">
                 {{ analytics?.highlights.maintenance_health.due_soon_schedules ?? 0 }}
               </p>
             </div>
-            <div class="rounded-2xl border border-rose-200 bg-rose-50/70 p-4">
-              <p class="text-xs font-semibold uppercase tracking-[0.18em] text-rose-700">Overdue schedules</p>
-              <p class="mt-2 text-2xl font-semibold text-rose-950">
+            <div class="rounded-2xl border border-rose-200 dark:border-rose-900/60 bg-rose-50/70 dark:bg-rose-950/40 p-4">
+              <p class="text-xs font-semibold uppercase tracking-[0.18em] text-rose-700 dark:text-rose-200">Overdue schedules</p>
+              <p class="mt-2 text-2xl font-semibold text-rose-950 dark:text-rose-100">
                 {{ analytics?.highlights.maintenance_health.overdue_schedules ?? 0 }}
               </p>
             </div>
-            <div class="rounded-2xl border border-amber-200 bg-amber-50/70 p-4">
-              <p class="text-xs font-semibold uppercase tracking-[0.18em] text-amber-700">Due soon components</p>
-              <p class="mt-2 text-2xl font-semibold text-amber-950">
+            <div class="rounded-2xl border border-amber-200 dark:border-amber-900/60 bg-amber-50/70 dark:bg-amber-950/40 p-4">
+              <p class="text-xs font-semibold uppercase tracking-[0.18em] text-amber-700 dark:text-amber-200">Due soon components</p>
+              <p class="mt-2 text-2xl font-semibold text-amber-950 dark:text-amber-100">
                 {{ analytics?.highlights.maintenance_health.due_soon_components ?? 0 }}
               </p>
             </div>
-            <div class="rounded-2xl border border-rose-200 bg-rose-50/70 p-4">
-              <p class="text-xs font-semibold uppercase tracking-[0.18em] text-rose-700">Overdue components</p>
-              <p class="mt-2 text-2xl font-semibold text-rose-950">
+            <div class="rounded-2xl border border-rose-200 dark:border-rose-900/60 bg-rose-50/70 dark:bg-rose-950/40 p-4">
+              <p class="text-xs font-semibold uppercase tracking-[0.18em] text-rose-700 dark:text-rose-200">Overdue components</p>
+              <p class="mt-2 text-2xl font-semibold text-rose-950 dark:text-rose-100">
                 {{ analytics?.highlights.maintenance_health.overdue_components ?? 0 }}
               </p>
             </div>
@@ -358,13 +358,13 @@ onMounted(async () => {
             <div
               v-for="item in analytics?.highlights.urgent_maintenance_items ?? []"
               :key="`${item.source}-${item.asset}-${item.title}`"
-              class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3"
+              class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3"
             >
               <div class="flex items-start justify-between gap-3">
                 <div>
-                  <p class="font-semibold text-slate-900">{{ item.title }}</p>
-                  <p class="text-sm text-slate-600">{{ item.asset }}</p>
-                  <p class="mt-1 text-xs uppercase tracking-[0.18em] text-slate-500">{{ item.source }}</p>
+                  <p class="font-semibold text-slate-900 dark:text-slate-100">{{ item.title }}</p>
+                  <p class="text-sm text-slate-600 dark:text-slate-400">{{ item.asset }}</p>
+                  <p class="mt-1 text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">{{ item.source }}</p>
                 </div>
                 <StatusBadge :value="item.status" />
               </div>
@@ -372,7 +372,7 @@ onMounted(async () => {
           </div>
           <p
             v-else
-            class="text-sm leading-6 text-slate-500"
+            class="text-sm leading-6 text-slate-500 dark:text-slate-400"
           >
             No urgent maintenance items were found for the current filter set.
           </p>
@@ -381,7 +381,7 @@ onMounted(async () => {
 
       <div
         v-if="loading"
-        class="rounded-2xl border border-slate-200 bg-slate-50 px-6 py-10 text-center text-sm text-slate-500"
+        class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-6 py-10 text-center text-sm text-slate-500 dark:text-slate-400"
       >
         Loading dashboard analytics...
       </div>

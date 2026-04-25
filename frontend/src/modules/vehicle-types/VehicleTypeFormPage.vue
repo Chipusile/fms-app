@@ -90,7 +90,7 @@ onMounted(async () => {
       <template #actions>
         <RouterLink
           :to="{ name: 'vehicle-types' }"
-          class="inline-flex items-center rounded-2xl border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+          class="inline-flex items-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50"
         >
           Cancel
         </RouterLink>
@@ -107,45 +107,45 @@ onMounted(async () => {
     <form class="grid gap-6 xl:grid-cols-[1fr_0.9fr]" @submit.prevent="submit">
       <SectionCard title="Catalogue details" description="Core metadata and default asset behaviour.">
         <div class="grid gap-4 md:grid-cols-2">
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Name</span>
-            <input v-model="form.name" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model="form.name" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('name')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Code</span>
-            <input v-model="form.code" class="w-full rounded-2xl border border-slate-300 px-4 py-3 uppercase outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model="form.code" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 uppercase outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('code')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Default fuel type</span>
-            <select v-model="form.default_fuel_type" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <select v-model="form.default_fuel_type" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
               <option :value="null">No default</option>
               <option v-for="option in vehicleFuelTypeOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
             </select>
             <FieldError :errors="errorsFor('default_fuel_type')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Default service interval (km)</span>
-            <input v-model.number="form.default_service_interval_km" type="number" min="0" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model.number="form.default_service_interval_km" type="number" min="0" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('default_service_interval_km')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700 md:col-span-2">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200 md:col-span-2">
             <span class="font-medium">Description</span>
-            <textarea v-model="form.description" class="min-h-32 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading" />
+            <textarea v-model="form.description" class="min-h-32 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading" />
             <FieldError :errors="errorsFor('description')" />
           </label>
         </div>
       </SectionCard>
 
       <SectionCard title="Availability" description="Control whether this type remains selectable for new vehicles.">
-        <div class="space-y-4 text-sm text-slate-700">
-          <label class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
-            <input v-model="form.is_active" type="checkbox" class="rounded border-slate-300" :disabled="loading">
+        <div class="space-y-4 text-sm text-slate-700 dark:text-slate-200">
+          <label class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3">
+            <input v-model="form.is_active" type="checkbox" class="rounded border-slate-300 dark:border-slate-700" :disabled="loading">
             <span>Active and available for new fleet records</span>
           </label>
           <div class="flex flex-col gap-3 sm:flex-row">
-            <RouterLink :to="{ name: 'vehicle-types' }" class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 sm:w-auto">
+            <RouterLink :to="{ name: 'vehicle-types' }" class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50 sm:w-auto">
               Cancel
             </RouterLink>
             <button type="submit" class="w-full rounded-2xl bg-slate-950 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60" :disabled="loading || submitting">

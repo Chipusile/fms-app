@@ -213,10 +213,10 @@ watch(() => form.value.vehicle_id, async () => {
 
     <div class="grid gap-6 xl:grid-cols-[0.92fr_1.08fr]">
       <SectionCard title="Manual reading" description="Use controlled manual capture when mileage is collected outside automated workflow sources.">
-        <form class="space-y-4 text-sm text-slate-700" @submit.prevent="submitManualReading">
+        <form class="space-y-4 text-sm text-slate-700 dark:text-slate-200" @submit.prevent="submitManualReading">
           <label class="space-y-2">
             <span class="font-medium">Vehicle</span>
-            <select v-model="form.vehicle_id" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="!canCreate">
+            <select v-model="form.vehicle_id" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="!canCreate">
               <option v-for="vehicle in vehicles" :key="vehicle.id" :value="vehicle.id">
                 {{ vehicle.label }}{{ vehicle.secondary ? ` · ${vehicle.secondary}` : '' }}
               </option>
@@ -225,7 +225,7 @@ watch(() => form.value.vehicle_id, async () => {
           </label>
           <label class="space-y-2">
             <span class="font-medium">Driver</span>
-            <select v-model="form.driver_id" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="!canCreate">
+            <select v-model="form.driver_id" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="!canCreate">
               <option :value="null">No driver linked</option>
               <option v-for="driver in drivers" :key="driver.id" :value="driver.id">
                 {{ driver.label }}{{ driver.secondary ? ` · ${driver.secondary}` : '' }}
@@ -235,20 +235,20 @@ watch(() => form.value.vehicle_id, async () => {
           </label>
           <label class="space-y-2">
             <span class="font-medium">Reading</span>
-            <input v-model.number="form.reading" type="number" min="0" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :placeholder="selectedVehicle ? `Current ${selectedVehicle.odometer_reading}` : 'Mileage'" :disabled="!canCreate">
+            <input v-model.number="form.reading" type="number" min="0" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :placeholder="selectedVehicle ? `Current ${selectedVehicle.odometer_reading}` : 'Mileage'" :disabled="!canCreate">
             <FieldError :errors="errorsFor('reading')" />
           </label>
           <label class="space-y-2">
             <span class="font-medium">Recorded at</span>
-            <input v-model="form.recorded_at" type="datetime-local" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="!canCreate">
+            <input v-model="form.recorded_at" type="datetime-local" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="!canCreate">
             <FieldError :errors="errorsFor('recorded_at')" />
           </label>
           <label class="space-y-2">
             <span class="font-medium">Notes</span>
-            <textarea v-model="form.notes" class="min-h-24 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="!canCreate" />
+            <textarea v-model="form.notes" class="min-h-24 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="!canCreate" />
             <FieldError :errors="errorsFor('notes')" />
           </label>
-          <div class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs leading-5 text-slate-600">
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3 text-xs leading-5 text-slate-600 dark:text-slate-400">
             Supported sources in this tenant: {{ sources.join(', ').replaceAll('_', ' ') }}.
           </div>
           <button type="submit" class="w-full rounded-2xl bg-slate-950 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60" :disabled="!canCreate || submitting">
@@ -295,12 +295,12 @@ watch(() => form.value.vehicle_id, async () => {
           <button
             v-if="canResolve"
             type="button"
-            class="rounded-xl border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-50"
+            class="rounded-xl border border-slate-300 dark:border-slate-700 px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50"
             @click="resolveAnomaly(Number(row.id))"
           >
             Resolve
           </button>
-          <span v-else class="text-xs text-slate-500">Read only</span>
+          <span v-else class="text-xs text-slate-500 dark:text-slate-400">Read only</span>
         </template>
       </DataTable>
 

@@ -124,7 +124,7 @@ onMounted(async () => {
   <div class="space-y-6">
     <PageHeader eyebrow="Fleet" :title="isEditMode ? 'Edit vehicle' : 'Create vehicle'" description="Register and maintain tenant fleet assets with type, ownership, and lifecycle context.">
       <template #actions>
-        <RouterLink :to="{ name: 'vehicles' }" class="inline-flex items-center rounded-2xl border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
+        <RouterLink :to="{ name: 'vehicles' }" class="inline-flex items-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50">
           Cancel
         </RouterLink>
       </template>
@@ -135,66 +135,66 @@ onMounted(async () => {
     <form class="grid gap-6 xl:grid-cols-[1fr_0.95fr]" @submit.prevent="submit">
       <SectionCard title="Identity" description="Core registration and classification details for the fleet asset.">
         <div class="grid gap-4 md:grid-cols-2">
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Registration number</span>
-            <input v-model="form.registration_number" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model="form.registration_number" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('registration_number')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Asset tag</span>
-            <input v-model="form.asset_tag" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model="form.asset_tag" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('asset_tag')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Vehicle type</span>
-            <select v-model="form.vehicle_type_id" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <select v-model="form.vehicle_type_id" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
               <option v-for="vehicleType in vehicleTypes" :key="vehicleType.id" :value="vehicleType.id">{{ vehicleType.name }}</option>
             </select>
             <FieldError :errors="errorsFor('vehicle_type_id')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Department</span>
-            <select v-model="form.department_id" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <select v-model="form.department_id" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
               <option :value="null">Unassigned</option>
               <option v-for="department in departments" :key="department.id" :value="department.id">{{ department.name }}</option>
             </select>
             <FieldError :errors="errorsFor('department_id')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Make</span>
-            <input v-model="form.make" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model="form.make" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('make')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Model</span>
-            <input v-model="form.model" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model="form.model" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('model')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Year</span>
-            <input v-model.number="form.year" type="number" min="1990" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model.number="form.year" type="number" min="1990" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('year')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">VIN</span>
-            <input v-model="form.vin" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model="form.vin" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('vin')" />
           </label>
         </div>
       </SectionCard>
 
       <SectionCard title="Operational defaults" description="Lifecycle, fuel, and asset economics used by later workflows.">
-        <div class="space-y-4 text-sm text-slate-700">
+        <div class="space-y-4 text-sm text-slate-700 dark:text-slate-200">
           <label class="space-y-2">
             <span class="font-medium">Fuel type</span>
-            <select v-model="form.fuel_type" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <select v-model="form.fuel_type" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
               <option v-for="option in vehicleFuelTypeOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
             </select>
             <FieldError :errors="errorsFor('fuel_type')" />
           </label>
           <label class="space-y-2">
             <span class="font-medium">Transmission</span>
-            <select v-model="form.transmission_type" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <select v-model="form.transmission_type" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
               <option :value="null">Not specified</option>
               <option v-for="option in vehicleTransmissionOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
             </select>
@@ -202,45 +202,45 @@ onMounted(async () => {
           </label>
           <label class="space-y-2">
             <span class="font-medium">Ownership</span>
-            <select v-model="form.ownership_type" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <select v-model="form.ownership_type" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
               <option v-for="option in vehicleOwnershipOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
             </select>
             <FieldError :errors="errorsFor('ownership_type')" />
           </label>
           <label class="space-y-2">
             <span class="font-medium">Status</span>
-            <select v-model="form.status" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <select v-model="form.status" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
               <option v-for="option in vehicleStatusOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
             </select>
             <FieldError :errors="errorsFor('status')" />
           </label>
           <label class="space-y-2">
             <span class="font-medium">Odometer</span>
-            <input v-model.number="form.odometer_reading" type="number" min="0" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model.number="form.odometer_reading" type="number" min="0" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('odometer_reading')" />
           </label>
           <label class="space-y-2">
             <span class="font-medium">Tank capacity (litres)</span>
-            <input v-model.number="form.tank_capacity_liters" type="number" min="0" step="0.01" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model.number="form.tank_capacity_liters" type="number" min="0" step="0.01" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('tank_capacity_liters')" />
           </label>
           <label class="space-y-2">
             <span class="font-medium">Acquisition date</span>
-            <input v-model="form.acquisition_date" type="date" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model="form.acquisition_date" type="date" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('acquisition_date')" />
           </label>
           <label class="space-y-2">
             <span class="font-medium">Acquisition cost</span>
-            <input v-model.number="form.acquisition_cost" type="number" min="0" step="0.01" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model.number="form.acquisition_cost" type="number" min="0" step="0.01" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('acquisition_cost')" />
           </label>
           <label class="space-y-2">
             <span class="font-medium">Notes</span>
-            <textarea v-model="form.notes" class="min-h-24 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading" />
+            <textarea v-model="form.notes" class="min-h-24 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading" />
             <FieldError :errors="errorsFor('notes')" />
           </label>
           <div class="flex flex-col gap-3 sm:flex-row">
-            <RouterLink :to="{ name: 'vehicles' }" class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 sm:w-auto">
+            <RouterLink :to="{ name: 'vehicles' }" class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50 sm:w-auto">
               Cancel
             </RouterLink>
             <button type="submit" class="w-full rounded-2xl bg-slate-950 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60" :disabled="loading || submitting">

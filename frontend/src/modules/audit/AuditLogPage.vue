@@ -79,7 +79,7 @@ onMounted(async () => {
       <FilterBar>
         <select
           v-model="eventFilter"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option value="">All events</option>
           <option value="created">created</option>

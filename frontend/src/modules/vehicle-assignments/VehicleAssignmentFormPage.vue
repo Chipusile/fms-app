@@ -115,7 +115,7 @@ onMounted(async () => {
       <template #actions>
         <RouterLink
           :to="{ name: 'vehicle-assignments' }"
-          class="inline-flex items-center rounded-2xl border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+          class="inline-flex items-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50"
         >
           Cancel
         </RouterLink>
@@ -132,36 +132,36 @@ onMounted(async () => {
     <form class="grid gap-6 xl:grid-cols-[1fr_0.9fr]" @submit.prevent="submit">
       <SectionCard title="Assignment target" description="Choose the vehicle and the operational owner for this record.">
         <div class="grid gap-4 md:grid-cols-2">
-          <label class="space-y-2 text-sm text-slate-700 md:col-span-2">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200 md:col-span-2">
             <span class="font-medium">Vehicle</span>
-            <select v-model="form.vehicle_id" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <select v-model="form.vehicle_id" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
               <option v-for="vehicle in vehicles" :key="vehicle.id" :value="vehicle.id">
                 {{ vehicle.label }}{{ vehicle.secondary ? ` · ${vehicle.secondary}` : '' }}
               </option>
             </select>
             <FieldError :errors="errorsFor('vehicle_id')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Assignment type</span>
-            <select v-model="form.assignment_type" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <select v-model="form.assignment_type" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
               <option v-for="option in vehicleAssignmentTypeOptions" :key="option.value" :value="option.value">
                 {{ option.label }}
               </option>
             </select>
             <FieldError :errors="errorsFor('assignment_type')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Status</span>
-            <select v-model="form.status" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <select v-model="form.status" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
               <option v-for="option in vehicleAssignmentStatusOptions" :key="option.value" :value="option.value">
                 {{ option.label }}
               </option>
             </select>
             <FieldError :errors="errorsFor('status')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Driver</span>
-            <select v-model="form.driver_id" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <select v-model="form.driver_id" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
               <option :value="null">No driver linked</option>
               <option v-for="driver in drivers" :key="driver.id" :value="driver.id">
                 {{ driver.label }}{{ driver.secondary ? ` · ${driver.secondary}` : '' }}
@@ -169,9 +169,9 @@ onMounted(async () => {
             </select>
             <FieldError :errors="errorsFor('driver_id')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Department</span>
-            <select v-model="form.department_id" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <select v-model="form.department_id" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
               <option :value="null">No department linked</option>
               <option v-for="department in departments" :key="department.id" :value="department.id">
                 {{ department.label }}{{ department.secondary ? ` · ${department.secondary}` : '' }}
@@ -183,27 +183,27 @@ onMounted(async () => {
       </SectionCard>
 
       <SectionCard title="Timeline" description="Active assignments must not overlap for the same vehicle. End the prior record before creating the next active one.">
-        <div class="space-y-4 text-sm text-slate-700">
+        <div class="space-y-4 text-sm text-slate-700 dark:text-slate-200">
           <label class="space-y-2">
             <span class="font-medium">Assigned from</span>
-            <input v-model="form.assigned_from" type="date" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model="form.assigned_from" type="date" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('assigned_from')" />
           </label>
           <label class="space-y-2">
             <span class="font-medium">Assigned to</span>
-            <input v-model="form.assigned_to" type="date" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model="form.assigned_to" type="date" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('assigned_to')" />
           </label>
           <label class="space-y-2">
             <span class="font-medium">Notes</span>
-            <textarea v-model="form.notes" class="min-h-28 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading" />
+            <textarea v-model="form.notes" class="min-h-28 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading" />
             <FieldError :errors="errorsFor('notes')" />
           </label>
-          <p class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs leading-5 text-slate-600">
+          <p class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3 text-xs leading-5 text-slate-600 dark:text-slate-400">
             At least one assignment target is required. Use a driver for direct accountability, a department for cost ownership, or both when the operational workflow needs both references.
           </p>
           <div class="flex flex-col gap-3 sm:flex-row">
-            <RouterLink :to="{ name: 'vehicle-assignments' }" class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 sm:w-auto">
+            <RouterLink :to="{ name: 'vehicle-assignments' }" class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50 sm:w-auto">
               Cancel
             </RouterLink>
             <button type="submit" class="w-full rounded-2xl bg-slate-950 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60" :disabled="loading || submitting">

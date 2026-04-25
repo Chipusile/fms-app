@@ -109,7 +109,7 @@ onMounted(async () => {
       <template #actions>
         <RouterLink
           :to="{ name: 'users' }"
-          class="inline-flex items-center rounded-2xl border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+          class="inline-flex items-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50"
         >
           Cancel
         </RouterLink>
@@ -132,39 +132,39 @@ onMounted(async () => {
         description="Core identity and communication fields."
       >
         <div class="grid gap-4 md:grid-cols-2">
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Full name</span>
             <input
               v-model="form.name"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading"
             >
             <FieldError :errors="errorsFor('name')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Email</span>
             <input
               v-model="form.email"
               type="email"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading"
             >
             <FieldError :errors="errorsFor('email')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Phone</span>
             <input
               v-model="form.phone"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading"
             >
             <FieldError :errors="errorsFor('phone')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Status</span>
             <select
               v-model="form.status"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading"
             >
               <option
@@ -185,19 +185,19 @@ onMounted(async () => {
         description="Assign roles and define account behavior."
       >
         <div class="space-y-4">
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Roles</span>
             <div class="grid gap-2">
               <label
                 v-for="role in roleOptions"
                 :key="role.id"
-                class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700"
+                class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3 text-sm text-slate-700 dark:text-slate-200"
               >
                 <input
                   v-model="form.role_ids"
                   type="checkbox"
                   :value="role.id"
-                  class="rounded border-slate-300"
+                  class="rounded border-slate-300 dark:border-slate-700"
                   :disabled="loading"
                 >
                 <span>{{ role.name }}</span>
@@ -206,25 +206,25 @@ onMounted(async () => {
             <FieldError :errors="errorsFor('role_ids')" />
           </label>
 
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">{{ isEditMode ? 'Reset password' : 'Temporary password' }}</span>
             <input
               v-model="form.password"
               type="password"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading"
             >
             <FieldError :errors="errorsFor('password')" />
           </label>
 
-          <div class="rounded-2xl bg-slate-50 p-4 text-sm leading-6 text-slate-600">
+          <div class="rounded-2xl bg-slate-50 dark:bg-slate-900/50 p-4 text-sm leading-6 text-slate-600 dark:text-slate-400">
             This form is now wired to the tenant-scoped roles endpoint and user create/update API.
           </div>
 
           <div class="flex flex-col gap-3 sm:flex-row">
             <RouterLink
               :to="{ name: 'users' }"
-              class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 sm:w-auto"
+              class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50 sm:w-auto"
             >
               Cancel
             </RouterLink>

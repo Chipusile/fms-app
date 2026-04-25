@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-primary-50: #eff6ff;
   --color-primary-100: #dbeafe;
@@ -20,18 +22,30 @@
 
 @layer base {
   :root {
+    color-scheme: light;
     color: #172033;
     background:
       radial-gradient(circle at top left, rgba(37, 99, 235, 0.08), transparent 32%),
       linear-gradient(180deg, #f7f9fc 0%, #eff3f8 100%);
-    font-family: "IBM Plex Sans", "Segoe UI", "Helvetica Neue", sans-serif;
+    font-family: 'IBM Plex Sans', 'Segoe UI', 'Helvetica Neue', sans-serif;
+  }
+
+  .dark {
+    color-scheme: dark;
+    color: #e2e8f0;
+    background:
+      radial-gradient(circle at top left, rgba(59, 130, 246, 0.18), transparent 32%),
+      linear-gradient(180deg, #0b1220 0%, #060912 100%);
   }
 
   body {
     min-height: 100vh;
     margin: 0;
-    color: #172033;
+    color: inherit;
     background: transparent;
+    transition:
+      color 200ms ease,
+      background-color 200ms ease;
   }
 
   #app {

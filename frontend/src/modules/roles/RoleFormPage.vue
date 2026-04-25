@@ -118,7 +118,7 @@ onMounted(async () => {
       <template #actions>
         <RouterLink
           :to="{ name: 'roles' }"
-          class="inline-flex items-center rounded-2xl border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+          class="inline-flex items-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50"
         >
           Cancel
         </RouterLink>
@@ -142,29 +142,29 @@ onMounted(async () => {
     <div class="grid gap-6 xl:grid-cols-[0.85fr_1.15fr]">
       <SectionCard title="Role details" description="Basic metadata for the role container.">
         <div class="space-y-4">
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Role name</span>
             <input
               v-model="form.name"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || isSystemRole"
             >
             <FieldError :errors="errorsFor('name')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Role key</span>
             <input
               v-model="form.slug"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || isSystemRole"
             >
             <FieldError :errors="errorsFor('slug')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Description</span>
             <textarea
               v-model="form.description"
-              class="min-h-32 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="min-h-32 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || isSystemRole"
             />
             <FieldError :errors="errorsFor('description')" />
@@ -172,7 +172,7 @@ onMounted(async () => {
           <div class="flex flex-col gap-3 sm:flex-row">
             <RouterLink
               :to="{ name: 'roles' }"
-              class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 sm:w-auto"
+              class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50 sm:w-auto"
             >
               Cancel
             </RouterLink>
@@ -194,19 +194,19 @@ onMounted(async () => {
           <div
             v-for="[group, modulePermissions] in groupedPermissions"
             :key="group"
-            class="rounded-2xl border border-slate-200 p-4"
+            class="rounded-2xl border border-slate-200 dark:border-slate-800 p-4"
           >
-            <h3 class="text-sm font-semibold capitalize text-slate-900">{{ group }}</h3>
+            <h3 class="text-sm font-semibold capitalize text-slate-900 dark:text-slate-100">{{ group }}</h3>
             <div class="mt-3 grid gap-3 md:grid-cols-2">
               <label
                 v-for="permission in modulePermissions"
                 :key="permission.id"
-                class="flex items-center gap-3 rounded-xl bg-slate-50 px-3 py-2 text-sm text-slate-700"
+                class="flex items-center gap-3 rounded-xl bg-slate-50 dark:bg-slate-900/50 px-3 py-2 text-sm text-slate-700 dark:text-slate-200"
               >
                 <input
                   v-model="form.permission_ids"
                   type="checkbox"
-                  class="rounded border-slate-300"
+                  class="rounded border-slate-300 dark:border-slate-700"
                   :value="permission.id"
                   :disabled="loading || isSystemRole"
                 >

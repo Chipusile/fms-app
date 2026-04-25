@@ -142,7 +142,7 @@ onMounted(async () => {
       <template #actions>
         <RouterLink
           :to="{ name: 'inspection-templates' }"
-          class="inline-flex items-center rounded-2xl border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+          class="inline-flex items-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50"
         >
           Back to templates
         </RouterLink>
@@ -159,29 +159,29 @@ onMounted(async () => {
     <form class="grid gap-6 xl:grid-cols-[1fr_0.92fr]" @submit.prevent="submit">
       <SectionCard title="Template details" description="Define the reusable checklist identity and publication status.">
         <div class="grid gap-4 md:grid-cols-2">
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Template name</span>
             <input
               v-model="form.name"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading"
             >
             <FieldError :errors="errorsFor('name')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Code</span>
             <input
               v-model="form.code"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 uppercase outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 uppercase outline-none focus:border-blue-500"
               :disabled="loading"
             >
             <FieldError :errors="errorsFor('code')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Applies to</span>
             <select
               v-model="form.applies_to"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading"
             >
               <option
@@ -194,11 +194,11 @@ onMounted(async () => {
             </select>
             <FieldError :errors="errorsFor('applies_to')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Status</span>
             <select
               v-model="form.status"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading"
             >
               <option
@@ -211,11 +211,11 @@ onMounted(async () => {
             </select>
             <FieldError :errors="errorsFor('status')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700 md:col-span-2">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200 md:col-span-2">
             <span class="font-medium">Description</span>
             <textarea
               v-model="form.description"
-              class="min-h-28 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="min-h-28 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading"
             />
             <FieldError :errors="errorsFor('description')" />
@@ -224,25 +224,25 @@ onMounted(async () => {
       </SectionCard>
 
       <SectionCard title="Governance" description="Control whether critical defects route into the approval queue.">
-        <div class="space-y-4 text-sm text-slate-700">
-          <label class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
+        <div class="space-y-4 text-sm text-slate-700 dark:text-slate-200">
+          <label class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3">
             <input
               v-model="form.requires_review_on_critical"
               type="checkbox"
-              class="h-4 w-4 rounded border-slate-300"
+              class="h-4 w-4 rounded border-slate-300 dark:border-slate-700"
               :disabled="loading"
             >
             <span class="font-medium">Require review when critical defects are recorded</span>
           </label>
 
-          <div class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs leading-5 text-slate-600">
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3 text-xs leading-5 text-slate-600 dark:text-slate-400">
             Keep templates inactive until the checklist structure has been reviewed. Active templates become available to inspection officers immediately.
           </div>
 
           <div class="flex flex-col gap-3 sm:flex-row">
             <RouterLink
               :to="{ name: 'inspection-templates' }"
-              class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 sm:w-auto"
+              class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50 sm:w-auto"
             >
               Cancel
             </RouterLink>
@@ -263,16 +263,16 @@ onMounted(async () => {
         <div
           v-for="(item, index) in form.items"
           :key="`item-${index}`"
-          class="rounded-3xl border border-slate-200 bg-slate-50/70 p-5"
+          class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40 p-5"
         >
           <div class="flex items-center justify-between gap-3">
             <div>
-              <p class="text-sm font-semibold text-slate-900">Item {{ index + 1 }}</p>
-              <p class="text-xs text-slate-500">Structured response settings and defect behavior.</p>
+              <p class="text-sm font-semibold text-slate-900 dark:text-slate-100">Item {{ index + 1 }}</p>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Structured response settings and defect behavior.</p>
             </div>
             <button
               type="button"
-              class="rounded-xl border border-rose-300 px-3 py-1.5 text-xs font-semibold text-rose-700 transition hover:bg-rose-50 disabled:cursor-not-allowed disabled:opacity-50"
+              class="rounded-xl border border-rose-300 dark:border-rose-800/60 px-3 py-1.5 text-xs font-semibold text-rose-700 dark:text-rose-200 transition hover:bg-rose-50 dark:hover:bg-rose-950/40 disabled:cursor-not-allowed disabled:opacity-50"
               :disabled="form.items.length <= 1"
               @click="removeItem(index)"
             >
@@ -281,20 +281,20 @@ onMounted(async () => {
           </div>
 
           <div class="mt-4 grid gap-4 md:grid-cols-2">
-            <label class="space-y-2 text-sm text-slate-700 md:col-span-2">
+            <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200 md:col-span-2">
               <span class="font-medium">Prompt</span>
               <input
                 v-model="item.title"
-                class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+                class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
                 :disabled="loading"
               >
               <FieldError :errors="errorsFor(`items.${index}.title`)" />
             </label>
-            <label class="space-y-2 text-sm text-slate-700">
+            <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
               <span class="font-medium">Response type</span>
               <select
                 v-model="item.response_type"
-                class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+                class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
                 :disabled="loading"
               >
                 <option
@@ -307,11 +307,11 @@ onMounted(async () => {
               </select>
               <FieldError :errors="errorsFor(`items.${index}.response_type`)" />
             </label>
-            <label class="space-y-2 text-sm text-slate-700">
+            <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
               <span class="font-medium">Description</span>
               <input
                 v-model="item.description"
-                class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+                class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
                 :disabled="loading"
               >
               <FieldError :errors="errorsFor(`items.${index}.description`)" />
@@ -319,20 +319,20 @@ onMounted(async () => {
           </div>
 
           <div class="mt-4 grid gap-3 md:grid-cols-2">
-            <label class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700">
+            <label class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-3 text-sm text-slate-700 dark:text-slate-200">
               <input
                 v-model="item.is_required"
                 type="checkbox"
-                class="h-4 w-4 rounded border-slate-300"
+                class="h-4 w-4 rounded border-slate-300 dark:border-slate-700"
                 :disabled="loading"
               >
               <span class="font-medium">Response is required</span>
             </label>
-            <label class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700">
+            <label class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-3 text-sm text-slate-700 dark:text-slate-200">
               <input
                 v-model="item.triggers_defect_on_fail"
                 type="checkbox"
-                class="h-4 w-4 rounded border-slate-300"
+                class="h-4 w-4 rounded border-slate-300 dark:border-slate-700"
                 :disabled="loading || item.response_type !== 'pass_fail'"
               >
               <span class="font-medium">Failure can trigger a defect</span>
@@ -343,7 +343,7 @@ onMounted(async () => {
         <div class="flex justify-start">
           <button
             type="button"
-            class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+            class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50"
             @click="addItem"
           >
             Add checklist item

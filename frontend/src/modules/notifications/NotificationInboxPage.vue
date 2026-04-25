@@ -145,7 +145,7 @@ onMounted(async () => {
       <FilterBar>
         <select
           v-model="statusFilter"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option value="">All statuses</option>
           <option v-for="option in userNotificationStatusOptions" :key="option.value" :value="option.value">
@@ -154,7 +154,7 @@ onMounted(async () => {
         </select>
         <select
           v-model="typeFilter"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option value="">All notification types</option>
           <option v-for="option in userNotificationTypeOptions" :key="option.value" :value="option.value">
@@ -179,8 +179,8 @@ onMounted(async () => {
     >
       <template #cell-title="{ row }">
         <div class="space-y-1">
-          <p class="font-semibold text-slate-900">{{ row.title }}</p>
-          <p v-if="row.body" class="text-xs leading-5 text-slate-500">{{ row.body }}</p>
+          <p class="font-semibold text-slate-900 dark:text-slate-100">{{ row.title }}</p>
+          <p v-if="row.body" class="text-xs leading-5 text-slate-500 dark:text-slate-400">{{ row.body }}</p>
         </div>
       </template>
       <template #cell-type="{ value }">
@@ -197,14 +197,14 @@ onMounted(async () => {
           <RouterLink
             v-if="row.action_url"
             :to="String(row.action_url)"
-            class="rounded-xl border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-50"
+            class="rounded-xl border border-slate-300 dark:border-slate-700 px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50"
           >
             Open
           </RouterLink>
           <button
             v-if="String(row.status) === 'unread'"
             type="button"
-            class="rounded-xl border border-sky-300 px-3 py-1.5 text-xs font-semibold text-sky-700 transition hover:bg-sky-50"
+            class="rounded-xl border border-sky-300 dark:border-sky-800/60 px-3 py-1.5 text-xs font-semibold text-sky-700 dark:text-sky-200 transition hover:bg-sky-50 dark:hover:bg-sky-950/40"
             :disabled="actionLoading"
             @click="runAction(Number(row.id), 'mark-read')"
           >
@@ -213,7 +213,7 @@ onMounted(async () => {
           <button
             v-if="String(row.status) !== 'acknowledged'"
             type="button"
-            class="rounded-xl border border-emerald-300 px-3 py-1.5 text-xs font-semibold text-emerald-700 transition hover:bg-emerald-50"
+            class="rounded-xl border border-emerald-300 dark:border-emerald-800/60 px-3 py-1.5 text-xs font-semibold text-emerald-700 dark:text-emerald-200 transition hover:bg-emerald-50 dark:hover:bg-emerald-950/40"
             :disabled="actionLoading"
             @click="runAction(Number(row.id), 'acknowledge')"
           >

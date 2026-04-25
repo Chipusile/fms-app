@@ -267,7 +267,7 @@ onMounted(async () => {
       <template #actions>
         <RouterLink
           :to="{ name: 'work-orders' }"
-          class="inline-flex items-center rounded-2xl border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+          class="inline-flex items-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50"
         >
           Back to work orders
         </RouterLink>
@@ -291,9 +291,9 @@ onMounted(async () => {
     <form class="grid gap-6 xl:grid-cols-[1fr_0.95fr]" @submit.prevent="submit">
       <SectionCard title="Work order details" description="Define the job scope, linked schedule, responsible party, and commercial due date.">
         <div class="grid gap-4 md:grid-cols-2">
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Linked schedule</span>
-            <select v-model="form.maintenance_schedule_id" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
+            <select v-model="form.maintenance_schedule_id" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
               <option :value="null">Standalone work order</option>
               <option v-for="scheduleOption in filteredSchedules" :key="scheduleOption.id" :value="scheduleOption.id">
                 {{ scheduleOption.label }}{{ scheduleOption.secondary ? ` · ${scheduleOption.secondary}` : '' }}
@@ -301,18 +301,18 @@ onMounted(async () => {
             </select>
             <FieldError :errors="errorsFor('maintenance_schedule_id')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Vehicle</span>
-            <select v-model="form.vehicle_id" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
+            <select v-model="form.vehicle_id" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
               <option v-for="vehicle in vehicles" :key="vehicle.id" :value="vehicle.id">
                 {{ vehicle.label }}{{ vehicle.secondary ? ` · ${vehicle.secondary}` : '' }}
               </option>
             </select>
             <FieldError :errors="errorsFor('vehicle_id')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Service provider</span>
-            <select v-model="form.service_provider_id" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
+            <select v-model="form.service_provider_id" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
               <option :value="null">Unassigned provider</option>
               <option v-for="provider in serviceProviders" :key="provider.id" :value="provider.id">
                 {{ provider.label }}{{ provider.secondary ? ` · ${provider.secondary}` : '' }}
@@ -320,9 +320,9 @@ onMounted(async () => {
             </select>
             <FieldError :errors="errorsFor('service_provider_id')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Assigned to</span>
-            <select v-model="form.assigned_to" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
+            <select v-model="form.assigned_to" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
               <option :value="null">No assignee yet</option>
               <option v-for="assignee in assignees" :key="assignee.id" :value="assignee.id">
                 {{ assignee.label }}{{ assignee.secondary ? ` · ${assignee.secondary}` : '' }}
@@ -330,42 +330,42 @@ onMounted(async () => {
             </select>
             <FieldError :errors="errorsFor('assigned_to')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700 md:col-span-2">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200 md:col-span-2">
             <span class="font-medium">Title</span>
-            <input v-model="form.title" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
+            <input v-model="form.title" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
             <FieldError :errors="errorsFor('title')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Maintenance type</span>
-            <select v-model="form.maintenance_type" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
+            <select v-model="form.maintenance_type" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
               <option v-for="option in workOrderTypeOptions" :key="option.value" :value="option.value">
                 {{ option.label }}
               </option>
             </select>
             <FieldError :errors="errorsFor('maintenance_type')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Priority</span>
-            <select v-model="form.priority" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
+            <select v-model="form.priority" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
               <option v-for="option in workOrderPriorityOptions" :key="option.value" :value="option.value">
                 {{ option.label }}
               </option>
             </select>
             <FieldError :errors="errorsFor('priority')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Due date</span>
-            <input v-model="form.due_date" type="date" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
+            <input v-model="form.due_date" type="date" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
             <FieldError :errors="errorsFor('due_date')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Estimated cost</span>
-            <input v-model.number="form.estimated_cost" type="number" min="0" step="0.01" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
+            <input v-model.number="form.estimated_cost" type="number" min="0" step="0.01" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)">
             <FieldError :errors="errorsFor('estimated_cost')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700 md:col-span-2">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200 md:col-span-2">
             <span class="font-medium">Notes</span>
-            <textarea v-model="form.notes" class="min-h-28 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)" />
+            <textarea v-model="form.notes" class="min-h-28 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || (isEditMode && !canEdit)" />
             <FieldError :errors="errorsFor('notes')" />
           </label>
         </div>
@@ -373,68 +373,68 @@ onMounted(async () => {
 
       <div class="space-y-6">
         <SectionCard title="Workflow status" description="Start, complete, or cancel the job while preserving the resulting maintenance history.">
-          <div class="space-y-4 text-sm text-slate-700">
-            <div v-if="workOrder" class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
+          <div class="space-y-4 text-sm text-slate-700 dark:text-slate-200">
+            <div v-if="workOrder" class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3">
               <div class="flex items-center justify-between gap-4">
                 <div>
-                  <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Current work order</p>
-                  <p class="mt-1 text-base font-semibold text-slate-900">{{ workOrder.work_order_number }}</p>
+                  <p class="text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Current work order</p>
+                  <p class="mt-1 text-base font-semibold text-slate-900 dark:text-slate-100">{{ workOrder.work_order_number }}</p>
                 </div>
                 <StatusBadge :value="workOrder.status" />
               </div>
               <div class="mt-3 flex flex-wrap gap-2">
                 <StatusBadge :value="workOrder.priority" />
-                <span class="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-xs font-semibold text-slate-600">
+                <span class="rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-2.5 py-1 text-xs font-semibold text-slate-600 dark:text-slate-400">
                   {{ selectedVehicle?.label ?? workOrder.vehicle?.registration_number ?? 'Vehicle' }}
                 </span>
               </div>
             </div>
-            <p v-else class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm leading-6 text-slate-600">
+            <p v-else class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3 text-sm leading-6 text-slate-600 dark:text-slate-400">
               Save the work order first to expose execution and closure actions.
             </p>
 
             <div class="grid gap-4 md:grid-cols-2">
-              <label class="space-y-2 text-sm text-slate-700">
+              <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
                 <span class="font-medium">Completed at</span>
-                <input v-model="completion.completed_at" type="datetime-local" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading || !canEdit">
+                <input v-model="completion.completed_at" type="datetime-local" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading || !canEdit">
                 <FieldError :errors="errorsFor('completed_at')" />
               </label>
-              <label class="space-y-2 text-sm text-slate-700">
+              <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
                 <span class="font-medium">Completion odometer</span>
-                <input v-model.number="completion.odometer_reading" type="number" min="0" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading || !canEdit">
+                <input v-model.number="completion.odometer_reading" type="number" min="0" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading || !canEdit">
                 <FieldError :errors="errorsFor('odometer_reading')" />
               </label>
-              <label class="space-y-2 text-sm text-slate-700">
+              <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
                 <span class="font-medium">Downtime hours</span>
-                <input v-model.number="completion.downtime_hours" type="number" min="0" step="0.1" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading || !canEdit">
+                <input v-model.number="completion.downtime_hours" type="number" min="0" step="0.1" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading || !canEdit">
                 <FieldError :errors="errorsFor('downtime_hours')" />
               </label>
-              <label class="space-y-2 text-sm text-slate-700">
+              <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
                 <span class="font-medium">Actual cost</span>
-                <input v-model.number="completion.actual_cost" type="number" min="0" step="0.01" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading || !canEdit">
+                <input v-model.number="completion.actual_cost" type="number" min="0" step="0.01" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading || !canEdit">
                 <FieldError :errors="errorsFor('actual_cost')" />
               </label>
-              <label class="space-y-2 text-sm text-slate-700">
+              <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
                 <span class="font-medium">Labour cost</span>
-                <input v-model.number="completion.labor_cost" type="number" min="0" step="0.01" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading || !canEdit">
+                <input v-model.number="completion.labor_cost" type="number" min="0" step="0.01" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading || !canEdit">
                 <FieldError :errors="errorsFor('labor_cost')" />
               </label>
-              <label class="space-y-2 text-sm text-slate-700">
+              <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
                 <span class="font-medium">Parts cost</span>
-                <input v-model.number="completion.parts_cost" type="number" min="0" step="0.01" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading || !canEdit">
+                <input v-model.number="completion.parts_cost" type="number" min="0" step="0.01" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading || !canEdit">
                 <FieldError :errors="errorsFor('parts_cost')" />
               </label>
             </div>
 
-            <label class="space-y-2 text-sm text-slate-700">
+            <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
               <span class="font-medium">Resolution notes</span>
-              <textarea v-model="completion.resolution_notes" class="min-h-24 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading || !canEdit" />
+              <textarea v-model="completion.resolution_notes" class="min-h-24 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading || !canEdit" />
               <FieldError :errors="errorsFor('resolution_notes')" />
             </label>
 
-            <label class="space-y-2 text-sm text-slate-700">
+            <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
               <span class="font-medium">Cancellation notes</span>
-              <textarea v-model="cancelNotes" class="min-h-20 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading || !canEdit" />
+              <textarea v-model="cancelNotes" class="min-h-20 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || actionLoading || !canEdit" />
             </label>
 
             <div class="flex flex-col gap-3">
@@ -442,7 +442,7 @@ onMounted(async () => {
                 <button
                   v-if="canStart"
                   type="button"
-                  class="rounded-2xl border border-sky-300 px-4 py-3 text-sm font-semibold text-sky-700 transition hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-60"
+                  class="rounded-2xl border border-sky-300 dark:border-sky-800/60 px-4 py-3 text-sm font-semibold text-sky-700 dark:text-sky-200 transition hover:bg-sky-50 dark:hover:bg-sky-950/40 disabled:cursor-not-allowed disabled:opacity-60"
                   :disabled="actionLoading"
                   @click="runAction('start')"
                 >
@@ -451,7 +451,7 @@ onMounted(async () => {
                 <button
                   v-if="canComplete"
                   type="button"
-                  class="rounded-2xl border border-emerald-300 px-4 py-3 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-50 disabled:cursor-not-allowed disabled:opacity-60"
+                  class="rounded-2xl border border-emerald-300 dark:border-emerald-800/60 px-4 py-3 text-sm font-semibold text-emerald-700 dark:text-emerald-200 transition hover:bg-emerald-50 dark:hover:bg-emerald-950/40 disabled:cursor-not-allowed disabled:opacity-60"
                   :disabled="actionLoading"
                   @click="runAction('complete', buildCompletionPayload() as Record<string, unknown>)"
                 >
@@ -460,7 +460,7 @@ onMounted(async () => {
                 <button
                   v-if="canCancel"
                   type="button"
-                  class="rounded-2xl border border-rose-300 px-4 py-3 text-sm font-semibold text-rose-700 transition hover:bg-rose-50 disabled:cursor-not-allowed disabled:opacity-60"
+                  class="rounded-2xl border border-rose-300 dark:border-rose-800/60 px-4 py-3 text-sm font-semibold text-rose-700 dark:text-rose-200 transition hover:bg-rose-50 dark:hover:bg-rose-950/40 disabled:cursor-not-allowed disabled:opacity-60"
                   :disabled="actionLoading"
                   @click="runAction('cancel', { resolution_notes: cancelNotes || null })"
                 >
@@ -469,7 +469,7 @@ onMounted(async () => {
               </div>
 
               <div class="flex flex-col gap-3 sm:flex-row">
-                <RouterLink :to="{ name: 'work-orders' }" class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 sm:w-auto">
+                <RouterLink :to="{ name: 'work-orders' }" class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50 sm:w-auto">
                   Cancel
                 </RouterLink>
                 <button type="submit" class="w-full rounded-2xl bg-slate-950 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60" :disabled="loading || submitting || (isEditMode ? !canEdit : !canCreate)">
@@ -478,7 +478,7 @@ onMounted(async () => {
                 <button
                   v-if="isEditMode && canDelete && workOrder?.status !== 'completed'"
                   type="button"
-                  class="w-full rounded-2xl border border-rose-300 px-4 py-3 text-sm font-semibold text-rose-700 transition hover:bg-rose-50 sm:w-auto"
+                  class="w-full rounded-2xl border border-rose-300 dark:border-rose-800/60 px-4 py-3 text-sm font-semibold text-rose-700 dark:text-rose-200 transition hover:bg-rose-50 dark:hover:bg-rose-950/40 sm:w-auto"
                   @click="removeWorkOrder"
                 >
                   Delete
@@ -489,11 +489,11 @@ onMounted(async () => {
         </SectionCard>
 
         <SectionCard v-if="workOrder?.maintenance_record" title="Generated maintenance record" description="Completing the work order creates an immutable maintenance history entry.">
-          <div class="space-y-3 text-sm text-slate-700">
-            <p><span class="font-medium text-slate-900">Summary:</span> {{ workOrder.maintenance_record.summary }}</p>
-            <p><span class="font-medium text-slate-900">Completed:</span> {{ workOrder.maintenance_record.completed_at ? workOrder.maintenance_record.completed_at.slice(0, 10) : '—' }}</p>
-            <p><span class="font-medium text-slate-900">Total cost:</span> {{ workOrder.maintenance_record.total_cost ?? '—' }}</p>
-            <p><span class="font-medium text-slate-900">Recorded odometer:</span> {{ workOrder.maintenance_record.odometer_reading ?? '—' }}</p>
+          <div class="space-y-3 text-sm text-slate-700 dark:text-slate-200">
+            <p><span class="font-medium text-slate-900 dark:text-slate-100">Summary:</span> {{ workOrder.maintenance_record.summary }}</p>
+            <p><span class="font-medium text-slate-900 dark:text-slate-100">Completed:</span> {{ workOrder.maintenance_record.completed_at ? workOrder.maintenance_record.completed_at.slice(0, 10) : '—' }}</p>
+            <p><span class="font-medium text-slate-900 dark:text-slate-100">Total cost:</span> {{ workOrder.maintenance_record.total_cost ?? '—' }}</p>
+            <p><span class="font-medium text-slate-900 dark:text-slate-100">Recorded odometer:</span> {{ workOrder.maintenance_record.odometer_reading ?? '—' }}</p>
           </div>
         </SectionCard>
       </div>

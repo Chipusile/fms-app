@@ -78,7 +78,7 @@ onMounted(async () => {
   <div class="space-y-6">
     <PageHeader eyebrow="Master Data" :title="isEditMode ? 'Edit department' : 'Create department'" description="Departments and cost centres define asset ownership and reporting boundaries.">
       <template #actions>
-        <RouterLink :to="{ name: 'departments' }" class="inline-flex items-center rounded-2xl border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
+        <RouterLink :to="{ name: 'departments' }" class="inline-flex items-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50">
           Cancel
         </RouterLink>
       </template>
@@ -89,35 +89,35 @@ onMounted(async () => {
     <form class="grid gap-6 xl:grid-cols-[1fr_0.8fr]" @submit.prevent="submit">
       <SectionCard title="Department details" description="Core metadata used across allocations and reporting.">
         <div class="grid gap-4 md:grid-cols-2">
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Name</span>
-            <input v-model="form.name" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model="form.name" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('name')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Code</span>
-            <input v-model="form.code" class="w-full rounded-2xl border border-slate-300 px-4 py-3 uppercase outline-none focus:border-blue-500" :disabled="loading">
+            <input v-model="form.code" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 uppercase outline-none focus:border-blue-500" :disabled="loading">
             <FieldError :errors="errorsFor('code')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700 md:col-span-2">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200 md:col-span-2">
             <span class="font-medium">Description</span>
-            <textarea v-model="form.description" class="min-h-32 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading" />
+            <textarea v-model="form.description" class="min-h-32 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading" />
             <FieldError :errors="errorsFor('description')" />
           </label>
         </div>
       </SectionCard>
 
       <SectionCard title="Lifecycle" description="Inactive departments remain visible for historical reporting but should not receive new allocations.">
-        <div class="space-y-4 text-sm text-slate-700">
+        <div class="space-y-4 text-sm text-slate-700 dark:text-slate-200">
           <label class="space-y-2">
             <span class="font-medium">Status</span>
-            <select v-model="form.status" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
+            <select v-model="form.status" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading">
               <option v-for="option in departmentStatusOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
             </select>
             <FieldError :errors="errorsFor('status')" />
           </label>
           <div class="flex flex-col gap-3 sm:flex-row">
-            <RouterLink :to="{ name: 'departments' }" class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 sm:w-auto">
+            <RouterLink :to="{ name: 'departments' }" class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50 sm:w-auto">
               Cancel
             </RouterLink>
             <button type="submit" class="w-full rounded-2xl bg-slate-950 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60" :disabled="loading || submitting">

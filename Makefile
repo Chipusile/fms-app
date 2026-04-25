@@ -131,7 +131,7 @@ routes: ## List all registered routes
 	$(ARTISAN) route:list
 
 api-docs: ## Generate/view API documentation
-	@echo "API docs: http://localhost:8080/docs/api (root setup) or http://localhost:8000/docs/api (infra setup)"
+	@echo "API docs: http://localhost:8090/docs/api (root setup) or http://localhost:8000/docs/api (infra setup)"
 
 # ── Help ─────────────────────────────────────────────────────
 .PHONY: help

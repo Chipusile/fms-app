@@ -104,7 +104,7 @@ const option = computed(() => {
     />
     <div
       v-else
-      class="flex min-h-[320px] items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-slate-50 text-sm text-slate-500"
+      class="flex min-h-[320px] items-center justify-center rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 text-sm text-slate-500 dark:text-slate-400"
     >
       No chart data available for the selected filters.
     </div>

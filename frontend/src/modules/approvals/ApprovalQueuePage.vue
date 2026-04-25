@@ -167,22 +167,22 @@ onMounted(async () => {
       :description="`Preparing to ${decisionAction} ${decisionTarget.title}.`"
     >
       <div class="space-y-4">
-        <div class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
-          <p class="font-semibold text-slate-900">{{ decisionTarget.summary ?? 'Approval workflow record' }}</p>
-          <p class="mt-1 text-xs text-slate-500">Reference: {{ decisionTarget.approvalable?.reference ?? 'Workflow item' }}</p>
+        <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3 text-sm text-slate-700 dark:text-slate-200">
+          <p class="font-semibold text-slate-900 dark:text-slate-100">{{ decisionTarget.summary ?? 'Approval workflow record' }}</p>
+          <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">Reference: {{ decisionTarget.approvalable?.reference ?? 'Workflow item' }}</p>
         </div>
-        <label class="space-y-2 text-sm text-slate-700">
+        <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
           <span class="font-medium">Decision notes</span>
           <textarea
             v-model="decisionNotes"
-            class="min-h-28 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+            class="min-h-28 w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
             :disabled="actionLoading"
           />
         </label>
         <div class="flex flex-col gap-3 sm:flex-row">
           <button
             type="button"
-            class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 sm:w-auto"
+            class="inline-flex w-full items-center justify-center rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50 sm:w-auto"
             :disabled="actionLoading"
             @click="cancelDecision"
           >
@@ -204,7 +204,7 @@ onMounted(async () => {
       <FilterBar>
         <select
           v-model="statusFilter"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option value="">All statuses</option>
           <option v-for="option in approvalRequestStatusOptions" :key="option.value" :value="option.value">
@@ -213,7 +213,7 @@ onMounted(async () => {
         </select>
         <select
           v-model="typeFilter"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option value="">All workflow types</option>
           <option v-for="option in approvalRequestTypeOptions" :key="option.value" :value="option.value">
@@ -250,7 +250,7 @@ onMounted(async () => {
           <button
             v-if="String(row.status) === 'pending'"
             type="button"
-            class="rounded-xl border border-emerald-300 px-3 py-1.5 text-xs font-semibold text-emerald-700 transition hover:bg-emerald-50"
+            class="rounded-xl border border-emerald-300 dark:border-emerald-800/60 px-3 py-1.5 text-xs font-semibold text-emerald-700 dark:text-emerald-200 transition hover:bg-emerald-50 dark:hover:bg-emerald-950/40"
             @click="beginDecision(Number(row.id), 'approve')"
           >
             Approve
@@ -258,14 +258,14 @@ onMounted(async () => {
           <button
             v-if="String(row.status) === 'pending'"
             type="button"
-            class="rounded-xl border border-rose-300 px-3 py-1.5 text-xs font-semibold text-rose-700 transition hover:bg-rose-50"
+            class="rounded-xl border border-rose-300 dark:border-rose-800/60 px-3 py-1.5 text-xs font-semibold text-rose-700 dark:text-rose-200 transition hover:bg-rose-50 dark:hover:bg-rose-950/40"
             @click="beginDecision(Number(row.id), 'reject')"
           >
             Reject
           </button>
           <span
             v-else
-            class="text-xs text-slate-500"
+            class="text-xs text-slate-500 dark:text-slate-400"
           >
             Finalized
           </span>

@@ -143,19 +143,19 @@ onMounted(async () => {
     </PageHeader>
 
     <div class="grid gap-4 md:grid-cols-3">
-      <div class="rounded-2xl border border-amber-200 bg-amber-50/70 p-5 shadow-sm shadow-amber-100/60">
-        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-amber-700">Open</p>
-        <p class="mt-3 text-3xl font-semibold text-amber-950">{{ statusCounts.open }}</p>
+      <div class="rounded-2xl border border-amber-200 dark:border-amber-900/60 bg-amber-50/70 dark:bg-amber-950/40 p-5 shadow-sm shadow-amber-100/60 dark:shadow-amber-900/20">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-amber-700 dark:text-amber-200">Open</p>
+        <p class="mt-3 text-3xl font-semibold text-amber-950 dark:text-amber-100">{{ statusCounts.open }}</p>
         <p class="mt-2 text-sm text-amber-900/80">New work orders waiting for assignment or start.</p>
       </div>
-      <div class="rounded-2xl border border-sky-200 bg-sky-50/70 p-5 shadow-sm shadow-sky-100/60">
-        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-sky-700">In progress</p>
-        <p class="mt-3 text-3xl font-semibold text-sky-950">{{ statusCounts.in_progress }}</p>
+      <div class="rounded-2xl border border-sky-200 dark:border-sky-900/60 bg-sky-50/70 dark:bg-sky-950/40 p-5 shadow-sm shadow-sky-100/60 dark:shadow-sky-900/20">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-sky-700 dark:text-sky-200">In progress</p>
+        <p class="mt-3 text-3xl font-semibold text-sky-950 dark:text-sky-100">{{ statusCounts.in_progress }}</p>
         <p class="mt-2 text-sm text-sky-900/80">Jobs currently under maintenance execution.</p>
       </div>
-      <div class="rounded-2xl border border-emerald-200 bg-emerald-50/70 p-5 shadow-sm shadow-emerald-100/60">
-        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700">Completed on page</p>
-        <p class="mt-3 text-3xl font-semibold text-emerald-950">{{ statusCounts.completed }}</p>
+      <div class="rounded-2xl border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/70 dark:bg-emerald-950/40 p-5 shadow-sm shadow-emerald-100/60 dark:shadow-emerald-900/20">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700 dark:text-emerald-200">Completed on page</p>
+        <p class="mt-3 text-3xl font-semibold text-emerald-950 dark:text-emerald-100">{{ statusCounts.completed }}</p>
         <p class="mt-2 text-sm text-emerald-900/80">Closed-out work orders visible in the current result set.</p>
       </div>
     </div>
@@ -173,11 +173,11 @@ onMounted(async () => {
           v-model="search"
           type="search"
           placeholder="Search work order number, title, or vehicle"
-          class="min-w-[240px] flex-1 rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="min-w-[240px] flex-1 rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
         <select
           v-model="statusFilter"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option value="">All statuses</option>
           <option v-for="option in workOrderStatusOptions" :key="option.value" :value="option.value">
@@ -186,7 +186,7 @@ onMounted(async () => {
         </select>
         <select
           v-model="priorityFilter"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option value="">All priorities</option>
           <option v-for="option in workOrderPriorityOptions" :key="option.value" :value="option.value">
@@ -195,7 +195,7 @@ onMounted(async () => {
         </select>
         <select
           v-model="vehicleFilter"
-          class="rounded-2xl border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
+          class="rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500"
         >
           <option value="">All vehicles</option>
           <option v-for="vehicle in vehicles" :key="vehicle.id" :value="String(vehicle.id)">
@@ -228,14 +228,14 @@ onMounted(async () => {
         <div class="flex items-center gap-2">
           <RouterLink
             :to="{ name: 'work-orders.edit', params: { id: String(row.id) } }"
-            class="rounded-xl border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-50"
+            class="rounded-xl border border-slate-300 dark:border-slate-700 px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50"
           >
             Open
           </RouterLink>
           <button
             v-if="auth.hasPermission('maintenance.delete') && row.status !== 'completed'"
             type="button"
-            class="rounded-xl border border-rose-300 px-3 py-1.5 text-xs font-semibold text-rose-700 transition hover:bg-rose-50"
+            class="rounded-xl border border-rose-300 dark:border-rose-800/60 px-3 py-1.5 text-xs font-semibold text-rose-700 dark:text-rose-200 transition hover:bg-rose-50 dark:hover:bg-rose-950/40"
             @click="removeWorkOrder(Number(row.id))"
           >
             Delete

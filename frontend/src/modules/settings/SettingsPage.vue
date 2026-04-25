@@ -194,46 +194,46 @@ onMounted(async () => {
         description="Tenant administrators can manage their own company profile without needing platform-level access."
       >
         <div class="grid gap-4 md:grid-cols-2">
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Organisation name</span>
-            <input v-model="tenantProfile.name" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || profileSubmitting">
+            <input v-model="tenantProfile.name" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || profileSubmitting">
             <FieldError :errors="profileFieldErrors('name')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Email</span>
-            <input v-model="tenantProfile.email" type="email" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || profileSubmitting">
+            <input v-model="tenantProfile.email" type="email" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || profileSubmitting">
             <FieldError :errors="profileFieldErrors('email')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Phone</span>
-            <input v-model="tenantProfile.phone" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || profileSubmitting">
+            <input v-model="tenantProfile.phone" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || profileSubmitting">
             <FieldError :errors="profileFieldErrors('phone')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Website</span>
-            <input v-model="tenantProfile.website" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || profileSubmitting">
+            <input v-model="tenantProfile.website" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || profileSubmitting">
             <FieldError :errors="profileFieldErrors('website')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700 md:col-span-2">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200 md:col-span-2">
             <span class="font-medium">Address</span>
-            <input v-model="tenantProfile.address" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || profileSubmitting">
+            <input v-model="tenantProfile.address" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || profileSubmitting">
             <FieldError :errors="profileFieldErrors('address')" />
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">City</span>
-            <input v-model="tenantProfile.city" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || profileSubmitting">
+            <input v-model="tenantProfile.city" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || profileSubmitting">
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">State / province</span>
-            <input v-model="tenantProfile.state" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || profileSubmitting">
+            <input v-model="tenantProfile.state" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || profileSubmitting">
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Postal code</span>
-            <input v-model="tenantProfile.postal_code" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || profileSubmitting">
+            <input v-model="tenantProfile.postal_code" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || profileSubmitting">
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Country</span>
-            <input v-model="tenantProfile.country" class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || profileSubmitting">
+            <input v-model="tenantProfile.country" class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500" :disabled="loading || profileSubmitting">
           </label>
           <button
             type="button"
@@ -248,11 +248,11 @@ onMounted(async () => {
 
       <SectionCard title="Organisation defaults" description="Tenant identity and operational defaults.">
         <div class="grid gap-4 md:grid-cols-2">
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Timezone</span>
             <select
               v-model="timezone"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || !canManageSettings"
             >
               <option
@@ -264,11 +264,11 @@ onMounted(async () => {
               </option>
             </select>
           </label>
-          <label class="space-y-2 text-sm text-slate-700">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             <span class="font-medium">Currency</span>
             <select
               v-model="currency"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || !canManageSettings"
             >
               <option
@@ -280,11 +280,11 @@ onMounted(async () => {
               </option>
             </select>
           </label>
-          <label class="space-y-2 text-sm text-slate-700 md:col-span-2">
+          <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200 md:col-span-2">
             <span class="font-medium">Date format</span>
             <select
               v-model="dateFormat"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || !canManageSettings"
             >
               <option
@@ -300,14 +300,14 @@ onMounted(async () => {
       </SectionCard>
 
       <SectionCard title="Reminder rules" description="These values are stored as tenant settings so reminder behaviour stays configurable.">
-        <div class="space-y-4 text-sm text-slate-700">
+        <div class="space-y-4 text-sm text-slate-700 dark:text-slate-200">
           <label class="space-y-2">
             <span class="font-medium">Compliance reminder lead time (days)</span>
             <input
               v-model.number="complianceReminderDays"
               type="number"
               min="1"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || !canManageSettings"
             >
           </label>
@@ -315,7 +315,7 @@ onMounted(async () => {
             <span class="font-medium">Reminder automation</span>
             <select
               v-model="remindersEnabled"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || !canManageSettings"
             >
               <option :value="true">Enabled</option>
@@ -328,7 +328,7 @@ onMounted(async () => {
               v-model.number="maintenanceReminderDays"
               type="number"
               min="1"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || !canManageSettings"
             >
           </label>
@@ -338,7 +338,7 @@ onMounted(async () => {
               v-model.number="maintenanceReminderKm"
               type="number"
               min="1"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || !canManageSettings"
             >
           </label>
@@ -348,7 +348,7 @@ onMounted(async () => {
               v-model.number="componentReminderDays"
               type="number"
               min="1"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || !canManageSettings"
             >
           </label>
@@ -358,7 +358,7 @@ onMounted(async () => {
               v-model.number="componentReminderKm"
               type="number"
               min="1"
-              class="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading || !canManageSettings"
             >
           </label>
