@@ -42,6 +42,10 @@ RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
 # PHP configuration for local development
 COPY php-local.ini /usr/local/etc/php/conf.d/local.ini
 
+# Ensure PHP-FPM accepts IPv4 connections from Nginx in a separate container.
+RUN find /usr/local/etc/php-fpm.d -maxdepth 1 -type f -name '*docker*.conf' \
+    -exec sed -i 's!^listen = 9000$!listen = 0.0.0.0:9000!' {} +
+
 WORKDIR /var/www/backend
 
 # Create application user matching host UID for file permission compatibility
