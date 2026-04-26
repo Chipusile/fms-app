@@ -24,13 +24,13 @@ class DepartmentController extends Controller
             ->with('manager')
             ->when($request->input('search'), function ($query, $search) {
                 $query->where(function ($query) use ($search) {
-                    $query->where('name', 'like', "%{$search}%")
-                        ->orWhere('code', 'like', "%{$search}%");
+                    $query->where('name', 'ilike', "%{$search}%")
+                        ->orWhere('code', 'ilike', "%{$search}%");
                 });
             })
             ->when($request->input('filter.status'), fn ($query, $status) => $query->where('status', $status))
             ->orderBy($sort, $direction)
-            ->paginate($request->input('per_page', 15));
+            ->paginate($this->perPage($request, 15));
 
         return ApiResponse::success(
             DepartmentResource::collection($departments),

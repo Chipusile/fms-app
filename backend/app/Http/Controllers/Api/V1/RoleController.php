@@ -23,7 +23,7 @@ class RoleController extends Controller
             ->with('permissions')
             ->when($request->input('search'), fn ($q, $search) => $q->where('name', 'ilike', "%{$search}%"))
             ->orderBy('name')
-            ->paginate($request->input('per_page', 15));
+            ->paginate($this->perPage($request, 15));
 
         return ApiResponse::success(
             RoleResource::collection($roles),

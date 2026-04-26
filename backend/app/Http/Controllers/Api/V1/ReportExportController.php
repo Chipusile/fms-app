@@ -16,8 +16,7 @@ class ReportExportController extends Controller
 {
     public function __construct(
         private readonly ReportExportService $reportExportService,
-    ) {
-    }
+    ) {}
 
     public function index(Request $request): JsonResponse
     {
@@ -25,8 +24,11 @@ class ReportExportController extends Controller
 
         $exports = ReportExport::query()
             ->with('requester')
+            ->when(! $request->user()->hasPermission('reports.view-all'), function ($query) use ($request) {
+                $query->where('requested_by', $request->user()->id);
+            })
             ->orderByDesc('created_at')
-            ->paginate($request->input('per_page', 10));
+            ->paginate($this->perPage($request, 10));
 
         return ApiResponse::success(
             ReportExportResource::collection($exports),

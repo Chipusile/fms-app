@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Enums\UserStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\ApiResponse;
 use App\Http\Requests\Api\V1\StoreUserRequest;
 use App\Http\Requests\Api\V1\UpdateUserRequest;
 use App\Http\Resources\Api\V1\UserResource;
 use App\Models\User;
+use App\Models\UserInvitation;
+use App\Notifications\UserInvitationNotification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -27,8 +31,11 @@ class UserController extends Controller
                 $q->where('name', 'ilike', "%{$search}%")
                     ->orWhere('email', 'ilike', "%{$search}%");
             }))
-            ->orderBy($request->input('sort', 'name'), $request->input('direction', 'asc'))
-            ->paginate($request->input('per_page', 15));
+            ->orderBy(
+                $this->sortColumn($request, ['name', 'email', 'status', 'created_at', 'last_login_at'], 'name'),
+                $this->sortDirection($request)
+            )
+            ->paginate($this->perPage($request, 15));
 
         return ApiResponse::success(
             UserResource::collection($users),
@@ -44,19 +51,47 @@ class UserController extends Controller
     public function store(StoreUserRequest $request): JsonResponse
     {
         $this->authorize('create', User::class);
+        $this->enforceTenantPlanLimit(
+            $request,
+            'users',
+            User::query()->visibleTo($request->user())->count()
+        );
 
-        $user = DB::transaction(function () use ($request) {
-            $user = User::create($request->safe()->except('role_ids'));
+        [$user, $invitation, $plainToken] = DB::transaction(function () use ($request) {
+            $payload = $request->safe()->except('role_ids');
+            $payload['password'] = Str::password(32);
+            $payload['status'] = UserStatus::PendingActivation;
+            $payload['email_verified_at'] = null;
+
+            $user = User::create($payload);
 
             if ($request->has('role_ids')) {
                 $user->roles()->sync($request->input('role_ids'));
             }
 
-            return $user;
+            UserInvitation::where('user_id', $user->id)
+                ->whereNull('accepted_at')
+                ->update(['accepted_at' => now()]);
+
+            $plainToken = Str::random(64);
+            $invitation = UserInvitation::create([
+                'tenant_id' => $user->tenant_id,
+                'user_id' => $user->id,
+                'invited_by' => $request->user()->id,
+                'email' => $user->email,
+                'token_hash' => hash('sha256', $plainToken),
+                'role_ids' => $request->input('role_ids', []),
+                'expires_at' => now()->addDays(7),
+            ]);
+
+            return [$user, $invitation, $plainToken];
         });
 
+        $user->notify(new UserInvitationNotification($invitation, $plainToken));
+
         return ApiResponse::created(
-            new UserResource($user->load('roles'))
+            new UserResource($user->load('roles')),
+            'User invited successfully.'
         );
     }
 

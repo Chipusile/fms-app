@@ -20,8 +20,7 @@ class IncidentController extends Controller
 {
     public function __construct(
         private readonly IncidentService $incidentService,
-    ) {
-    }
+    ) {}
 
     public function index(Request $request): JsonResponse
     {
@@ -34,10 +33,10 @@ class IncidentController extends Controller
 
                 $query->where(function ($searchQuery) use ($search) {
                     $searchQuery
-                        ->where('incident_number', 'like', $search)
-                        ->orWhere('description', 'like', $search)
-                        ->orWhere('location', 'like', $search)
-                        ->orWhereHas('vehicle', fn ($vehicleQuery) => $vehicleQuery->where('registration_number', 'like', $search));
+                        ->where('incident_number', 'ilike', $search)
+                        ->orWhere('description', 'ilike', $search)
+                        ->orWhere('location', 'ilike', $search)
+                        ->orWhereHas('vehicle', fn ($vehicleQuery) => $vehicleQuery->where('registration_number', 'ilike', $search));
                 });
             })
             ->when($request->filled('filter.status'), fn ($query, $status) => $query->where('status', $status))
@@ -45,7 +44,7 @@ class IncidentController extends Controller
             ->when($request->filled('filter.incident_type'), fn ($query, $type) => $query->where('incident_type', $type))
             ->when($request->filled('filter.vehicle_id'), fn ($query, $vehicleId) => $query->where('vehicle_id', $vehicleId))
             ->orderByDesc('occurred_at')
-            ->paginate($request->input('per_page', 15));
+            ->paginate($this->perPage($request, 15));
 
         return ApiResponse::success(
             IncidentResource::collection($incidents),

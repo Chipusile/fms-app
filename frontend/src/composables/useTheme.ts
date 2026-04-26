@@ -23,7 +23,7 @@ export function useTheme() {
   )
 
   function cycle() {
-    const next = cycleOrder[(cycleOrder.indexOf(mode.value) + 1) % cycleOrder.length]
+    const next = cycleOrder[(cycleOrder.indexOf(mode.value) + 1) % cycleOrder.length] ?? 'auto'
     mode.value = next
   }
 

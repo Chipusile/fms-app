@@ -62,4 +62,5 @@ Artisan::command('fleet:dispatch-reminders {--tenant=}', function () {
 
 Schedule::command('fleet:dispatch-reminders')
     ->hourly()
-    ->withoutOverlapping();
+    ->withoutOverlapping()
+    ->emailOutputOnFailure(config('mail.from.address'));

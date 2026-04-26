@@ -23,15 +23,15 @@ class ServiceProviderController extends Controller
         $serviceProviders = ServiceProvider::query()
             ->when($request->input('search'), function ($query, $search) {
                 $query->where(function ($query) use ($search) {
-                    $query->where('name', 'like', "%{$search}%")
-                        ->orWhere('contact_person', 'like', "%{$search}%")
-                        ->orWhere('email', 'like', "%{$search}%");
+                    $query->where('name', 'ilike', "%{$search}%")
+                        ->orWhere('contact_person', 'ilike', "%{$search}%")
+                        ->orWhere('email', 'ilike', "%{$search}%");
                 });
             })
             ->when($request->input('filter.status'), fn ($query, $status) => $query->where('status', $status))
             ->when($request->input('filter.provider_type'), fn ($query, $providerType) => $query->where('provider_type', $providerType))
             ->orderBy($sort, $direction)
-            ->paginate($request->input('per_page', 15));
+            ->paginate($this->perPage($request, 15));
 
         return ApiResponse::success(
             ServiceProviderResource::collection($serviceProviders),

@@ -24,11 +24,11 @@ class VehicleController extends Controller
             ->with(['type', 'department'])
             ->when($request->input('search'), function ($query, $search) {
                 $query->where(function ($query) use ($search) {
-                    $query->where('registration_number', 'like', "%{$search}%")
-                        ->orWhere('asset_tag', 'like', "%{$search}%")
-                        ->orWhere('vin', 'like', "%{$search}%")
-                        ->orWhere('make', 'like', "%{$search}%")
-                        ->orWhere('model', 'like', "%{$search}%");
+                    $query->where('registration_number', 'ilike', "%{$search}%")
+                        ->orWhere('asset_tag', 'ilike', "%{$search}%")
+                        ->orWhere('vin', 'ilike', "%{$search}%")
+                        ->orWhere('make', 'ilike', "%{$search}%")
+                        ->orWhere('model', 'ilike', "%{$search}%");
                 });
             })
             ->when($request->input('filter.status'), fn ($query, $status) => $query->where('status', $status))
@@ -36,7 +36,7 @@ class VehicleController extends Controller
             ->when($request->input('filter.vehicle_type_id'), fn ($query, $vehicleTypeId) => $query->where('vehicle_type_id', $vehicleTypeId))
             ->when($request->input('filter.department_id'), fn ($query, $departmentId) => $query->where('department_id', $departmentId))
             ->orderBy($sort, $direction)
-            ->paginate($request->input('per_page', 15));
+            ->paginate($this->perPage($request, 15));
 
         return ApiResponse::success(
             VehicleResource::collection($vehicles),
@@ -52,6 +52,7 @@ class VehicleController extends Controller
     public function store(VehicleRequest $request): JsonResponse
     {
         $this->authorize('create', Vehicle::class);
+        $this->enforceTenantPlanLimit($request, 'vehicles', Vehicle::query()->count());
 
         $vehicle = Vehicle::create($request->validated());
 

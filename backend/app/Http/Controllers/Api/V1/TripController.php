@@ -23,8 +23,7 @@ class TripController extends Controller
 {
     public function __construct(
         private readonly TripService $tripService,
-    ) {
-    }
+    ) {}
 
     public function index(Request $request): JsonResponse
     {
@@ -41,12 +40,12 @@ class TripController extends Controller
 
                 $query->where(function ($searchQuery) use ($search) {
                     $searchQuery
-                        ->where('trip_number', 'like', $search)
-                        ->orWhere('purpose', 'like', $search)
-                        ->orWhere('origin', 'like', $search)
-                        ->orWhere('destination', 'like', $search)
-                        ->orWhereHas('vehicle', fn ($vehicleQuery) => $vehicleQuery->where('registration_number', 'like', $search))
-                        ->orWhereHas('driver', fn ($driverQuery) => $driverQuery->where('name', 'like', $search));
+                        ->where('trip_number', 'ilike', $search)
+                        ->orWhere('purpose', 'ilike', $search)
+                        ->orWhere('origin', 'ilike', $search)
+                        ->orWhere('destination', 'ilike', $search)
+                        ->orWhereHas('vehicle', fn ($vehicleQuery) => $vehicleQuery->where('registration_number', 'ilike', $search))
+                        ->orWhereHas('driver', fn ($driverQuery) => $driverQuery->where('name', 'ilike', $search));
                 });
             })
             ->when($request->filled('filter.status'), fn ($query, $status) => $query->where('status', $status))
@@ -54,7 +53,7 @@ class TripController extends Controller
             ->when($request->filled('filter.driver_id'), fn ($query, $driverId) => $query->where('driver_id', $driverId))
             ->when($request->filled('filter.requested_by'), fn ($query, $requestedBy) => $query->where('requested_by', $requestedBy))
             ->orderBy($sort, $direction)
-            ->paginate($request->input('per_page', 15));
+            ->paginate($this->perPage($request, 15));
 
         return ApiResponse::success(
             TripResource::collection($trips),

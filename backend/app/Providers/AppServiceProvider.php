@@ -2,50 +2,49 @@
 
 namespace App\Providers;
 
-use App\Models\AuditLog;
-use App\Models\AssetDocument;
 use App\Models\ApprovalRequest;
+use App\Models\AssetDocument;
+use App\Models\AuditLog;
+use App\Models\ComplianceItem;
 use App\Models\Department;
 use App\Models\Driver;
 use App\Models\FuelLog;
 use App\Models\Incident;
 use App\Models\Inspection;
 use App\Models\InspectionTemplate;
-use App\Models\ComplianceItem;
-use App\Models\MaintenanceSchedule;
 use App\Models\MaintenanceRequest;
-use App\Models\WorkOrder;
+use App\Models\MaintenanceSchedule;
 use App\Models\OdometerReading;
 use App\Models\Permission;
-use App\Models\Role;
 use App\Models\ReportExport;
+use App\Models\Role;
 use App\Models\ServiceProvider as ServiceProviderModel;
 use App\Models\Setting;
 use App\Models\Tenant;
 use App\Models\Trip;
-use App\Models\UserNotification;
 use App\Models\User;
+use App\Models\UserNotification;
 use App\Models\Vehicle;
-use App\Models\VehicleComponent;
 use App\Models\VehicleAssignment;
+use App\Models\VehicleComponent;
 use App\Models\VehicleType;
-use App\Policies\AuditLogPolicy;
-use App\Policies\AssetDocumentPolicy;
+use App\Models\WorkOrder;
 use App\Policies\ApprovalRequestPolicy;
+use App\Policies\AssetDocumentPolicy;
+use App\Policies\AuditLogPolicy;
+use App\Policies\ComplianceItemPolicy;
 use App\Policies\DepartmentPolicy;
 use App\Policies\DriverPolicy;
 use App\Policies\FuelLogPolicy;
 use App\Policies\IncidentPolicy;
 use App\Policies\InspectionPolicy;
 use App\Policies\InspectionTemplatePolicy;
-use App\Policies\ComplianceItemPolicy;
-use App\Policies\MaintenanceSchedulePolicy;
 use App\Policies\MaintenanceRequestPolicy;
-use App\Policies\WorkOrderPolicy;
+use App\Policies\MaintenanceSchedulePolicy;
 use App\Policies\OdometerReadingPolicy;
 use App\Policies\PermissionPolicy;
-use App\Policies\RolePolicy;
 use App\Policies\ReportExportPolicy;
+use App\Policies\RolePolicy;
 use App\Policies\ServiceProviderPolicy;
 use App\Policies\SettingPolicy;
 use App\Policies\TenantPolicy;
@@ -53,14 +52,16 @@ use App\Policies\TripPolicy;
 use App\Policies\UserNotificationPolicy;
 use App\Policies\UserPolicy;
 use App\Policies\VehicleAssignmentPolicy;
-use App\Policies\VehiclePolicy;
 use App\Policies\VehicleComponentPolicy;
+use App\Policies\VehiclePolicy;
 use App\Policies\VehicleTypePolicy;
+use App\Policies\WorkOrderPolicy;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Validation\Rules\Password;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -77,11 +78,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Password::defaults(fn () => Password::min(12)
+            ->mixedCase()
+            ->numbers()
+            ->symbols()
+            ->uncompromised());
+
         RateLimiter::for('auth-login', function (Request $request) {
             $email = (string) $request->input('email', 'guest');
 
             return [
                 Limit::perMinute(5)->by($email.'|'.$request->ip()),
+                Limit::perMinute(20)->by($email),
             ];
         });
 

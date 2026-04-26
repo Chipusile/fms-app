@@ -20,7 +20,8 @@ class ReportExportPolicy
     public function view(User $user, ReportExport $reportExport): bool
     {
         return $user->tenant_id === $reportExport->tenant_id
-            && $user->hasPermission('reports.view');
+            && $user->hasPermission('reports.view')
+            && ($reportExport->requested_by === $user->id || $user->hasPermission('reports.view-all'));
     }
 
     public function create(User $user): bool
@@ -31,6 +32,7 @@ class ReportExportPolicy
     public function download(User $user, ReportExport $reportExport): bool
     {
         return $user->tenant_id === $reportExport->tenant_id
-            && $user->hasPermission('reports.export');
+            && $user->hasPermission('reports.export')
+            && ($reportExport->requested_by === $user->id || $user->hasPermission('reports.view-all'));
     }
 }

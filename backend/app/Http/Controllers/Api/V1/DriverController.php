@@ -24,16 +24,16 @@ class DriverController extends Controller
             ->with(['department', 'user'])
             ->when($request->input('search'), function ($query, $search) {
                 $query->where(function ($query) use ($search) {
-                    $query->where('name', 'like', "%{$search}%")
-                        ->orWhere('employee_number', 'like', "%{$search}%")
-                        ->orWhere('license_number', 'like', "%{$search}%")
-                        ->orWhere('email', 'like', "%{$search}%");
+                    $query->where('name', 'ilike', "%{$search}%")
+                        ->orWhere('employee_number', 'ilike', "%{$search}%")
+                        ->orWhere('license_number', 'ilike', "%{$search}%")
+                        ->orWhere('email', 'ilike', "%{$search}%");
                 });
             })
             ->when($request->input('filter.status'), fn ($query, $status) => $query->where('status', $status))
             ->when($request->input('filter.department_id'), fn ($query, $departmentId) => $query->where('department_id', $departmentId))
             ->orderBy($sort, $direction)
-            ->paginate($request->input('per_page', 15));
+            ->paginate($this->perPage($request, 15));
 
         return ApiResponse::success(
             DriverResource::collection($drivers),
@@ -49,6 +49,7 @@ class DriverController extends Controller
     public function store(DriverRequest $request): JsonResponse
     {
         $this->authorize('create', Driver::class);
+        $this->enforceTenantPlanLimit($request, 'drivers', Driver::query()->count());
 
         $driver = Driver::create($request->validated());
 

@@ -28,7 +28,7 @@ class AuditLogController extends Controller
             ->when($request->input('filter.from'), fn ($q, $from) => $q->where('created_at', '>=', $from))
             ->when($request->input('filter.to'), fn ($q, $to) => $q->where('created_at', '<=', $to))
             ->orderByDesc('created_at')
-            ->paginate($request->input('per_page', 25));
+            ->paginate($this->perPage($request, 25));
 
         return ApiResponse::success(
             AuditLogResource::collection($logs->items()),

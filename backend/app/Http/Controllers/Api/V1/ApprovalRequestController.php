@@ -15,8 +15,7 @@ class ApprovalRequestController extends Controller
 {
     public function __construct(
         private readonly ApprovalService $approvalService,
-    ) {
-    }
+    ) {}
 
     public function index(Request $request): JsonResponse
     {
@@ -28,7 +27,7 @@ class ApprovalRequestController extends Controller
             ->when($request->filled('filter.approval_type'), fn ($query, $type) => $query->where('approval_type', $type))
             ->orderByRaw("CASE WHEN status = 'pending' THEN 0 ELSE 1 END")
             ->orderByDesc('created_at')
-            ->paginate($request->input('per_page', 15));
+            ->paginate($this->perPage($request, 15));
 
         return ApiResponse::success(
             ApprovalRequestResource::collection($approvals),

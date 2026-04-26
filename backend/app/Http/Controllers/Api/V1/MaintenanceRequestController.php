@@ -21,8 +21,7 @@ class MaintenanceRequestController extends Controller
 {
     public function __construct(
         private readonly MaintenanceRequestService $maintenanceRequestService,
-    ) {
-    }
+    ) {}
 
     public function index(Request $request): JsonResponse
     {
@@ -35,9 +34,9 @@ class MaintenanceRequestController extends Controller
 
                 $query->where(function ($searchQuery) use ($search) {
                     $searchQuery
-                        ->where('request_number', 'like', $search)
-                        ->orWhere('title', 'like', $search)
-                        ->orWhereHas('vehicle', fn ($vehicleQuery) => $vehicleQuery->where('registration_number', 'like', $search));
+                        ->where('request_number', 'ilike', $search)
+                        ->orWhere('title', 'ilike', $search)
+                        ->orWhereHas('vehicle', fn ($vehicleQuery) => $vehicleQuery->where('registration_number', 'ilike', $search));
                 });
             })
             ->when($request->filled('filter.status'), fn ($query, $status) => $query->where('status', $status))
@@ -45,7 +44,7 @@ class MaintenanceRequestController extends Controller
             ->when($request->filled('filter.vehicle_id'), fn ($query, $vehicleId) => $query->where('vehicle_id', $vehicleId))
             ->orderByRaw("CASE WHEN status = 'submitted' THEN 0 WHEN status = 'approved' THEN 1 ELSE 2 END")
             ->orderByDesc('requested_at')
-            ->paginate($request->input('per_page', 15));
+            ->paginate($this->perPage($request, 15));
 
         return ApiResponse::success(
             MaintenanceRequestResource::collection($requests),

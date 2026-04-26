@@ -5,16 +5,18 @@ use App\Http\Middleware\AddSecurityHeaders;
 use App\Http\Middleware\AssignRequestId;
 use App\Http\Middleware\CheckPermission;
 use App\Http\Middleware\EnsureStatefulFrontendRequests;
+use App\Http\Middleware\EnsureSubscriptionIsActive;
 use App\Http\Middleware\EnsureTenantIsActive;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Sentry\Laravel\Integration as SentryIntegration;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -27,6 +29,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'permission' => CheckPermission::class,
             'tenant.active' => EnsureTenantIsActive::class,
+            'subscription.active' => EnsureSubscriptionIsActive::class,
         ]);
 
         $trustedProxies = array_values(array_filter(array_map(
@@ -55,7 +58,9 @@ return Application::configure(basePath: dirname(__DIR__))
         );
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->shouldRenderJsonWhen(function (Request $request, \Throwable $throwable): bool {
+        SentryIntegration::handles($exceptions);
+
+        $exceptions->shouldRenderJsonWhen(function (Request $request, Throwable $throwable): bool {
             return $request->is('api/*');
         });
 

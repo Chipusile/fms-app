@@ -34,6 +34,13 @@ jobs:
       - name: Copy environment
         run: cp .env.example .env
 
+      - name: Guard production debug settings
+        run: |
+          if grep -q '^APP_ENV=production$' .env.example && grep -q '^APP_DEBUG=true$' .env.example; then
+            echo "APP_DEBUG=true is not allowed when APP_ENV=production"
+            exit 1
+          fi
+
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist
 

@@ -18,6 +18,7 @@ const baseColumns = [
   { key: 'document_type', label: 'Type' },
   { key: 'expiry_date', label: 'Expiry' },
   { key: 'status', label: 'Status' },
+  { key: 'scan_status', label: 'Scan' },
   { key: 'file', label: 'File' },
 ]
 
@@ -50,6 +51,7 @@ const rows = computed(() => documents.value.map((document) => ({
   status: document.status,
   file: document.file_name ?? 'Metadata only',
   has_file: document.has_file,
+  scan_status: document.scan_status,
   download_url: document.download_url,
 })))
 
@@ -174,10 +176,13 @@ onMounted(async () => {
       <template #cell-status="{ value }">
         <StatusBadge :value="String(value)" />
       </template>
+      <template #cell-scan_status="{ value }">
+        <StatusBadge :value="String(value)" />
+      </template>
       <template #cell-actions="{ row }">
         <div class="flex items-center gap-2">
           <a
-            v-if="row.has_file"
+            v-if="row.has_file && row.download_url"
             :href="String(row.download_url)"
             class="rounded-xl border border-slate-300 dark:border-slate-700 px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-900/50"
           >

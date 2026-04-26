@@ -20,8 +20,7 @@ class FuelLogController extends Controller
 {
     public function __construct(
         private readonly OdometerService $odometerService,
-    ) {
-    }
+    ) {}
 
     public function index(Request $request): JsonResponse
     {
@@ -38,12 +37,12 @@ class FuelLogController extends Controller
 
                 $query->where(function ($searchQuery) use ($search) {
                     $searchQuery
-                        ->where('reference_number', 'like', $search)
-                        ->orWhere('notes', 'like', $search)
-                        ->orWhereHas('vehicle', fn ($vehicleQuery) => $vehicleQuery->where('registration_number', 'like', $search))
-                        ->orWhereHas('driver', fn ($driverQuery) => $driverQuery->where('name', 'like', $search))
-                        ->orWhereHas('trip', fn ($tripQuery) => $tripQuery->where('trip_number', 'like', $search))
-                        ->orWhereHas('serviceProvider', fn ($providerQuery) => $providerQuery->where('name', 'like', $search));
+                        ->where('reference_number', 'ilike', $search)
+                        ->orWhere('notes', 'ilike', $search)
+                        ->orWhereHas('vehicle', fn ($vehicleQuery) => $vehicleQuery->where('registration_number', 'ilike', $search))
+                        ->orWhereHas('driver', fn ($driverQuery) => $driverQuery->where('name', 'ilike', $search))
+                        ->orWhereHas('trip', fn ($tripQuery) => $tripQuery->where('trip_number', 'ilike', $search))
+                        ->orWhereHas('serviceProvider', fn ($providerQuery) => $providerQuery->where('name', 'ilike', $search));
                 });
             })
             ->when($request->filled('filter.vehicle_id'), fn ($query, $vehicleId) => $query->where('vehicle_id', $vehicleId))
@@ -52,7 +51,7 @@ class FuelLogController extends Controller
             ->when($request->filled('filter.service_provider_id'), fn ($query, $providerId) => $query->where('service_provider_id', $providerId))
             ->when($request->filled('filter.fuel_type'), fn ($query, $fuelType) => $query->where('fuel_type', $fuelType))
             ->orderBy($sort, $direction)
-            ->paginate($request->input('per_page', 15));
+            ->paginate($this->perPage($request, 15));
 
         return ApiResponse::success(
             FuelLogResource::collection($fuelLogs),

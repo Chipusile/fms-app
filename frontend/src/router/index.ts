@@ -11,6 +11,30 @@ const router = createRouter({
       meta: { guest: true },
     },
     {
+      path: '/register',
+      name: 'register',
+      component: () => import('@/modules/auth/RegisterPage.vue'),
+      meta: { guest: true },
+    },
+    {
+      path: '/forgot-password',
+      name: 'forgot-password',
+      component: () => import('@/modules/auth/ForgotPasswordPage.vue'),
+      meta: { guest: true },
+    },
+    {
+      path: '/reset-password',
+      name: 'reset-password',
+      component: () => import('@/modules/auth/ResetPasswordPage.vue'),
+      meta: { guest: true },
+    },
+    {
+      path: '/accept-invite',
+      name: 'accept-invite',
+      component: () => import('@/modules/auth/AcceptInvitePage.vue'),
+      meta: { guest: true },
+    },
+    {
       path: '/',
       component: () => import('@/components/layout/AppLayout.vue'),
       meta: { requiresAuth: true },

@@ -5,8 +5,8 @@ namespace App\Models;
 use App\Models\Traits\BelongsToTenant;
 use App\Models\Traits\HasAuditTrail;
 use App\Models\Traits\HasCreatorAndUpdater;
-use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -26,6 +26,9 @@ class AssetDocument extends Model
         'storage_disk',
         'mime_type',
         'file_size',
+        'scan_status',
+        'scanned_at',
+        'scan_error',
         'issue_date',
         'expiry_date',
         'status',
@@ -40,6 +43,7 @@ class AssetDocument extends Model
         return [
             'issue_date' => 'date',
             'expiry_date' => 'date',
+            'scanned_at' => 'datetime',
             'metadata' => 'array',
         ];
     }

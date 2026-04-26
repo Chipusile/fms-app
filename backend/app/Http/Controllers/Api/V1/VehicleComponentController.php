@@ -18,8 +18,7 @@ class VehicleComponentController extends Controller
 {
     public function __construct(
         private readonly VehicleComponentService $vehicleComponentService,
-    ) {
-    }
+    ) {}
 
     public function index(Request $request): JsonResponse
     {
@@ -34,11 +33,11 @@ class VehicleComponentController extends Controller
 
                 $query->where(function ($searchQuery) use ($search) {
                     $searchQuery
-                        ->where('component_number', 'like', $search)
-                        ->orWhere('serial_number', 'like', $search)
-                        ->orWhere('brand', 'like', $search)
-                        ->orWhere('model', 'like', $search)
-                        ->orWhereHas('vehicle', fn ($vehicleQuery) => $vehicleQuery->where('registration_number', 'like', $search));
+                        ->where('component_number', 'ilike', $search)
+                        ->orWhere('serial_number', 'ilike', $search)
+                        ->orWhere('brand', 'ilike', $search)
+                        ->orWhere('model', 'ilike', $search)
+                        ->orWhereHas('vehicle', fn ($vehicleQuery) => $vehicleQuery->where('registration_number', 'ilike', $search));
                 });
             })
             ->when($request->filled('filter.status'), fn ($query, $status) => $query->where('status', $status))
@@ -47,7 +46,7 @@ class VehicleComponentController extends Controller
             ->orderByRaw("CASE WHEN status = 'due_replacement' THEN 0 WHEN status = 'active' THEN 1 ELSE 2 END")
             ->orderBy('next_replacement_at')
             ->orderBy('next_replacement_km')
-            ->paginate($request->input('per_page', 15));
+            ->paginate($this->perPage($request, 15));
 
         return ApiResponse::success(
             VehicleComponentResource::collection($components),

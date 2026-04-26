@@ -17,8 +17,7 @@ class ComplianceItemController extends Controller
 {
     public function __construct(
         private readonly ComplianceService $complianceService,
-    ) {
-    }
+    ) {}
 
     public function index(Request $request): JsonResponse
     {
@@ -33,9 +32,9 @@ class ComplianceItemController extends Controller
 
                 $query->where(function ($searchQuery) use ($search) {
                     $searchQuery
-                        ->where('title', 'like', $search)
-                        ->orWhere('reference_number', 'like', $search)
-                        ->orWhere('issuer', 'like', $search);
+                        ->where('title', 'ilike', $search)
+                        ->orWhere('reference_number', 'ilike', $search)
+                        ->orWhere('issuer', 'ilike', $search);
                 });
             })
             ->when($request->filled('filter.status'), fn ($query, $status) => $query->where('status', $status))
@@ -49,7 +48,7 @@ class ComplianceItemController extends Controller
             })
             ->orderBy('expiry_date')
             ->orderBy('title')
-            ->paginate($request->input('per_page', 15));
+            ->paginate($this->perPage($request, 15));
 
         return ApiResponse::success(
             ComplianceItemResource::collection($items),

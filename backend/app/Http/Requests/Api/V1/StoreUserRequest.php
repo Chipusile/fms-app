@@ -5,7 +5,6 @@ namespace App\Http\Requests\Api\V1;
 use App\Enums\UserStatus;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
 
 class StoreUserRequest extends FormRequest
 {
@@ -29,7 +28,6 @@ class StoreUserRequest extends FormRequest
                 'max:255',
                 Rule::unique('users')->where('tenant_id', $tenantId),
             ],
-            'password' => ['required', Password::defaults()],
             'phone' => ['nullable', 'string', 'max:30'],
             'status' => ['nullable', Rule::enum(UserStatus::class)],
             'role_ids' => ['nullable', 'array'],

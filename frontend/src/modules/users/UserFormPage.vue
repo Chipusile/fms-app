@@ -17,11 +17,11 @@ const submitting = ref(false)
 const errorMessage = ref<string | null>(null)
 const fieldErrors = ref<Record<string, string[]>>({})
 const roleOptions = ref<Role[]>([])
+const resetPassword = ref('')
 
 const form = ref<CreateUserPayload>({
   name: '',
   email: '',
-  password: '',
   phone: '',
   status: 'active',
   role_ids: [],
@@ -41,7 +41,6 @@ async function loadUser() {
   form.value = {
     name: user.name,
     email: user.email,
-    password: '',
     phone: user.phone ?? '',
     status: user.status,
     role_ids: user.roles?.map((role) => role.id) ?? [],
@@ -63,8 +62,8 @@ async function submit() {
         role_ids: form.value.role_ids,
       }
 
-      if (form.value.password) {
-        payload.password = form.value.password
+      if (resetPassword.value) {
+        payload.password = resetPassword.value
       }
 
       await updateResource<User, UpdateUserPayload>(`/users/${route.params.id}`, payload)
@@ -207,9 +206,19 @@ onMounted(async () => {
           </label>
 
           <label class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
-            <span class="font-medium">{{ isEditMode ? 'Reset password' : 'Temporary password' }}</span>
+            <span class="font-medium">Invitation</span>
+            <p class="text-sm leading-6 text-slate-500 dark:text-slate-400">
+              New users receive an email invitation and set their own password before the account is active.
+            </p>
+          </label>
+
+          <label
+            v-if="isEditMode"
+            class="space-y-2 text-sm text-slate-700 dark:text-slate-200"
+          >
+            <span class="font-medium">Reset password</span>
             <input
-              v-model="form.password"
+              v-model="resetPassword"
               type="password"
               class="w-full rounded-2xl border border-slate-300 dark:border-slate-700 px-4 py-3 outline-none focus:border-blue-500"
               :disabled="loading"

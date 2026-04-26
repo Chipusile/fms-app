@@ -17,8 +17,7 @@ class MaintenanceScheduleController extends Controller
 {
     public function __construct(
         private readonly MaintenanceService $maintenanceService,
-    ) {
-    }
+    ) {}
 
     public function index(Request $request): JsonResponse
     {
@@ -31,8 +30,8 @@ class MaintenanceScheduleController extends Controller
 
                 $query->where(function ($searchQuery) use ($search) {
                     $searchQuery
-                        ->where('title', 'like', $search)
-                        ->orWhereHas('vehicle', fn ($vehicleQuery) => $vehicleQuery->where('registration_number', 'like', $search));
+                        ->where('title', 'ilike', $search)
+                        ->orWhereHas('vehicle', fn ($vehicleQuery) => $vehicleQuery->where('registration_number', 'ilike', $search));
                 });
             })
             ->when($request->filled('filter.status'), fn ($query, $status) => $query->where('status', $status))
@@ -40,7 +39,7 @@ class MaintenanceScheduleController extends Controller
             ->when($request->filled('filter.vehicle_id'), fn ($query, $vehicleId) => $query->where('vehicle_id', $vehicleId))
             ->orderBy('next_due_at')
             ->orderBy('next_due_km')
-            ->paginate($request->input('per_page', 15));
+            ->paginate($this->perPage($request, 15));
 
         return ApiResponse::success(
             MaintenanceScheduleResource::collection($schedules),

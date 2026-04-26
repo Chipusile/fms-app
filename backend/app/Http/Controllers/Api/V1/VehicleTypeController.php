@@ -23,13 +23,13 @@ class VehicleTypeController extends Controller
         $vehicleTypes = VehicleType::query()
             ->when($request->input('search'), function ($query, $search) {
                 $query->where(function ($query) use ($search) {
-                    $query->where('name', 'like', "%{$search}%")
-                        ->orWhere('code', 'like', "%{$search}%");
+                    $query->where('name', 'ilike', "%{$search}%")
+                        ->orWhere('code', 'ilike', "%{$search}%");
                 });
             })
             ->when($request->has('filter.is_active'), fn ($query) => $query->where('is_active', filter_var($request->input('filter.is_active'), FILTER_VALIDATE_BOOL)))
             ->orderBy($sort, $direction)
-            ->paginate($request->input('per_page', 15));
+            ->paginate($this->perPage($request, 15));
 
         return ApiResponse::success(
             VehicleTypeResource::collection($vehicleTypes),

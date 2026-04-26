@@ -14,8 +14,7 @@ class UserNotificationController extends Controller
 {
     public function __construct(
         private readonly NotificationService $notificationService,
-    ) {
-    }
+    ) {}
 
     public function index(Request $request): JsonResponse
     {
@@ -27,7 +26,7 @@ class UserNotificationController extends Controller
             ->when($request->filled('filter.status'), fn ($query, $status) => $query->where('status', $status))
             ->when($request->filled('filter.type'), fn ($query, $type) => $query->where('type', $type))
             ->orderByDesc('created_at')
-            ->paginate($request->input('per_page', 20));
+            ->paginate($this->perPage($request, 20));
 
         return ApiResponse::success(
             UserNotificationResource::collection($notifications),

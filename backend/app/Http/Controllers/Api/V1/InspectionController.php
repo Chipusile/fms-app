@@ -21,8 +21,7 @@ class InspectionController extends Controller
 {
     public function __construct(
         private readonly InspectionService $inspectionService,
-    ) {
-    }
+    ) {}
 
     public function index(Request $request): JsonResponse
     {
@@ -35,16 +34,16 @@ class InspectionController extends Controller
 
                 $query->where(function ($searchQuery) use ($search) {
                     $searchQuery
-                        ->where('inspection_number', 'like', $search)
-                        ->orWhereHas('vehicle', fn ($vehicleQuery) => $vehicleQuery->where('registration_number', 'like', $search))
-                        ->orWhereHas('template', fn ($templateQuery) => $templateQuery->where('name', 'like', $search));
+                        ->where('inspection_number', 'ilike', $search)
+                        ->orWhereHas('vehicle', fn ($vehicleQuery) => $vehicleQuery->where('registration_number', 'ilike', $search))
+                        ->orWhereHas('template', fn ($templateQuery) => $templateQuery->where('name', 'ilike', $search));
                 });
             })
             ->when($request->filled('filter.status'), fn ($query, $status) => $query->where('status', $status))
             ->when($request->filled('filter.result'), fn ($query, $result) => $query->where('result', $result))
             ->when($request->filled('filter.vehicle_id'), fn ($query, $vehicleId) => $query->where('vehicle_id', $vehicleId))
             ->orderByDesc('performed_at')
-            ->paginate($request->input('per_page', 15));
+            ->paginate($this->perPage($request, 15));
 
         return ApiResponse::success(
             InspectionResource::collection($inspections),

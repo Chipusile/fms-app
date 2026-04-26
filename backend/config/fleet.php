@@ -5,6 +5,33 @@ use App\Models\ServiceProvider;
 use App\Models\Vehicle;
 
 return [
+    'plans' => [
+        'trial' => [
+            'name' => 'Trial',
+            'trial_days' => 14,
+            'limits' => [
+                'vehicles' => 5,
+                'users' => 3,
+                'drivers' => 5,
+            ],
+        ],
+        'starter' => [
+            'name' => 'Starter',
+            'limits' => [
+                'vehicles' => 25,
+                'users' => 10,
+                'drivers' => 25,
+            ],
+        ],
+        'pro' => [
+            'name' => 'Pro',
+            'limits' => [
+                'vehicles' => null,
+                'users' => null,
+                'drivers' => null,
+            ],
+        ],
+    ],
     'vehicle' => [
         'fuel_types' => ['petrol', 'diesel', 'electric', 'hybrid'],
         'transmission_types' => ['manual', 'automatic', 'semi_automatic'],
@@ -65,6 +92,7 @@ return [
             'maintenance_due',
             'compliance_expiring',
             'component_due_replacement',
+            'report_export_failed',
         ],
         'statuses' => ['unread', 'read', 'acknowledged'],
     ],
@@ -115,6 +143,12 @@ return [
         ],
         'allowed_extensions' => ['pdf', 'jpg', 'jpeg', 'png', 'doc', 'docx', 'xls', 'xlsx'],
         'max_upload_kb' => 10240,
+        'download_url_ttl_minutes' => env('ASSET_DOCUMENT_DOWNLOAD_URL_TTL_MINUTES', 10),
+        'scan' => [
+            'enabled' => (bool) env('ASSET_DOCUMENT_SCAN_ENABLED', false),
+            'command' => env('ASSET_DOCUMENT_SCAN_COMMAND', 'clamscan'),
+            'timeout_seconds' => (int) env('ASSET_DOCUMENT_SCAN_TIMEOUT_SECONDS', 120),
+        ],
     ],
     'bulk_import' => [
         'templates' => [

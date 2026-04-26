@@ -138,6 +138,7 @@ class PermissionSeeder extends Seeder
             ],
             'reports' => [
                 'view' => 'View reports and dashboards',
+                'view-all' => 'View all report exports for the tenant',
                 'export' => 'Export reports',
             ],
             'settings' => [

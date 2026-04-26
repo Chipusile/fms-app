@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Helpers\ApiResponse;
 use App\Http\Requests\Api\V1\AssetDocumentRequest;
 use App\Http\Resources\Api\V1\AssetDocumentResource;
+use App\Jobs\ScanAssetDocument;
 use App\Models\AssetDocument;
 use App\Models\Driver;
 use App\Models\ServiceProvider;
@@ -39,9 +40,9 @@ class AssetDocumentController extends Controller
 
                 $query->where(function ($searchQuery) use ($search) {
                     $searchQuery
-                        ->where('name', 'like', $search)
-                        ->orWhere('document_number', 'like', $search)
-                        ->orWhere('file_name', 'like', $search);
+                        ->where('name', 'ilike', $search)
+                        ->orWhere('document_number', 'ilike', $search)
+                        ->orWhere('file_name', 'ilike', $search);
                 });
             })
             ->when($request->filled('filter.status'), fn ($query, $status) => $query->where('status', $status))
@@ -55,7 +56,7 @@ class AssetDocumentController extends Controller
                     ->whereDate('expiry_date', '<=', now()->addDays($expiringWithinDays)->toDateString());
             })
             ->orderBy($sort, $direction)
-            ->paginate($request->input('per_page', 15));
+            ->paginate($this->perPage($request, 15));
 
         return ApiResponse::success(
             AssetDocumentResource::collection($documents),
@@ -77,6 +78,7 @@ class AssetDocumentController extends Controller
         return ApiResponse::success([
             'vehicles' => Vehicle::query()
                 ->orderBy('registration_number')
+                ->limit(50)
                 ->get(['id', 'registration_number', 'make', 'model'])
                 ->map(fn (Vehicle $vehicle) => [
                     'id' => $vehicle->id,
@@ -85,6 +87,7 @@ class AssetDocumentController extends Controller
                 ]),
             'drivers' => Driver::query()
                 ->orderBy('name')
+                ->limit(50)
                 ->get(['id', 'name', 'license_number'])
                 ->map(fn (Driver $driver) => [
                     'id' => $driver->id,
@@ -93,12 +96,78 @@ class AssetDocumentController extends Controller
                 ]),
             'service_providers' => ServiceProvider::query()
                 ->orderBy('name')
+                ->limit(50)
                 ->get(['id', 'name', 'provider_type'])
                 ->map(fn (ServiceProvider $serviceProvider) => [
                     'id' => $serviceProvider->id,
                     'label' => $serviceProvider->name,
                     'secondary' => $serviceProvider->provider_type,
                 ]),
+        ]);
+    }
+
+    public function typeahead(Request $request): JsonResponse
+    {
+        if (! $request->user()?->hasAnyPermission(['documents.view', 'documents.create', 'documents.update'])) {
+            return ApiResponse::forbidden('You do not have permission to access document support data.');
+        }
+
+        $request->validate([
+            'type' => ['required', 'string', 'in:vehicle,driver,service_provider'],
+            'search' => ['nullable', 'string', 'max:100'],
+        ]);
+
+        $search = '%'.$request->string('search')->trim().'%';
+        $type = $request->string('type')->toString();
+
+        $results = match ($type) {
+            'vehicle' => Vehicle::query()
+                ->when($request->filled('search'), function ($query) use ($search) {
+                    $query->where('registration_number', 'ilike', $search)
+                        ->orWhere('make', 'ilike', $search)
+                        ->orWhere('model', 'ilike', $search);
+                })
+                ->orderBy('registration_number')
+                ->paginate($this->perPage($request, 15)),
+            'driver' => Driver::query()
+                ->when($request->filled('search'), function ($query) use ($search) {
+                    $query->where('name', 'ilike', $search)
+                        ->orWhere('license_number', 'ilike', $search);
+                })
+                ->orderBy('name')
+                ->paginate($this->perPage($request, 15)),
+            'service_provider' => ServiceProvider::query()
+                ->when($request->filled('search'), function ($query) use ($search) {
+                    $query->where('name', 'ilike', $search)
+                        ->orWhere('provider_type', 'ilike', $search);
+                })
+                ->orderBy('name')
+                ->paginate($this->perPage($request, 15)),
+        };
+
+        $items = $results->getCollection()->map(fn ($item) => match ($type) {
+            'vehicle' => [
+                'id' => $item->id,
+                'label' => $item->registration_number,
+                'secondary' => trim($item->make.' '.$item->model),
+            ],
+            'driver' => [
+                'id' => $item->id,
+                'label' => $item->name,
+                'secondary' => $item->license_number,
+            ],
+            'service_provider' => [
+                'id' => $item->id,
+                'label' => $item->name,
+                'secondary' => $item->provider_type,
+            ],
+        });
+
+        return ApiResponse::success($items, meta: [
+            'current_page' => $results->currentPage(),
+            'last_page' => $results->lastPage(),
+            'per_page' => $results->perPage(),
+            'total' => $results->total(),
         ]);
     }
 
@@ -126,6 +195,10 @@ class AssetDocumentController extends Controller
             $this->deleteStoredFile($fileAttributes);
 
             throw $exception;
+        }
+
+        if ($fileAttributes) {
+            ScanAssetDocument::dispatch($document->id);
         }
 
         return ApiResponse::created(
@@ -176,6 +249,10 @@ class AssetDocumentController extends Controller
                 ->delete($oldFileAttributes['file_path']);
         }
 
+        if ($newFileAttributes) {
+            ScanAssetDocument::dispatch($assetDocument->id);
+        }
+
         return ApiResponse::success(
             new AssetDocumentResource($assetDocument->fresh()->load('documentable')),
             'Asset document updated successfully.'
@@ -199,9 +276,17 @@ class AssetDocumentController extends Controller
             return ApiResponse::notFound('The requested file could not be found.');
         }
 
+        if ($assetDocument->scan_status !== 'clean') {
+            return ApiResponse::error('This file is not available until malware scanning completes successfully.', 409);
+        }
+
         return Storage::disk($assetDocument->storage_disk)->download(
             $assetDocument->file_path,
-            $assetDocument->file_name ?? basename($assetDocument->file_path)
+            $this->downloadFileName($assetDocument),
+            [
+                'Content-Type' => $assetDocument->mime_type ?? 'application/octet-stream',
+                'X-Content-Type-Options' => 'nosniff',
+            ]
         );
     }
 
@@ -253,9 +338,20 @@ class AssetDocumentController extends Controller
             'file_name' => $file->getClientOriginalName(),
             'file_path' => $path,
             'storage_disk' => $disk,
-            'mime_type' => $file->getClientMimeType(),
+            'mime_type' => $file->getMimeType(),
             'file_size' => $file->getSize(),
+            'scan_status' => 'pending',
+            'scanned_at' => null,
+            'scan_error' => null,
         ];
+    }
+
+    private function downloadFileName(AssetDocument $assetDocument): string
+    {
+        $extension = pathinfo((string) $assetDocument->file_path, PATHINFO_EXTENSION);
+        $baseName = 'asset-document-'.$assetDocument->id;
+
+        return $extension ? $baseName.'.'.$extension : $baseName;
     }
 
     /**

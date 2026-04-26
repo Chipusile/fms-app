@@ -268,6 +268,7 @@ onMounted(async () => {
           </label>
           <div v-if="existingDocument?.file_name" class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 px-4 py-3 text-xs leading-5 text-slate-600 dark:text-slate-400">
             Current file: <span class="font-semibold text-slate-800 dark:text-slate-100">{{ existingDocument.file_name }}</span>
+            <span class="ml-2">Scan: {{ existingDocument.scan_status }}</span>
             <a v-if="existingDocument.download_url" :href="existingDocument.download_url" class="ml-2 font-semibold text-blue-700 dark:text-blue-200 hover:text-blue-900 dark:hover:text-blue-100">Download</a>
           </div>
           <label class="space-y-2">

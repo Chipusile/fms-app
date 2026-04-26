@@ -8,6 +8,7 @@ use App\Models\ServiceProvider;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\URL;
 
 class AssetDocumentResource extends JsonResource
 {
@@ -24,8 +25,17 @@ class AssetDocumentResource extends JsonResource
             'file_name' => $this->file_name,
             'mime_type' => $this->mime_type,
             'file_size' => $this->file_size,
+            'scan_status' => $this->scan_status,
+            'scanned_at' => $this->scanned_at?->toISOString(),
+            'scan_error' => $this->scan_error,
             'has_file' => filled($this->file_path),
-            'download_url' => $this->file_path ? route('asset-documents.download', $this->resource) : null,
+            'download_url' => $this->file_path && $this->scan_status === 'clean'
+                ? URL::temporarySignedRoute(
+                    'asset-documents.download',
+                    now()->addMinutes((int) config('fleet.asset_document.download_url_ttl_minutes', 10)),
+                    $this->resource
+                )
+                : null,
             'issue_date' => optional($this->issue_date)->toDateString(),
             'expiry_date' => optional($this->expiry_date)->toDateString(),
             'status' => $this->status,

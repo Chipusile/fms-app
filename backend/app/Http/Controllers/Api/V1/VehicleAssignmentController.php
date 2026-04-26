@@ -31,9 +31,9 @@ class VehicleAssignmentController extends Controller
 
                 $query->where(function ($searchQuery) use ($search) {
                     $searchQuery
-                        ->whereHas('vehicle', fn ($vehicleQuery) => $vehicleQuery->where('registration_number', 'like', $search))
-                        ->orWhereHas('driver', fn ($driverQuery) => $driverQuery->where('name', 'like', $search))
-                        ->orWhereHas('department', fn ($departmentQuery) => $departmentQuery->where('name', 'like', $search));
+                        ->whereHas('vehicle', fn ($vehicleQuery) => $vehicleQuery->where('registration_number', 'ilike', $search))
+                        ->orWhereHas('driver', fn ($driverQuery) => $driverQuery->where('name', 'ilike', $search))
+                        ->orWhereHas('department', fn ($departmentQuery) => $departmentQuery->where('name', 'ilike', $search));
                 });
             })
             ->when($request->input('filter.status'), fn ($query, $status) => $query->where('status', $status))
@@ -41,7 +41,7 @@ class VehicleAssignmentController extends Controller
             ->when($request->input('filter.driver_id'), fn ($query, $driverId) => $query->where('driver_id', $driverId))
             ->when($request->input('filter.department_id'), fn ($query, $departmentId) => $query->where('department_id', $departmentId))
             ->orderBy($sort, $direction)
-            ->paginate($request->input('per_page', 15));
+            ->paginate($this->perPage($request, 15));
 
         return ApiResponse::success(
             VehicleAssignmentResource::collection($assignments),

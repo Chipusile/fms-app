@@ -21,8 +21,7 @@ class WorkOrderController extends Controller
 {
     public function __construct(
         private readonly MaintenanceService $maintenanceService,
-    ) {
-    }
+    ) {}
 
     public function index(Request $request): JsonResponse
     {
@@ -35,9 +34,9 @@ class WorkOrderController extends Controller
 
                 $query->where(function ($searchQuery) use ($search) {
                     $searchQuery
-                        ->where('work_order_number', 'like', $search)
-                        ->orWhere('title', 'like', $search)
-                        ->orWhereHas('vehicle', fn ($vehicleQuery) => $vehicleQuery->where('registration_number', 'like', $search));
+                        ->where('work_order_number', 'ilike', $search)
+                        ->orWhere('title', 'ilike', $search)
+                        ->orWhereHas('vehicle', fn ($vehicleQuery) => $vehicleQuery->where('registration_number', 'ilike', $search));
                 });
             })
             ->when($request->filled('filter.status'), fn ($query, $status) => $query->where('status', $status))
@@ -46,7 +45,7 @@ class WorkOrderController extends Controller
             ->orderByRaw("CASE WHEN status IN ('open','in_progress') THEN 0 ELSE 1 END")
             ->orderBy('due_date')
             ->orderByDesc('created_at')
-            ->paginate($request->input('per_page', 15));
+            ->paginate($this->perPage($request, 15));
 
         return ApiResponse::success(
             WorkOrderResource::collection($workOrders),

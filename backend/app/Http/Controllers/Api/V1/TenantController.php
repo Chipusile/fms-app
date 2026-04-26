@@ -20,8 +20,11 @@ class TenantController extends Controller
         $tenants = Tenant::query()
             ->when($request->input('filter.status'), fn ($q, $status) => $q->where('status', $status))
             ->when($request->input('search'), fn ($q, $search) => $q->where('name', 'ilike', "%{$search}%"))
-            ->orderBy($request->input('sort', 'name'), $request->input('direction', 'asc'))
-            ->paginate($request->input('per_page', 15));
+            ->orderBy(
+                $this->sortColumn($request, ['name', 'slug', 'status', 'created_at'], 'name'),
+                $this->sortDirection($request)
+            )
+            ->paginate($this->perPage($request, 15));
 
         return ApiResponse::success(
             TenantResource::collection($tenants),

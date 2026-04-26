@@ -125,6 +125,7 @@ export type VehicleAssignmentType = 'driver' | 'department' | 'pool'
 export type ServiceProviderType = 'garage' | 'insurer' | 'fuel_station' | 'tyre_shop' | 'towing' | 'inspection_center' | 'other'
 export type ServiceProviderStatus = 'active' | 'inactive'
 export type AssetDocumentStatus = 'active' | 'expired' | 'replaced'
+export type AssetDocumentScanStatus = 'pending' | 'clean' | 'infected' | 'failed'
 export type AssetDocumentType = 'registration' | 'insurance' | 'license' | 'inspection' | 'permit' | 'contract' | 'other'
 export type DocumentableType = 'vehicle' | 'driver' | 'service_provider'
 export type TripStatus = 'requested' | 'approved' | 'rejected' | 'in_progress' | 'completed' | 'cancelled'
@@ -167,6 +168,7 @@ export type UserNotificationType =
   | 'maintenance_due'
   | 'compliance_expiring'
   | 'component_due_replacement'
+  | 'report_export_failed'
 export type UserNotificationStatus = 'unread' | 'read' | 'acknowledged'
 export type ReportType =
   | 'fleet-overview'
@@ -303,6 +305,9 @@ export interface AssetDocument {
   file_name: string | null
   mime_type: string | null
   file_size: number | null
+  scan_status: AssetDocumentScanStatus
+  scanned_at: string | null
+  scan_error: string | null
   has_file: boolean
   download_url: string | null
   issue_date: string | null
@@ -1040,7 +1045,6 @@ export interface ListQuery {
 export interface CreateUserPayload {
   name: string
   email: string
-  password: string
   phone?: string
   status?: UserStatus
   role_ids?: number[]

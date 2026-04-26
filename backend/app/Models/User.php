@@ -5,20 +5,23 @@ namespace App\Models;
 use App\Enums\UserStatus;
 use App\Models\Traits\BelongsToTenant;
 use App\Models\Traits\HasAuditTrail;
+use App\Notifications\ResetPasswordNotification;
 use Database\Factories\UserFactory;
+use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
-    use BelongsToTenant, HasApiTokens, HasAuditTrail, HasFactory, Notifiable, SoftDeletes;
+    use BelongsToTenant, HasApiTokens, HasAuditTrail, HasFactory, MustVerifyEmailTrait, Notifiable, SoftDeletes;
 
     protected $fillable = [
         'tenant_id',
@@ -26,6 +29,7 @@ class User extends Authenticatable
         'email',
         'password',
         'phone',
+        'email_verified_at',
         'status',
         'is_super_admin',
         'last_login_at',
@@ -59,6 +63,11 @@ class User extends Authenticatable
     public function notifications(): HasMany
     {
         return $this->hasMany(UserNotification::class);
+    }
+
+    public function invitations(): HasMany
+    {
+        return $this->hasMany(UserInvitation::class);
     }
 
     public function reportedIncidents(): HasMany
@@ -146,6 +155,11 @@ class User extends Authenticatable
     public function isActive(): bool
     {
         return $this->status === UserStatus::Active;
+    }
+
+    public function sendPasswordResetNotification($token): void
+    {
+        $this->notify(new ResetPasswordNotification($token));
     }
 
     public function scopeVisibleTo(Builder $query, ?self $actor): Builder

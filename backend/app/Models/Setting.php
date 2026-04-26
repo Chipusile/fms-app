@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\SettingKey;
 use App\Models\Traits\BelongsToTenant;
 use Illuminate\Database\Eloquent\Model;
 
@@ -56,9 +57,18 @@ class Setting extends Model
      */
     public static function setValue(string $key, mixed $value, ?string $group = null): static
     {
+        $settingKey = SettingKey::tryFrom($key);
+
+        if (! $settingKey) {
+            throw new \InvalidArgumentException('The selected setting key is invalid.');
+        }
+
         return static::updateOrCreate(
             ['key' => $key],
-            ['value' => $value, 'group' => $group],
+            [
+                'value' => $settingKey->normalize($value),
+                'group' => $group ?? $settingKey->group(),
+            ],
         );
     }
 }

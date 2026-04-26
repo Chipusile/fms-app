@@ -19,8 +19,7 @@ class OdometerReadingController extends Controller
 {
     public function __construct(
         private readonly OdometerService $odometerService,
-    ) {
-    }
+    ) {}
 
     public function supportData(Request $request): JsonResponse
     {
@@ -61,7 +60,7 @@ class OdometerReadingController extends Controller
             ->where('vehicle_id', $vehicle->id)
             ->orderByDesc('recorded_at')
             ->orderByDesc('id')
-            ->paginate($request->input('per_page', 15));
+            ->paginate($this->perPage($request, 15));
 
         return ApiResponse::success(
             OdometerReadingResource::collection($readings),
@@ -84,7 +83,7 @@ class OdometerReadingController extends Controller
             ->when(! $request->boolean('include_resolved'), fn ($query) => $query->whereNull('resolved_at'))
             ->orderByDesc('recorded_at')
             ->orderByDesc('id')
-            ->paginate($request->input('per_page', 15));
+            ->paginate($this->perPage($request, 15));
 
         return ApiResponse::success(
             OdometerReadingResource::collection($readings),

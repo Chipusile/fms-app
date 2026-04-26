@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Api\V1\AuditLogController;
-use App\Http\Controllers\Api\V1\AssetDocumentController;
 use App\Http\Controllers\Api\V1\ApprovalRequestController;
+use App\Http\Controllers\Api\V1\AssetDocumentController;
+use App\Http\Controllers\Api\V1\AuditLogController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\ComplianceItemController;
 use App\Http\Controllers\Api\V1\DepartmentController;
@@ -16,18 +16,18 @@ use App\Http\Controllers\Api\V1\MaintenanceRequestController;
 use App\Http\Controllers\Api\V1\MaintenanceScheduleController;
 use App\Http\Controllers\Api\V1\OdometerReadingController;
 use App\Http\Controllers\Api\V1\PermissionController;
-use App\Http\Controllers\Api\V1\RoleController;
 use App\Http\Controllers\Api\V1\ReportController;
 use App\Http\Controllers\Api\V1\ReportExportController;
+use App\Http\Controllers\Api\V1\RoleController;
 use App\Http\Controllers\Api\V1\ServiceProviderController;
 use App\Http\Controllers\Api\V1\SettingController;
 use App\Http\Controllers\Api\V1\TenantController;
 use App\Http\Controllers\Api\V1\TripController;
-use App\Http\Controllers\Api\V1\UserNotificationController;
 use App\Http\Controllers\Api\V1\UserController;
+use App\Http\Controllers\Api\V1\UserNotificationController;
 use App\Http\Controllers\Api\V1\VehicleAssignmentController;
-use App\Http\Controllers\Api\V1\VehicleController;
 use App\Http\Controllers\Api\V1\VehicleComponentController;
+use App\Http\Controllers\Api\V1\VehicleController;
 use App\Http\Controllers\Api\V1\VehicleTypeController;
 use App\Http\Controllers\Api\V1\WorkOrderController;
 use Illuminate\Support\Facades\Route;
@@ -48,13 +48,26 @@ Route::prefix('v1')->group(function () {
     // Public auth routes
     Route::post('auth/login', [AuthController::class, 'login'])
         ->middleware('throttle:auth-login');
+    Route::post('auth/register', [AuthController::class, 'register'])
+        ->middleware('throttle:6,1');
+    Route::post('auth/forgot-password', [AuthController::class, 'forgotPassword'])
+        ->middleware('throttle:6,1');
+    Route::post('auth/reset-password', [AuthController::class, 'resetPassword'])
+        ->middleware('throttle:6,1');
+    Route::post('auth/invitations/accept', [AuthController::class, 'acceptInvitation'])
+        ->middleware('throttle:6,1');
+    Route::get('auth/verify-email/{id}/{hash}', [AuthController::class, 'verifyEmail'])
+        ->middleware(['signed', 'throttle:6,1'])
+        ->name('verification.verify');
 
     // Protected routes
-    Route::middleware(['auth:sanctum', 'tenant.active'])->group(function () {
+    Route::middleware(['auth:sanctum', 'tenant.active', 'subscription.active'])->group(function () {
 
         // Auth
         Route::post('auth/logout', [AuthController::class, 'logout']);
         Route::get('auth/me', [AuthController::class, 'me']);
+        Route::post('auth/email/verification-notification', [AuthController::class, 'sendEmailVerification'])
+            ->middleware('throttle:6,1');
 
         // Tenants (Super Admin only)
         Route::apiResource('tenants', TenantController::class);
@@ -73,9 +86,10 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('vehicles', VehicleController::class);
         Route::get('vehicle-assignments/support-data', [VehicleAssignmentController::class, 'supportData']);
         Route::apiResource('vehicle-assignments', VehicleAssignmentController::class);
+        Route::get('asset-documents/typeahead', [AssetDocumentController::class, 'typeahead']);
         Route::get('asset-documents/support-data', [AssetDocumentController::class, 'supportData']);
         Route::get('asset-documents/{assetDocument}/download', [AssetDocumentController::class, 'download'])
-            ->middleware('throttle:asset-downloads')
+            ->middleware(['signed', 'throttle:asset-downloads'])
             ->name('asset-documents.download');
         Route::apiResource('asset-documents', AssetDocumentController::class);
         Route::get('import-templates', [ImportTemplateController::class, 'index']);

@@ -120,6 +120,11 @@ async function submit() {
             </button>
           </form>
 
+          <div class="flex items-center justify-between text-sm">
+            <RouterLink to="/forgot-password" class="font-medium text-blue-700 dark:text-blue-300">Forgot password?</RouterLink>
+            <RouterLink to="/register" class="font-medium text-blue-700 dark:text-blue-300">Create workspace</RouterLink>
+          </div>
+
           <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-4 text-sm leading-6 text-slate-600 dark:text-slate-400">
             Seeded example: <span class="font-semibold text-slate-900 dark:text-slate-100">admin@acme-transport.local / password</span>
           </div>

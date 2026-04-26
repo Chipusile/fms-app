@@ -24,13 +24,13 @@ class InspectionTemplateController extends Controller
 
                 $query->where(function ($searchQuery) use ($search) {
                     $searchQuery
-                        ->where('name', 'like', $search)
-                        ->orWhere('code', 'like', $search);
+                        ->where('name', 'ilike', $search)
+                        ->orWhere('code', 'ilike', $search);
                 });
             })
             ->when($request->filled('filter.status'), fn ($query, $status) => $query->where('status', $status))
             ->orderBy('name')
-            ->paginate($request->input('per_page', 15));
+            ->paginate($this->perPage($request, 15));
 
         return ApiResponse::success(
             InspectionTemplateResource::collection($templates),
