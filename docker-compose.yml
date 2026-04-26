@@ -10,6 +10,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./backend:/var/www/backend
+      - ./backend/.env.docker:/var/www/backend/.env
     depends_on:
       postgres:
         condition: service_healthy
@@ -60,7 +61,7 @@ services:
     container_name: fms-postgres
     restart: unless-stopped
     ports:
-      - "${DB_PORT:-5432}:5432"
+      - "${DB_PORT:-5433}:5432"
     environment:
       POSTGRES_DB: ${DB_DATABASE:-fms_db}
       POSTGRES_USER: ${DB_USERNAME:-fms_user}
@@ -82,7 +83,7 @@ services:
     container_name: fms-redis
     restart: unless-stopped
     ports:
-      - "${REDIS_PORT:-6379}:6379"
+      - "${REDIS_PORT:-6380}:6379"
     volumes:
       - fms-redis-data:/data
     healthcheck:
@@ -133,6 +134,7 @@ services:
     command: php artisan queue:work redis --sleep=3 --tries=3 --max-time=3600
     volumes:
       - ./backend:/var/www/backend
+      - ./backend/.env.docker:/var/www/backend/.env
     depends_on:
       postgres:
         condition: service_healthy
@@ -153,6 +155,7 @@ services:
     command: sh -c "while true; do php artisan schedule:run --verbose --no-interaction; sleep 60; done"
     volumes:
       - ./backend:/var/www/backend
+      - ./backend/.env.docker:/var/www/backend/.env
     depends_on:
       postgres:
         condition: service_healthy
